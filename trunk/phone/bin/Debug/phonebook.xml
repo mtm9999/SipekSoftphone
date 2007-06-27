@@ -1,0 +1,20 @@
+<Phonebook>
+  <Record>
+    <LastName>phone</LastName>
+    <FirstName>eyebeam</FirstName>
+    <Phone>
+      <phonenumber>4444</phonenumber>
+      <uri>
+      </uri>
+    </Phone>
+  </Record>
+  <Record>
+    <LastName>Phone1</LastName>
+    <FirstName>Funkwerk</FirstName>
+    <Phone>
+      <phonenumber>9999</phonenumber>
+      <uri>
+      </uri>
+    </Phone>
+  </Record>
+</Phonebook>
