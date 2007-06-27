@@ -1,0 +1,20 @@
+<Calllog>
+  <Record>
+    <Type>0</Type>
+    <Name>
+    </Name>
+    <Number>9999</Number>
+    <Time>21.6.2007 14:38:29</Time>
+    <Duration>00:02:22.8161560</Duration>
+    <Count>10</Count>
+  </Record>
+  <Record>
+    <Type>2</Type>
+    <Name>
+    </Name>
+    <Number>"coh" 9999</Number>
+    <Time>21.6.2007 15:36:46</Time>
+    <Duration>00:00:04.6576804</Duration>
+    <Count>1</Count>
+  </Record>
+</Calllog>
