@@ -333,7 +333,8 @@ namespace Sipek
     private void MainForm_Activated(object sender, EventArgs e)
     {
       // Refresh data
-      RefreshForm();
+      //RefreshForm();
+      UpdateBuddyList();
     }
 
     private void placeACallToolStripMenuItem_Click(object sender, EventArgs e)
