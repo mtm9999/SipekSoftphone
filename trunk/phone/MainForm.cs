@@ -17,24 +17,11 @@ namespace Sipek
       InitializeComponent();
 
       // register callback
-      Telephony.CCallManager.getInstance().registerOnRefreshCallback(onTelephonyRefresh);
+      Telephony.CCallManager.getInstance().CallStateChanged += onTelephonyRefresh;
+      Telephony.CCallManager.getInstance().MessageReceived += onMessageReceived;
 
       // Initlialize telephony
       Telephony.CCallManager.getInstance().initialize();
-
-      // Refresh data
-      RefreshForm();
-
-      // Buddies List View Init
-      //listViewBuddies.Clear();
-
-      Dictionary<int, CBuddyRecord> results = CBuddyList.getInstance().getList();
-
-      foreach (KeyValuePair<int, CBuddyRecord> kvp in results)
-      {
-        ListViewItem item = new ListViewItem(new string[] { kvp.Value.FirstName + kvp.Value.LastName, "online" });
-        listViewBuddies.Items.Add(item);
-      }
     }
 
     /////////////////////////////////////////////////////////////////////////////////
@@ -49,6 +36,9 @@ namespace Sipek
 
       // Update Call Register
       UpdateCallRegister();
+
+      // Update Buddy List
+      UpdateBuddyList();
     }
 
     private void UpdateAccountList()
@@ -99,7 +89,7 @@ namespace Sipek
         if (duration.IndexOf('.') > 0) duration = duration.Remove(duration.IndexOf('.')); // remove miliseconds
 
         ListViewItem lvi = new ListViewItem(new string[] {
-            kvp.Value.getStateName(), number, ""/*kvp.Value.lastInfoMessage*/, duration});
+            kvp.Value.getStateName(), number, duration});
 
         lvi.Tag = kvp.Value.Session;
         listViewCallLines.Items.Add(lvi);
@@ -131,15 +121,79 @@ namespace Sipek
       }
     }
 
-    delegate void RefreshDelegate();
+    delegate void StateChangedDelegate();
+    delegate void MessageReceivedDelegate(string from, string message);
 
     public void onTelephonyRefresh()
     {
       if (this.Created)
-      this.Invoke(new RefreshDelegate(this.RefreshForm));
+        this.BeginInvoke(new StateChangedDelegate(this.RefreshForm));
     }
 
+    public void onMessageReceived(string from, string message)
+    {
+      if (this.Created)
+        this.BeginInvoke(new MessageReceivedDelegate(this.MessageReceived), new object[] { from, message });
+    }
 
+    private void MessageReceived(string from, string message)
+    {
+      // check if ChatForm already opened
+      foreach (Form ctrl in Application.OpenForms)
+      {
+        if (ctrl.Name == "ChatForm")
+        {
+          ((ChatForm)ctrl).LastMessage = message;
+          ((ChatForm)ctrl).BuddyName = from;
+          ctrl.Focus();
+          return;
+        }
+      }
+
+      // if not, create new instance
+      ChatForm bf = new ChatForm();
+      // extract buddy ID
+      string buddyId = parseFrom(from);
+      int id = CBuddyList.getInstance().getBuddy(buddyId);
+      if (id >= 0)
+      {
+        //_buddyId = id;        
+        CBuddyRecord buddy = CBuddyList.getInstance()[id];
+        //_titleText.Caption = buddy.FirstName + ", " + buddy.LastName;
+        bf.BuddyId = (int)id;
+      }
+      bf.LastMessage = message;
+      bf.BuddyName = buddyId;
+      bf.ShowDialog();
+    }
+
+    private string parseFrom(string from)
+    {
+      string number = from.Replace("<sip:", "");
+
+      int atPos = number.IndexOf('@');
+      if (atPos >= 0)
+      {
+        number = number.Remove(atPos);
+      }
+      else
+      {
+        int semiPos = number.IndexOf(';');
+        if (semiPos >= 0)
+        {
+          number = number.Remove(semiPos);
+        }
+        else
+        {
+          int colPos = number.IndexOf(':');
+          if (colPos >= 0)
+          {
+            number = number.Remove(colPos);
+          }
+        }
+      }
+      return number;
+    }
     private void toolStripComboDial_KeyPress(object sender, KeyPressEventArgs e)
     {
       // if enter
@@ -223,6 +277,82 @@ namespace Sipek
       }
       // call
       contextMenuStripCalls.Items["releaseToolStripMenuItem"].Visible = true;
+    }
+
+    private void toolStripMenuItemAdd_Click(object sender, EventArgs e)
+    {
+      (new BuddyForm()).ShowDialog();
+    }
+
+    private void tabPageBuddies_Enter(object sender, EventArgs e)
+    {
+      UpdateBuddyList();
+    }
+
+    private void UpdateBuddyList()
+    {
+      Dictionary<int, CBuddyRecord> results = CBuddyList.getInstance().getList();
+      listViewBuddies.Items.Clear();
+      foreach (KeyValuePair<int, CBuddyRecord> kvp in results)
+      {
+        ListViewItem item = new ListViewItem(new string[] { kvp.Value.FirstName + kvp.Value.LastName, "online" });
+        item.Tag = kvp.Value.Id;
+        listViewBuddies.Items.Add(item);
+      }
+    }
+
+    private void tabPageAccounts_Enter(object sender, EventArgs e)
+    {
+      UpdateAccountList();
+    }
+
+    private void toolStripMenuItemIM_Click(object sender, EventArgs e)
+    {
+      if (listViewBuddies.SelectedItems.Count > 0)
+      {
+        ListViewItem lvi = listViewBuddies.SelectedItems[0];
+        ChatForm bf = new ChatForm();
+        bf.BuddyId = (int)lvi.Tag;
+        bf.ShowDialog();
+      }
+
+    }
+
+    private void toolStripMenuItemEdit_Click(object sender, EventArgs e)
+    {
+      if (listViewBuddies.SelectedItems.Count > 0)
+      {
+        ListViewItem lvi = listViewBuddies.SelectedItems[0];
+        
+        BuddyForm bf = new BuddyForm();
+        bf.BuddyId = (int)lvi.Tag;
+        bf.ShowDialog();
+      }
+    }
+
+    private void MainForm_Activated(object sender, EventArgs e)
+    {
+      // Refresh data
+      RefreshForm();
+    }
+
+    private void placeACallToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      if (listViewBuddies.SelectedItems.Count > 0)
+      {
+        ListViewItem lvi = listViewBuddies.SelectedItems[0];
+        
+        CBuddyRecord rec = CBuddyList.getInstance().getRecord((int)lvi.Tag);
+        if (rec != null)
+        {
+          Telephony.CCallManager.getInstance().createSession(rec.Number);
+        }
+      }
+    }
+
+    private void textBoxChatInput_KeyPress(object sender, KeyPressEventArgs e)
+    {
+
     }
 
   }
