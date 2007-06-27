@@ -55,15 +55,18 @@ namespace Sipek
       this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
       this.columnHeader2 = new System.Windows.Forms.ColumnHeader();
       this.columnHeader3 = new System.Windows.Forms.ColumnHeader();
-      this.tabControl1 = new System.Windows.Forms.TabControl();
-      this.tabPageChat = new System.Windows.Forms.TabPage();
-      this.textBox1 = new System.Windows.Forms.TextBox();
+      this.contextMenuStripCalls = new System.Windows.Forms.ContextMenuStrip(this.components);
+      this.releaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.tabControl2 = new System.Windows.Forms.TabControl();
       this.tabPageBuddies = new System.Windows.Forms.TabPage();
       this.listViewBuddies = new System.Windows.Forms.ListView();
       this.columnHeaderName = new System.Windows.Forms.ColumnHeader();
       this.columnHeaderBuddyStatus = new System.Windows.Forms.ColumnHeader();
       this.tabPageCalls = new System.Windows.Forms.TabPage();
+      this.listViewCallRegister = new System.Windows.Forms.ListView();
+      this.columnHeaderNameNumber = new System.Windows.Forms.ColumnHeader();
+      this.columnHeaderDateTime = new System.Windows.Forms.ColumnHeader();
+      this.columnHeaderDuration = new System.Windows.Forms.ColumnHeader();
       this.tabPageAccounts = new System.Windows.Forms.TabPage();
       this.listViewAccounts = new System.Windows.Forms.ListView();
       this.columnHeaderAccountName = new System.Windows.Forms.ColumnHeader();
@@ -72,12 +75,13 @@ namespace Sipek
       this.toolStripServices = new System.Windows.Forms.ToolStrip();
       this.toolStripButtonDND = new System.Windows.Forms.ToolStripButton();
       this.toolStripButtonAA = new System.Windows.Forms.ToolStripButton();
-      this.contextMenuStripCalls = new System.Windows.Forms.ContextMenuStrip(this.components);
-      this.releaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-      this.listViewCallRegister = new System.Windows.Forms.ListView();
-      this.columnHeaderNameNumber = new System.Windows.Forms.ColumnHeader();
-      this.columnHeaderDateTime = new System.Windows.Forms.ColumnHeader();
-      this.columnHeaderDuration = new System.Windows.Forms.ColumnHeader();
+      this.contextMenuBuddies = new System.Windows.Forms.ContextMenuStrip(this.components);
+      this.toolStripMenuItemAdd = new System.Windows.Forms.ToolStripMenuItem();
+      this.toolStripMenuItemRemove = new System.Windows.Forms.ToolStripMenuItem();
+      this.toolStripMenuItemEdit = new System.Windows.Forms.ToolStripMenuItem();
+      this.toolStripMenuItemIM = new System.Windows.Forms.ToolStripMenuItem();
+      this.placeACallToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
       this.menuStrip.SuspendLayout();
       this.toolStripCall.SuspendLayout();
       this.panel1.SuspendLayout();
@@ -85,10 +89,8 @@ namespace Sipek
       this.splitContainerEW.Panel2.SuspendLayout();
       this.splitContainerEW.SuspendLayout();
       this.splitContainerENS.Panel1.SuspendLayout();
-      this.splitContainerENS.Panel2.SuspendLayout();
       this.splitContainerENS.SuspendLayout();
-      this.tabControl1.SuspendLayout();
-      this.tabPageChat.SuspendLayout();
+      this.contextMenuStripCalls.SuspendLayout();
       this.tabControl2.SuspendLayout();
       this.tabPageBuddies.SuspendLayout();
       this.tabPageCalls.SuspendLayout();
@@ -98,7 +100,7 @@ namespace Sipek
       this.toolStripContainer2.TopToolStripPanel.SuspendLayout();
       this.toolStripContainer2.SuspendLayout();
       this.toolStripServices.SuspendLayout();
-      this.contextMenuStripCalls.SuspendLayout();
+      this.contextMenuBuddies.SuspendLayout();
       this.SuspendLayout();
       // 
       // BottomToolStripPanel
@@ -258,7 +260,7 @@ namespace Sipek
       this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.panel1.Location = new System.Drawing.Point(0, 0);
       this.panel1.Name = "panel1";
-      this.panel1.Size = new System.Drawing.Size(608, 203);
+      this.panel1.Size = new System.Drawing.Size(608, 222);
       this.panel1.TabIndex = 3;
       // 
       // splitContainerEW
@@ -275,7 +277,7 @@ namespace Sipek
       // splitContainerEW.Panel2
       // 
       this.splitContainerEW.Panel2.Controls.Add(this.tabControl2);
-      this.splitContainerEW.Size = new System.Drawing.Size(608, 203);
+      this.splitContainerEW.Size = new System.Drawing.Size(608, 222);
       this.splitContainerEW.SplitterDistance = 443;
       this.splitContainerEW.TabIndex = 5;
       // 
@@ -290,12 +292,8 @@ namespace Sipek
       // splitContainerENS.Panel1
       // 
       this.splitContainerENS.Panel1.Controls.Add(this.listViewCallLines);
-      // 
-      // splitContainerENS.Panel2
-      // 
-      this.splitContainerENS.Panel2.Controls.Add(this.tabControl1);
-      this.splitContainerENS.Size = new System.Drawing.Size(443, 203);
-      this.splitContainerENS.SplitterDistance = 122;
+      this.splitContainerENS.Size = new System.Drawing.Size(443, 222);
+      this.splitContainerENS.SplitterDistance = 153;
       this.splitContainerENS.TabIndex = 1;
       // 
       // listViewCallLines
@@ -309,7 +307,7 @@ namespace Sipek
       this.listViewCallLines.FullRowSelect = true;
       this.listViewCallLines.Location = new System.Drawing.Point(0, 0);
       this.listViewCallLines.Name = "listViewCallLines";
-      this.listViewCallLines.Size = new System.Drawing.Size(439, 118);
+      this.listViewCallLines.Size = new System.Drawing.Size(439, 149);
       this.listViewCallLines.TabIndex = 6;
       this.listViewCallLines.UseCompatibleStateImageBehavior = false;
       this.listViewCallLines.View = System.Windows.Forms.View.Details;
@@ -329,35 +327,20 @@ namespace Sipek
       this.columnHeader3.Text = "Duration";
       this.columnHeader3.Width = 110;
       // 
-      // tabControl1
+      // contextMenuStripCalls
       // 
-      this.tabControl1.Controls.Add(this.tabPageChat);
-      this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.tabControl1.Location = new System.Drawing.Point(0, 0);
-      this.tabControl1.Name = "tabControl1";
-      this.tabControl1.SelectedIndex = 0;
-      this.tabControl1.Size = new System.Drawing.Size(439, 73);
-      this.tabControl1.TabIndex = 0;
+      this.contextMenuStripCalls.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.releaseToolStripMenuItem});
+      this.contextMenuStripCalls.Name = "contextMenuStripCalls";
+      this.contextMenuStripCalls.Size = new System.Drawing.Size(124, 26);
+      this.contextMenuStripCalls.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStripCalls_Opening);
       // 
-      // tabPageChat
+      // releaseToolStripMenuItem
       // 
-      this.tabPageChat.Controls.Add(this.textBox1);
-      this.tabPageChat.Location = new System.Drawing.Point(4, 22);
-      this.tabPageChat.Name = "tabPageChat";
-      this.tabPageChat.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPageChat.Size = new System.Drawing.Size(431, 47);
-      this.tabPageChat.TabIndex = 0;
-      this.tabPageChat.Text = "Chat";
-      this.tabPageChat.UseVisualStyleBackColor = true;
-      // 
-      // textBox1
-      // 
-      this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.textBox1.Location = new System.Drawing.Point(3, 3);
-      this.textBox1.Multiline = true;
-      this.textBox1.Name = "textBox1";
-      this.textBox1.Size = new System.Drawing.Size(425, 41);
-      this.textBox1.TabIndex = 0;
+      this.releaseToolStripMenuItem.Name = "releaseToolStripMenuItem";
+      this.releaseToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
+      this.releaseToolStripMenuItem.Text = "Release";
+      this.releaseToolStripMenuItem.Click += new System.EventHandler(this.releaseToolStripMenuItem_Click);
       // 
       // tabControl2
       // 
@@ -368,7 +351,7 @@ namespace Sipek
       this.tabControl2.Location = new System.Drawing.Point(0, 0);
       this.tabControl2.Name = "tabControl2";
       this.tabControl2.SelectedIndex = 0;
-      this.tabControl2.Size = new System.Drawing.Size(157, 199);
+      this.tabControl2.Size = new System.Drawing.Size(157, 218);
       this.tabControl2.TabIndex = 0;
       // 
       // tabPageBuddies
@@ -377,20 +360,22 @@ namespace Sipek
       this.tabPageBuddies.Location = new System.Drawing.Point(4, 22);
       this.tabPageBuddies.Name = "tabPageBuddies";
       this.tabPageBuddies.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPageBuddies.Size = new System.Drawing.Size(149, 173);
+      this.tabPageBuddies.Size = new System.Drawing.Size(149, 192);
       this.tabPageBuddies.TabIndex = 0;
       this.tabPageBuddies.Text = "Buddies";
       this.tabPageBuddies.UseVisualStyleBackColor = true;
+      this.tabPageBuddies.Enter += new System.EventHandler(this.tabPageBuddies_Enter);
       // 
       // listViewBuddies
       // 
       this.listViewBuddies.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeaderName,
             this.columnHeaderBuddyStatus});
+      this.listViewBuddies.ContextMenuStrip = this.contextMenuBuddies;
       this.listViewBuddies.Dock = System.Windows.Forms.DockStyle.Fill;
       this.listViewBuddies.Location = new System.Drawing.Point(3, 3);
       this.listViewBuddies.Name = "listViewBuddies";
-      this.listViewBuddies.Size = new System.Drawing.Size(143, 167);
+      this.listViewBuddies.Size = new System.Drawing.Size(143, 186);
       this.listViewBuddies.TabIndex = 0;
       this.listViewBuddies.UseCompatibleStateImageBehavior = false;
       this.listViewBuddies.View = System.Windows.Forms.View.Details;
@@ -415,16 +400,43 @@ namespace Sipek
       this.tabPageCalls.Text = "Calls";
       this.tabPageCalls.UseVisualStyleBackColor = true;
       // 
+      // listViewCallRegister
+      // 
+      this.listViewCallRegister.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeaderNameNumber,
+            this.columnHeaderDateTime,
+            this.columnHeaderDuration});
+      this.listViewCallRegister.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.listViewCallRegister.Location = new System.Drawing.Point(3, 3);
+      this.listViewCallRegister.Name = "listViewCallRegister";
+      this.listViewCallRegister.Size = new System.Drawing.Size(143, 167);
+      this.listViewCallRegister.TabIndex = 0;
+      this.listViewCallRegister.UseCompatibleStateImageBehavior = false;
+      this.listViewCallRegister.View = System.Windows.Forms.View.Details;
+      // 
+      // columnHeaderNameNumber
+      // 
+      this.columnHeaderNameNumber.Text = "Name/Number";
+      // 
+      // columnHeaderDateTime
+      // 
+      this.columnHeaderDateTime.Text = "Date/Time";
+      // 
+      // columnHeaderDuration
+      // 
+      this.columnHeaderDuration.Text = "Duration";
+      // 
       // tabPageAccounts
       // 
       this.tabPageAccounts.Controls.Add(this.listViewAccounts);
       this.tabPageAccounts.Location = new System.Drawing.Point(4, 22);
       this.tabPageAccounts.Name = "tabPageAccounts";
       this.tabPageAccounts.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPageAccounts.Size = new System.Drawing.Size(149, 148);
+      this.tabPageAccounts.Size = new System.Drawing.Size(149, 192);
       this.tabPageAccounts.TabIndex = 2;
       this.tabPageAccounts.Text = "Accounts";
       this.tabPageAccounts.UseVisualStyleBackColor = true;
+      this.tabPageAccounts.Enter += new System.EventHandler(this.tabPageAccounts_Enter);
       // 
       // listViewAccounts
       // 
@@ -434,7 +446,7 @@ namespace Sipek
       this.listViewAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
       this.listViewAccounts.Location = new System.Drawing.Point(3, 3);
       this.listViewAccounts.Name = "listViewAccounts";
-      this.listViewAccounts.Size = new System.Drawing.Size(143, 142);
+      this.listViewAccounts.Size = new System.Drawing.Size(143, 186);
       this.listViewAccounts.TabIndex = 0;
       this.listViewAccounts.UseCompatibleStateImageBehavior = false;
       this.listViewAccounts.View = System.Windows.Forms.View.Details;
@@ -458,11 +470,11 @@ namespace Sipek
       // 
       this.toolStripContainer2.ContentPanel.AutoScroll = true;
       this.toolStripContainer2.ContentPanel.Controls.Add(this.panel1);
-      this.toolStripContainer2.ContentPanel.Size = new System.Drawing.Size(608, 203);
+      this.toolStripContainer2.ContentPanel.Size = new System.Drawing.Size(608, 222);
       this.toolStripContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
       this.toolStripContainer2.Location = new System.Drawing.Point(0, 0);
       this.toolStripContainer2.Name = "toolStripContainer2";
-      this.toolStripContainer2.Size = new System.Drawing.Size(608, 274);
+      this.toolStripContainer2.Size = new System.Drawing.Size(608, 293);
       this.toolStripContainer2.TabIndex = 6;
       this.toolStripContainer2.Text = "toolStripContainer2";
       // 
@@ -501,56 +513,67 @@ namespace Sipek
       this.toolStripButtonAA.Size = new System.Drawing.Size(23, 22);
       this.toolStripButtonAA.Text = "toolStripButtonAA";
       // 
-      // contextMenuStripCalls
+      // contextMenuBuddies
       // 
-      this.contextMenuStripCalls.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.releaseToolStripMenuItem});
-      this.contextMenuStripCalls.Name = "contextMenuStripCalls";
-      this.contextMenuStripCalls.Size = new System.Drawing.Size(124, 26);
-      this.contextMenuStripCalls.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStripCalls_Opening);
+      this.contextMenuBuddies.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemAdd,
+            this.toolStripMenuItemEdit,
+            this.toolStripMenuItemRemove,
+            this.toolStripSeparator2,
+            this.toolStripMenuItemIM,
+            this.placeACallToolStripMenuItem});
+      this.contextMenuBuddies.Name = "contextMenuBuddies";
+      this.contextMenuBuddies.Size = new System.Drawing.Size(208, 120);
       // 
-      // releaseToolStripMenuItem
+      // toolStripMenuItemAdd
       // 
-      this.releaseToolStripMenuItem.Name = "releaseToolStripMenuItem";
-      this.releaseToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
-      this.releaseToolStripMenuItem.Text = "Release";
-      this.releaseToolStripMenuItem.Click += new System.EventHandler(this.releaseToolStripMenuItem_Click);
+      this.toolStripMenuItemAdd.Name = "toolStripMenuItemAdd";
+      this.toolStripMenuItemAdd.Size = new System.Drawing.Size(207, 22);
+      this.toolStripMenuItemAdd.Text = "Add";
+      this.toolStripMenuItemAdd.Click += new System.EventHandler(this.toolStripMenuItemAdd_Click);
       // 
-      // listViewCallRegister
+      // toolStripMenuItemRemove
       // 
-      this.listViewCallRegister.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeaderNameNumber,
-            this.columnHeaderDateTime,
-            this.columnHeaderDuration});
-      this.listViewCallRegister.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.listViewCallRegister.Location = new System.Drawing.Point(3, 3);
-      this.listViewCallRegister.Name = "listViewCallRegister";
-      this.listViewCallRegister.Size = new System.Drawing.Size(143, 167);
-      this.listViewCallRegister.TabIndex = 0;
-      this.listViewCallRegister.UseCompatibleStateImageBehavior = false;
-      this.listViewCallRegister.View = System.Windows.Forms.View.Details;
+      this.toolStripMenuItemRemove.Name = "toolStripMenuItemRemove";
+      this.toolStripMenuItemRemove.Size = new System.Drawing.Size(207, 22);
+      this.toolStripMenuItemRemove.Text = "Remove";
       // 
-      // columnHeaderNameNumber
+      // toolStripMenuItemEdit
       // 
-      this.columnHeaderNameNumber.Text = "Name/Number";
+      this.toolStripMenuItemEdit.Name = "toolStripMenuItemEdit";
+      this.toolStripMenuItemEdit.Size = new System.Drawing.Size(207, 22);
+      this.toolStripMenuItemEdit.Text = "Edit";
+      this.toolStripMenuItemEdit.Click += new System.EventHandler(this.toolStripMenuItemEdit_Click);
       // 
-      // columnHeaderDateTime
+      // toolStripMenuItemIM
       // 
-      this.columnHeaderDateTime.Text = "Date/Time";
+      this.toolStripMenuItemIM.Name = "toolStripMenuItemIM";
+      this.toolStripMenuItemIM.Size = new System.Drawing.Size(207, 22);
+      this.toolStripMenuItemIM.Text = "Send an Instant Message";
+      this.toolStripMenuItemIM.Click += new System.EventHandler(this.toolStripMenuItemIM_Click);
       // 
-      // columnHeaderDuration
+      // placeACallToolStripMenuItem
       // 
-      this.columnHeaderDuration.Text = "Duration";
+      this.placeACallToolStripMenuItem.Name = "placeACallToolStripMenuItem";
+      this.placeACallToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
+      this.placeACallToolStripMenuItem.Text = "Place a Call";
+      this.placeACallToolStripMenuItem.Click += new System.EventHandler(this.placeACallToolStripMenuItem_Click);
+      // 
+      // toolStripSeparator2
+      // 
+      this.toolStripSeparator2.Name = "toolStripSeparator2";
+      this.toolStripSeparator2.Size = new System.Drawing.Size(204, 6);
       // 
       // MainForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(608, 274);
+      this.ClientSize = new System.Drawing.Size(608, 293);
       this.Controls.Add(this.toolStripContainer2);
       this.MainMenuStrip = this.menuStrip;
       this.Name = "MainForm";
       this.Text = "Sipek 2";
+      this.Activated += new System.EventHandler(this.MainForm_Activated);
       this.menuStrip.ResumeLayout(false);
       this.menuStrip.PerformLayout();
       this.toolStripCall.ResumeLayout(false);
@@ -560,11 +583,8 @@ namespace Sipek
       this.splitContainerEW.Panel2.ResumeLayout(false);
       this.splitContainerEW.ResumeLayout(false);
       this.splitContainerENS.Panel1.ResumeLayout(false);
-      this.splitContainerENS.Panel2.ResumeLayout(false);
       this.splitContainerENS.ResumeLayout(false);
-      this.tabControl1.ResumeLayout(false);
-      this.tabPageChat.ResumeLayout(false);
-      this.tabPageChat.PerformLayout();
+      this.contextMenuStripCalls.ResumeLayout(false);
       this.tabControl2.ResumeLayout(false);
       this.tabPageBuddies.ResumeLayout(false);
       this.tabPageCalls.ResumeLayout(false);
@@ -578,7 +598,7 @@ namespace Sipek
       this.toolStripContainer2.PerformLayout();
       this.toolStripServices.ResumeLayout(false);
       this.toolStripServices.PerformLayout();
-      this.contextMenuStripCalls.ResumeLayout(false);
+      this.contextMenuBuddies.ResumeLayout(false);
       this.ResumeLayout(false);
 
     }
@@ -614,8 +634,6 @@ namespace Sipek
     private System.Windows.Forms.ToolStripButton toolStripButtonDND;
     private System.Windows.Forms.ToolStripButton toolStripButtonAA;
     private System.Windows.Forms.ToolStripButton toolStripButtonHold;
-    private System.Windows.Forms.TabControl tabControl1;
-    private System.Windows.Forms.TabPage tabPageChat;
     private System.Windows.Forms.TabControl tabControl2;
     private System.Windows.Forms.TabPage tabPageBuddies;
     private System.Windows.Forms.TabPage tabPageCalls;
@@ -623,7 +641,6 @@ namespace Sipek
     private System.Windows.Forms.ListView listViewAccounts;
     private System.Windows.Forms.ColumnHeader columnHeaderAccountName;
     private System.Windows.Forms.ColumnHeader columnHeaderStatus;
-    private System.Windows.Forms.TextBox textBox1;
     private System.Windows.Forms.ListView listViewBuddies;
     private System.Windows.Forms.ColumnHeader columnHeaderName;
     private System.Windows.Forms.ColumnHeader columnHeaderBuddyStatus;
@@ -633,6 +650,13 @@ namespace Sipek
     private System.Windows.Forms.ColumnHeader columnHeaderNameNumber;
     private System.Windows.Forms.ColumnHeader columnHeaderDateTime;
     private System.Windows.Forms.ColumnHeader columnHeaderDuration;
+    private System.Windows.Forms.ContextMenuStrip contextMenuBuddies;
+    private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemAdd;
+    private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemEdit;
+    private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemRemove;
+    private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemIM;
+    private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+    private System.Windows.Forms.ToolStripMenuItem placeACallToolStripMenuItem;
 
   }
 }

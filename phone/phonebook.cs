@@ -52,7 +52,7 @@ namespace Sipek
   {
     private int _id;
     private string _firstName;
-    private string _lastName;
+    private string _lastName = "";
     private string _number;
     private string _email;
     private int _accountId;
@@ -157,7 +157,10 @@ namespace Sipek
     #region Properties
     public CBuddyRecord this[int index]
     {
-      get { return _buddyList[index]; }
+      get {
+        if (!_buddyList.ContainsKey(index)) return null;
+        return _buddyList[index]; 
+      }
     }
 
     public int BuddyCount
@@ -217,7 +220,7 @@ namespace Sipek
         if ((snode != null) && (snode.FirstChild.Value != null)) record.FirstName = snode.FirstChild.Value;
 
         snode = item.SelectSingleNode(LASTNAME);
-        if ((snode != null) && (snode.FirstChild.Value != null)) record.LastName = snode.FirstChild.Value;
+        if ((snode != null) && (snode.FirstChild != null) && (snode.FirstChild.Value != null)) record.LastName = snode.FirstChild.Value;
 
         snode = item.SelectSingleNode(PHONE_NUMBER);
         if ((snode != null) && (snode.FirstChild.Value != null)) record.Number = snode.FirstChild.Value;
