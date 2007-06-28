@@ -46,7 +46,8 @@ namespace Sipek
       this.tabControlChat.Name = "tabControlChat";
       this.tabControlChat.SelectedIndex = 0;
       this.tabControlChat.Size = new System.Drawing.Size(374, 286);
-      this.tabControlChat.TabIndex = 1;
+      this.tabControlChat.TabIndex = 5;
+      this.tabControlChat.TabStop = false;
       // 
       // tabPageChat
       // 
@@ -68,15 +69,16 @@ namespace Sipek
       this.richTextBoxChatHistory.Location = new System.Drawing.Point(3, 3);
       this.richTextBoxChatHistory.Name = "richTextBoxChatHistory";
       this.richTextBoxChatHistory.ReadOnly = true;
-      this.richTextBoxChatHistory.Size = new System.Drawing.Size(360, 153);
+      this.richTextBoxChatHistory.Size = new System.Drawing.Size(360, 196);
       this.richTextBoxChatHistory.TabIndex = 3;
+      this.richTextBoxChatHistory.TabStop = false;
       this.richTextBoxChatHistory.Text = "";
       // 
       // buttonSendIM
       // 
-      this.buttonSendIM.Location = new System.Drawing.Point(291, 162);
+      this.buttonSendIM.Location = new System.Drawing.Point(310, 205);
       this.buttonSendIM.Name = "buttonSendIM";
-      this.buttonSendIM.Size = new System.Drawing.Size(72, 95);
+      this.buttonSendIM.Size = new System.Drawing.Size(53, 47);
       this.buttonSendIM.TabIndex = 2;
       this.buttonSendIM.Text = "Send";
       this.buttonSendIM.UseVisualStyleBackColor = true;
@@ -85,11 +87,13 @@ namespace Sipek
       // textBoxChatInput
       // 
       this.textBoxChatInput.AcceptsReturn = true;
-      this.textBoxChatInput.Location = new System.Drawing.Point(8, 162);
+      this.textBoxChatInput.Location = new System.Drawing.Point(3, 205);
       this.textBoxChatInput.Multiline = true;
       this.textBoxChatInput.Name = "textBoxChatInput";
-      this.textBoxChatInput.Size = new System.Drawing.Size(264, 90);
-      this.textBoxChatInput.TabIndex = 1;
+      this.textBoxChatInput.Size = new System.Drawing.Size(301, 47);
+      this.textBoxChatInput.TabIndex = 0;
+      this.textBoxChatInput.KeyUp += new System.Windows.Forms.KeyEventHandler(this.textBoxChatInput_KeyUp);
+      this.textBoxChatInput.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxChatInput_KeyPress);
       // 
       // buttonCancel
       // 
@@ -111,7 +115,7 @@ namespace Sipek
       this.Controls.Add(this.tabControlChat);
       this.Name = "ChatForm";
       this.Text = "Chat Room";
-      this.Activated += new System.EventHandler(this.ChatForm_Activated);
+      this.Shown += new System.EventHandler(this.ChatForm_Shown);
       this.tabControlChat.ResumeLayout(false);
       this.tabPageChat.ResumeLayout(false);
       this.tabPageChat.PerformLayout();

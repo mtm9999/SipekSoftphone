@@ -57,7 +57,10 @@ namespace Sipek
     private string _email;
     private int _accountId;
     private string _uri;
+
+    private int _status = 0; 
     private Stack<CBuddyMessage> _messageList;
+
 
     public int Id
     {
@@ -77,6 +80,12 @@ namespace Sipek
         if (_messageList.Count == 0) return "";
         return _messageList.Peek().Content; 
       }
+    }
+
+    public int Status
+    {
+      get { return _status; }
+      set { _status = value; }
     }
 /*
     public CBuddyMessage this[int index]
@@ -311,9 +320,10 @@ namespace Sipek
     {
       // Call stack to add buddy and get buddy id
       // TODO
-      int buddyindex = -1; /*CPjSipProxy.addBuddy(record.Number);*/
+      int buddyindex = Telephony.CPjSipProxy.addBuddy(record.Number);
       if (buddyindex == -1)
       {
+        return;
         Random rnd = new System.Random((int)DateTime.Now.Ticks);
         buddyindex = rnd.Next(10000);
         for (int i = 0; i < 30000; i++)

@@ -19,9 +19,18 @@ namespace Sipek
       // register callback
       Telephony.CCallManager.getInstance().CallStateChanged += onTelephonyRefresh;
       Telephony.CCallManager.getInstance().MessageReceived += onMessageReceived;
+      Telephony.CCallManager.getInstance().BuddyStatusChanged += onBuddyStateChanged;
 
       // Initlialize telephony
       Telephony.CCallManager.getInstance().initialize();
+
+      // Initialize dial combo box
+      toolStripComboDial.Items.Clear();
+      Collection<CCallRecord> clist = CCallLog.getInstance().getList(ECallType.EDialed);
+      foreach (CCallRecord item in clist)
+      {
+        toolStripComboDial.Items.Add(item.Number);
+      }
     }
 
     /////////////////////////////////////////////////////////////////////////////////
@@ -71,32 +80,40 @@ namespace Sipek
       }
     }
 
+
     /// <summary>
     /// UpdateCallLines delegate
     /// </summary>
     private void UpdateCallLines()
     {
       listViewCallLines.Items.Clear();
-
-      //
-      Dictionary<int, Telephony.CStateMachine> callList = Telephony.CCallManager.getInstance().getCallList();
-
-      foreach (KeyValuePair<int, Telephony.CStateMachine> kvp in callList)
+      
+      try
       {
-        string number = kvp.Value.CallingNo;
+        //
+        Dictionary<int, Telephony.CStateMachine> callList = Telephony.CCallManager.getInstance().getCallList();
 
-        string duration = kvp.Value.Duration.ToString();
-        if (duration.IndexOf('.') > 0) duration = duration.Remove(duration.IndexOf('.')); // remove miliseconds
+        foreach (KeyValuePair<int, Telephony.CStateMachine> kvp in callList)
+        {
+          string number = kvp.Value.CallingNo;
 
-        ListViewItem lvi = new ListViewItem(new string[] {
+          string duration = kvp.Value.Duration.ToString();
+          if (duration.IndexOf('.') > 0) duration = duration.Remove(duration.IndexOf('.')); // remove miliseconds
+
+          ListViewItem lvi = new ListViewItem(new string[] {
             kvp.Value.getStateName(), number, duration});
 
-        lvi.Tag = kvp.Value.Session;
-        listViewCallLines.Items.Add(lvi);
-        lvi.Selected = true;
+          lvi.Tag = kvp.Value.Session;
+          listViewCallLines.Items.Add(lvi);
+          lvi.Selected = true;
 
-        // display info
-        //toolStripStatusLabel1.Text = kvp.Value.lastInfoMessage;
+          // display info
+          //toolStripStatusLabel1.Text = kvp.Value.lastInfoMessage;
+        }
+      }
+      catch (Exception e)
+      { 
+        // TODO!!!!!!!!!!! Sychronize SHARED RESOURCES!!!!
       }
       //listViewCallLines.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
     }
@@ -121,8 +138,13 @@ namespace Sipek
       }
     }
 
+    //////////////////////////////////////////////////////////////////////////////////////
+    /// 
+
+
     delegate void StateChangedDelegate();
     delegate void MessageReceivedDelegate(string from, string message);
+    delegate void BuddyStateChangedDelegate(int buddyId, int status);
 
     public void onTelephonyRefresh()
     {
@@ -136,15 +158,34 @@ namespace Sipek
         this.BeginInvoke(new MessageReceivedDelegate(this.MessageReceived), new object[] { from, message });
     }
 
+    public void onBuddyStateChanged(int buddyId, int status)
+    {
+      if (this.Created)
+        this.BeginInvoke(new BuddyStateChangedDelegate(this.BuddyStateChanged), new object[] { buddyId, status});
+    }
+
+
+    /////////////////////////////////////////////////////////////////////////////////////
+    /// 
+
+    private void BuddyStateChanged(int buddyId, int status)
+    {
+      CBuddyList.getInstance()[buddyId].Status = status;
+      this.RefreshForm();
+    }
+
     private void MessageReceived(string from, string message)
     {
+      // extract buddy ID
+      string buddyId = parseFrom(from);
+
       // check if ChatForm already opened
       foreach (Form ctrl in Application.OpenForms)
       {
         if (ctrl.Name == "ChatForm")
         {
+          ((ChatForm)ctrl).BuddyName = buddyId;
           ((ChatForm)ctrl).LastMessage = message;
-          ((ChatForm)ctrl).BuddyName = from;
           ctrl.Focus();
           return;
         }
@@ -152,8 +193,6 @@ namespace Sipek
 
       // if not, create new instance
       ChatForm bf = new ChatForm();
-      // extract buddy ID
-      string buddyId = parseFrom(from);
       int id = CBuddyList.getInstance().getBuddy(buddyId);
       if (id >= 0)
       {
@@ -162,8 +201,8 @@ namespace Sipek
         //_titleText.Caption = buddy.FirstName + ", " + buddy.LastName;
         bf.BuddyId = (int)id;
       }
-      bf.LastMessage = message;
       bf.BuddyName = buddyId;
+      bf.LastMessage = message;
       bf.ShowDialog();
     }
 
@@ -175,6 +214,13 @@ namespace Sipek
       if (atPos >= 0)
       {
         number = number.Remove(atPos);
+        int first = number.IndexOf('"');
+        if (first >= 0)
+        {
+          int last = number.LastIndexOf('"');
+          number = number.Remove(0,last + 1);
+          number = number.Trim();
+        }
       }
       else
       {
@@ -193,22 +239,6 @@ namespace Sipek
         }
       }
       return number;
-    }
-    private void toolStripComboDial_KeyPress(object sender, KeyPressEventArgs e)
-    {
-      // if enter
-      if (e.KeyChar <= 0x7A && e.KeyChar >= 0x41)
-      {
-      }
-/*      else if (e.KeyChar <= 0x39 && e.KeyChar >= 0x30)
-      {
-        if (listViewCallLines.SelectedItems.Count > 0)
-        {
-          telephoneObj.sendDigit((int)listViewCallLines.SelectedItems[0].Tag, e.KeyChar);
-        }
-      }
-*/
-      base.OnKeyPress(e);
     }
 
     private void toolStripComboDial_KeyDown(object sender, KeyEventArgs e)
@@ -295,7 +325,15 @@ namespace Sipek
       listViewBuddies.Items.Clear();
       foreach (KeyValuePair<int, CBuddyRecord> kvp in results)
       {
-        ListViewItem item = new ListViewItem(new string[] { kvp.Value.FirstName + kvp.Value.LastName, "online" });
+        string status;
+        switch (kvp.Value.Status)
+        {
+          case 0: status = "unknown"; break;
+          case 1: status = "online"; break;
+          case 2: status = "offline"; break;
+          default: status = "?"; break;
+        }
+        ListViewItem item = new ListViewItem(new string[] { kvp.Value.FirstName + kvp.Value.LastName, status });
         item.Tag = kvp.Value.Id;
         listViewBuddies.Items.Add(item);
       }
@@ -334,7 +372,7 @@ namespace Sipek
     {
       // Refresh data
       //RefreshForm();
-      UpdateBuddyList();
+      //UpdateBuddyList();
     }
 
     private void placeACallToolStripMenuItem_Click(object sender, EventArgs e)
@@ -350,11 +388,5 @@ namespace Sipek
         }
       }
     }
-
-    private void textBoxChatInput_KeyPress(object sender, KeyPressEventArgs e)
-    {
-
-    }
-
   }
 }
