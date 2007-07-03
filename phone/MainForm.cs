@@ -26,7 +26,7 @@ namespace Sipek
 
       // Initialize dial combo box
       toolStripComboDial.Items.Clear();
-      Collection<CCallRecord> clist = CCallLog.getInstance().getList(ECallType.EDialed);
+      Stack<CCallRecord> clist = CCallLog.getInstance().getList(ECallType.EDialed);
       foreach (CCallRecord item in clist)
       {
         toolStripComboDial.Items.Add(item.Number);
@@ -80,59 +80,34 @@ namespace Sipek
       }
     }
 
-
-    /// <summary>
-    /// UpdateCallLines delegate
-    /// </summary>
-    private void UpdateCallLines()
-    {
-      listViewCallLines.Items.Clear();
-      
-      try
-      {
-        //
-        Dictionary<int, Telephony.CStateMachine> callList = Telephony.CCallManager.getInstance().getCallList();
-
-        foreach (KeyValuePair<int, Telephony.CStateMachine> kvp in callList)
-        {
-          string number = kvp.Value.CallingNo;
-
-          string duration = kvp.Value.Duration.ToString();
-          if (duration.IndexOf('.') > 0) duration = duration.Remove(duration.IndexOf('.')); // remove miliseconds
-
-          ListViewItem lvi = new ListViewItem(new string[] {
-            kvp.Value.getStateName(), number, duration});
-
-          lvi.Tag = kvp.Value.Session;
-          listViewCallLines.Items.Add(lvi);
-          lvi.Selected = true;
-
-          // display info
-          //toolStripStatusLabel1.Text = kvp.Value.lastInfoMessage;
-        }
-      }
-      catch (Exception e)
-      { 
-        // TODO!!!!!!!!!!! Sychronize SHARED RESOURCES!!!!
-      }
-      //listViewCallLines.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-    }
-
     private void UpdateCallRegister()
     {
       listViewCallRegister.Items.Clear();
 
-      Collection<CCallRecord> results = CCallLog.getInstance().getList();
-
+      Stack<CCallRecord> results = CCallLog.getInstance().getList();
+      
       foreach (CCallRecord item in results)
       {
         string duration = item.Duration.ToString();
         if (duration.IndexOf('.') > 0) duration = duration.Remove(duration.IndexOf('.')); // remove miliseconds
 
-        ListViewItem lvi = new ListViewItem(new string[] {
-             item.Number + " " + item.Name, item.Time.ToString(), duration});
+        string recorditem = item.Number;
+        CBuddyRecord rec = null;
+        int buddyId = CBuddyList.getInstance().getBuddyId(item.Number);
+        if (buddyId > -1)
+        {
+          string name = "";
+          rec = CBuddyList.getInstance()[buddyId];
+          name = rec.FirstName + " " + rec.LastName;
+          name = name.Trim();
+          recorditem = name + ", " + item.Number;
+        }
+//        recorditem = recorditem.;
 
-        //lvi.SubItems.Add(item.Number);
+        ListViewItem lvi = new ListViewItem(new string[] {
+             item.Type.ToString(), recorditem.Trim(), item.Time.ToString(), duration});
+
+        lvi.Tag = item.Number;
         
         listViewCallRegister.Items.Add(lvi);
       }
@@ -140,8 +115,6 @@ namespace Sipek
 
     //////////////////////////////////////////////////////////////////////////////////////
     /// 
-
-
     delegate void StateChangedDelegate();
     delegate void MessageReceivedDelegate(string from, string message);
     delegate void BuddyStateChangedDelegate(int buddyId, int status);
@@ -166,7 +139,38 @@ namespace Sipek
 
 
     /////////////////////////////////////////////////////////////////////////////////////
-    /// 
+    /// Buddy List Methods
+    #region Buddy List Methods
+
+    private void UpdateBuddyList()
+    {
+      Dictionary<int, CBuddyRecord> results = CBuddyList.getInstance().getList();
+      listViewBuddies.Items.Clear();
+      foreach (KeyValuePair<int, CBuddyRecord> kvp in results)
+      {
+        string status;
+        switch (kvp.Value.Status)
+        {
+          case 0: status = "unknown"; break;
+          case 1: status = "online"; break;
+          case 2: status = "offline"; break;
+          default: status = "?"; break;
+        }
+        ListViewItem item = new ListViewItem(new string[] { kvp.Value.FirstName + kvp.Value.LastName, status });
+        item.Tag = kvp.Value.Id;
+        listViewBuddies.Items.Add(item);
+      }
+    }
+
+    private void toolStripMenuItemAdd_Click(object sender, EventArgs e)
+    {
+      (new BuddyForm()).ShowDialog();
+    }
+
+    private void tabPageBuddies_Enter(object sender, EventArgs e)
+    {
+      UpdateBuddyList();
+    }
 
     private void BuddyStateChanged(int buddyId, int status)
     {
@@ -193,7 +197,7 @@ namespace Sipek
 
       // if not, create new instance
       ChatForm bf = new ChatForm();
-      int id = CBuddyList.getInstance().getBuddy(buddyId);
+      int id = CBuddyList.getInstance().getBuddyId(buddyId);
       if (id >= 0)
       {
         //_buddyId = id;        
@@ -241,18 +245,31 @@ namespace Sipek
       return number;
     }
 
-    private void toolStripComboDial_KeyDown(object sender, KeyEventArgs e)
+    private void toolStripMenuItemIM_Click(object sender, EventArgs e)
     {
-      if (e.KeyValue == 0x0d)
+      if (listViewBuddies.SelectedItems.Count > 0)
       {
-        if (toolStripComboDial.Text.Length > 0)
-        {
-          //makeCall(toolStripComboDial.Text);
-          Telephony.CCallManager.getInstance().createSession(toolStripComboDial.Text);
-        }
+        ListViewItem lvi = listViewBuddies.SelectedItems[0];
+        ChatForm bf = new ChatForm();
+        bf.BuddyId = (int)lvi.Tag;
+        bf.ShowDialog();
       }
 
     }
+
+    private void toolStripMenuItemEdit_Click(object sender, EventArgs e)
+    {
+      if (listViewBuddies.SelectedItems.Count > 0)
+      {
+        ListViewItem lvi = listViewBuddies.SelectedItems[0];
+
+        BuddyForm bf = new BuddyForm();
+        bf.BuddyId = (int)lvi.Tag;
+        bf.ShowDialog();
+      }
+    }
+    #endregion
+
 
     private void exitToolStripMenuItem_Click(object sender, EventArgs e)
     {
@@ -270,9 +287,111 @@ namespace Sipek
       (new SettingsForm()).ShowDialog();
     }
 
-    private void listViewBuddies_Enter(object sender, EventArgs e)
+    /// <summary>
+    /// Enable or disable menu items regarding to call state...
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void contextMenuStripCalls_Opening(object sender, CancelEventArgs e)
     {
+      if (listViewCallLines.SelectedItems.Count > 0)
+      {
+        ListViewItem lvi = listViewCallLines.SelectedItems[0];
 
+        // Hide all items...
+        foreach (ToolStripMenuItem mi in contextMenuStripCalls.Items)
+        {
+          mi.Visible = false;
+        }
+        if (Telephony.CCallManager.getInstance().Count <= 0)
+        {
+          return;
+        }
+        else
+        {
+          if (Telephony.CCallManager.getInstance().getCall((int)lvi.Tag).getStateId() == EStateId.INCOMING)
+            contextMenuStripCalls.Items["acceptToolStripMenuItem"].Visible = true;
+        }
+        // call
+        contextMenuStripCalls.Items["releaseToolStripMenuItem"].Visible = true;
+      }
+    }
+
+    private void tabPageAccounts_Enter(object sender, EventArgs e)
+    {
+      UpdateAccountList();
+    }
+
+    private void MainForm_Activated(object sender, EventArgs e)
+    {
+      // Refresh data
+      //RefreshForm();
+      //UpdateBuddyList();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////
+    // Call Related Methods
+    #region Call Related Methods
+
+    /// <summary>
+    /// UpdateCallLines delegate
+    /// </summary>
+    private void UpdateCallLines()
+    {
+      listViewCallLines.Items.Clear();
+
+      try
+      {
+        //
+        Dictionary<int, Telephony.CStateMachine> callList = Telephony.CCallManager.getInstance().getCallList();
+
+        foreach (KeyValuePair<int, Telephony.CStateMachine> kvp in callList)
+        {
+          string number = kvp.Value.CallingNo;
+
+          string duration = kvp.Value.Duration.ToString();
+          if (duration.IndexOf('.') > 0) duration = duration.Remove(duration.IndexOf('.')); // remove miliseconds
+
+          ListViewItem lvi = new ListViewItem(new string[] {
+            kvp.Value.getStateName(), number, duration});
+
+          lvi.Tag = kvp.Value.Session;
+          listViewCallLines.Items.Add(lvi);
+          lvi.Selected = true;
+
+          // display info
+          //toolStripStatusLabel1.Text = item.Value.lastInfoMessage;
+        }
+      }
+      catch (Exception e)
+      {
+        // TODO!!!!!!!!!!! Sychronize SHARED RESOURCES!!!!
+      }
+      //listViewCallLines.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+    }
+
+    private void placeACallToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      if (listViewBuddies.SelectedItems.Count > 0)
+      {
+        ListViewItem lvi = listViewBuddies.SelectedItems[0];
+
+        CBuddyRecord rec = CBuddyList.getInstance().getRecord((int)lvi.Tag);
+        if (rec != null)
+        {
+          Telephony.CCallManager.getInstance().createSession(rec.Number);
+        }
+      }
+    }
+
+    private void toolStripButton1_Click(object sender, EventArgs e)
+    {
+      if (listViewCallLines.SelectedItems.Count > 0)
+      {
+        ListViewItem lvi = listViewCallLines.SelectedItems[0];
+
+        Telephony.CCallManager.getInstance().HoldRetrieve((int)lvi.Tag);
+      }
     }
 
     private void toolStripButtonCall_Click(object sender, EventArgs e)
@@ -294,99 +413,55 @@ namespace Sipek
       }
     }
 
-    private void contextMenuStripCalls_Opening(object sender, CancelEventArgs e)
+    private void toolStripComboDial_KeyDown(object sender, KeyEventArgs e)
     {
-      // Hide all items...
-      foreach (ToolStripMenuItem mi in contextMenuStripCalls.Items)
+      if (e.KeyValue == 0x0d)
       {
-        mi.Visible = false;
-      }
-      if (Telephony.CCallManager.getInstance().Count <= 0) 
-      {
-        return;
-      }
-      // call
-      contextMenuStripCalls.Items["releaseToolStripMenuItem"].Visible = true;
-    }
-
-    private void toolStripMenuItemAdd_Click(object sender, EventArgs e)
-    {
-      (new BuddyForm()).ShowDialog();
-    }
-
-    private void tabPageBuddies_Enter(object sender, EventArgs e)
-    {
-      UpdateBuddyList();
-    }
-
-    private void UpdateBuddyList()
-    {
-      Dictionary<int, CBuddyRecord> results = CBuddyList.getInstance().getList();
-      listViewBuddies.Items.Clear();
-      foreach (KeyValuePair<int, CBuddyRecord> kvp in results)
-      {
-        string status;
-        switch (kvp.Value.Status)
+        if (toolStripComboDial.Text.Length > 0)
         {
-          case 0: status = "unknown"; break;
-          case 1: status = "online"; break;
-          case 2: status = "offline"; break;
-          default: status = "?"; break;
-        }
-        ListViewItem item = new ListViewItem(new string[] { kvp.Value.FirstName + kvp.Value.LastName, status });
-        item.Tag = kvp.Value.Id;
-        listViewBuddies.Items.Add(item);
-      }
-    }
-
-    private void tabPageAccounts_Enter(object sender, EventArgs e)
-    {
-      UpdateAccountList();
-    }
-
-    private void toolStripMenuItemIM_Click(object sender, EventArgs e)
-    {
-      if (listViewBuddies.SelectedItems.Count > 0)
-      {
-        ListViewItem lvi = listViewBuddies.SelectedItems[0];
-        ChatForm bf = new ChatForm();
-        bf.BuddyId = (int)lvi.Tag;
-        bf.ShowDialog();
-      }
-
-    }
-
-    private void toolStripMenuItemEdit_Click(object sender, EventArgs e)
-    {
-      if (listViewBuddies.SelectedItems.Count > 0)
-      {
-        ListViewItem lvi = listViewBuddies.SelectedItems[0];
-        
-        BuddyForm bf = new BuddyForm();
-        bf.BuddyId = (int)lvi.Tag;
-        bf.ShowDialog();
-      }
-    }
-
-    private void MainForm_Activated(object sender, EventArgs e)
-    {
-      // Refresh data
-      //RefreshForm();
-      //UpdateBuddyList();
-    }
-
-    private void placeACallToolStripMenuItem_Click(object sender, EventArgs e)
-    {
-      if (listViewBuddies.SelectedItems.Count > 0)
-      {
-        ListViewItem lvi = listViewBuddies.SelectedItems[0];
-        
-        CBuddyRecord rec = CBuddyList.getInstance().getRecord((int)lvi.Tag);
-        if (rec != null)
-        {
-          Telephony.CCallManager.getInstance().createSession(rec.Number);
+          //makeCall(toolStripComboDial.Text);
+          Telephony.CCallManager.getInstance().createSession(toolStripComboDial.Text);
         }
       }
+    }
+
+    private void listViewCallRegister_DoubleClick(object sender, EventArgs e)
+    {
+      if (listViewCallRegister.SelectedItems.Count > 0)
+      {
+        ListViewItem lvi = listViewCallRegister.SelectedItems[0];
+        string dialname = (string)lvi.Tag;
+        Telephony.CCallManager.getInstance().createSession(dialname);
+      }
+    }
+
+    private void acceptToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      if (listViewCallLines.SelectedItems.Count > 0)
+      {
+        ListViewItem lvi = listViewCallLines.SelectedItems[0];
+        Telephony.CCallManager.getInstance().onUserAnswer((int)lvi.Tag);
+      }
+    }
+
+    #endregion
+
+    private void removeToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      if (listViewCallRegister.SelectedItems.Count > 0)
+      {
+        ListViewItem lvi = listViewCallRegister.SelectedItems[0];
+
+        CCallLog.getInstance().deleteRecord((string)lvi.Tag);
+      }
+      this.UpdateCallRegister();
+
+    }
+
+    private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+    {
+      CCallLog.getInstance().save();
+      CBuddyList.getInstance().save();
     }
   }
 }

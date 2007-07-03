@@ -258,7 +258,7 @@ namespace Sipek
       return null;
     }
     
-    public int getBuddy(string buddy)
+    public int getBuddyId(string buddy)
     {
       int buddyId = -1;
       Dictionary<int,CBuddyRecord>.ValueCollection col = _buddyList.Values;
