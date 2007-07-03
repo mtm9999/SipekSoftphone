@@ -28,10 +28,10 @@ namespace Sipek
     /// </summary>
     private void InitializeComponent()
     {
-      this.tabControl1 = new System.Windows.Forms.TabControl();
-      this.tabPage1 = new System.Windows.Forms.TabPage();
+      this.tabControlSettings = new System.Windows.Forms.TabControl();
+      this.tabPageSettingsGeneral = new System.Windows.Forms.TabPage();
       this.groupBox4 = new System.Windows.Forms.GroupBox();
-      this.tabPage2 = new System.Windows.Forms.TabPage();
+      this.tabPageSettingsSIP = new System.Windows.Forms.TabPage();
       this.groupBox2 = new System.Windows.Forms.GroupBox();
       this.label2 = new System.Windows.Forms.Label();
       this.label1 = new System.Windows.Forms.Label();
@@ -53,57 +53,73 @@ namespace Sipek
       this.buttonApply = new System.Windows.Forms.Button();
       this.buttonCancel = new System.Windows.Forms.Button();
       this.buttonOK = new System.Windows.Forms.Button();
-      this.tabControl1.SuspendLayout();
-      this.tabPage1.SuspendLayout();
-      this.tabPage2.SuspendLayout();
+      this.tabPageSettingsServices = new System.Windows.Forms.TabPage();
+      this.groupBoxServices = new System.Windows.Forms.GroupBox();
+      this.textBoxCFU = new System.Windows.Forms.TextBox();
+      this.checkBoxCFU = new System.Windows.Forms.CheckBox();
+      this.checkBoxCFNR = new System.Windows.Forms.CheckBox();
+      this.textBoxCFNR = new System.Windows.Forms.TextBox();
+      this.checkBoxCFB = new System.Windows.Forms.CheckBox();
+      this.textBoxCFB = new System.Windows.Forms.TextBox();
+      this.groupBox1 = new System.Windows.Forms.GroupBox();
+      this.checkBoxDND = new System.Windows.Forms.CheckBox();
+      this.checkBoxAA = new System.Windows.Forms.CheckBox();
+      this.comboBox1 = new System.Windows.Forms.ComboBox();
+      this.tabControlSettings.SuspendLayout();
+      this.tabPageSettingsGeneral.SuspendLayout();
+      this.tabPageSettingsSIP.SuspendLayout();
       this.groupBox2.SuspendLayout();
       this.groupBox3.SuspendLayout();
       this.panel2.SuspendLayout();
+      this.tabPageSettingsServices.SuspendLayout();
+      this.groupBoxServices.SuspendLayout();
+      this.groupBox1.SuspendLayout();
       this.SuspendLayout();
       // 
-      // tabControl1
+      // tabControlSettings
       // 
-      this.tabControl1.Controls.Add(this.tabPage1);
-      this.tabControl1.Controls.Add(this.tabPage2);
-      this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.tabControl1.Location = new System.Drawing.Point(0, 0);
-      this.tabControl1.Name = "tabControl1";
-      this.tabControl1.SelectedIndex = 0;
-      this.tabControl1.Size = new System.Drawing.Size(275, 375);
-      this.tabControl1.TabIndex = 0;
+      this.tabControlSettings.Controls.Add(this.tabPageSettingsSIP);
+      this.tabControlSettings.Controls.Add(this.tabPageSettingsGeneral);
+      this.tabControlSettings.Controls.Add(this.tabPageSettingsServices);
+      this.tabControlSettings.Dock = System.Windows.Forms.DockStyle.Top;
+      this.tabControlSettings.Location = new System.Drawing.Point(0, 0);
+      this.tabControlSettings.Name = "tabControlSettings";
+      this.tabControlSettings.SelectedIndex = 0;
+      this.tabControlSettings.Size = new System.Drawing.Size(275, 321);
+      this.tabControlSettings.TabIndex = 0;
       // 
-      // tabPage1
+      // tabPageSettingsGeneral
       // 
-      this.tabPage1.Controls.Add(this.groupBox4);
-      this.tabPage1.Location = new System.Drawing.Point(4, 22);
-      this.tabPage1.Name = "tabPage1";
-      this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPage1.Size = new System.Drawing.Size(267, 349);
-      this.tabPage1.TabIndex = 0;
-      this.tabPage1.Text = "General";
-      this.tabPage1.UseVisualStyleBackColor = true;
+      this.tabPageSettingsGeneral.Controls.Add(this.groupBox4);
+      this.tabPageSettingsGeneral.Location = new System.Drawing.Point(4, 22);
+      this.tabPageSettingsGeneral.Name = "tabPageSettingsGeneral";
+      this.tabPageSettingsGeneral.Padding = new System.Windows.Forms.Padding(3);
+      this.tabPageSettingsGeneral.Size = new System.Drawing.Size(267, 295);
+      this.tabPageSettingsGeneral.TabIndex = 0;
+      this.tabPageSettingsGeneral.Text = "General";
+      this.tabPageSettingsGeneral.UseVisualStyleBackColor = true;
       // 
       // groupBox4
       // 
       this.groupBox4.Dock = System.Windows.Forms.DockStyle.Fill;
       this.groupBox4.Location = new System.Drawing.Point(3, 3);
       this.groupBox4.Name = "groupBox4";
-      this.groupBox4.Size = new System.Drawing.Size(261, 343);
+      this.groupBox4.Size = new System.Drawing.Size(261, 289);
       this.groupBox4.TabIndex = 0;
       this.groupBox4.TabStop = false;
       this.groupBox4.Text = "Sound";
       // 
-      // tabPage2
+      // tabPageSettingsSIP
       // 
-      this.tabPage2.Controls.Add(this.groupBox2);
-      this.tabPage2.Controls.Add(this.groupBox3);
-      this.tabPage2.Location = new System.Drawing.Point(4, 22);
-      this.tabPage2.Name = "tabPage2";
-      this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPage2.Size = new System.Drawing.Size(267, 349);
-      this.tabPage2.TabIndex = 1;
-      this.tabPage2.Text = "SIP";
-      this.tabPage2.UseVisualStyleBackColor = true;
+      this.tabPageSettingsSIP.Controls.Add(this.groupBox2);
+      this.tabPageSettingsSIP.Controls.Add(this.groupBox3);
+      this.tabPageSettingsSIP.Location = new System.Drawing.Point(4, 22);
+      this.tabPageSettingsSIP.Name = "tabPageSettingsSIP";
+      this.tabPageSettingsSIP.Padding = new System.Windows.Forms.Padding(3);
+      this.tabPageSettingsSIP.Size = new System.Drawing.Size(267, 295);
+      this.tabPageSettingsSIP.TabIndex = 1;
+      this.tabPageSettingsSIP.Text = "SIP";
+      this.tabPageSettingsSIP.UseVisualStyleBackColor = true;
       // 
       // groupBox2
       // 
@@ -120,7 +136,7 @@ namespace Sipek
       this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
       this.groupBox2.Location = new System.Drawing.Point(3, 110);
       this.groupBox2.Name = "groupBox2";
-      this.groupBox2.Size = new System.Drawing.Size(261, 236);
+      this.groupBox2.Size = new System.Drawing.Size(261, 182);
       this.groupBox2.TabIndex = 10;
       this.groupBox2.TabStop = false;
       this.groupBox2.Text = "User";
@@ -246,7 +262,6 @@ namespace Sipek
       this.checkBoxDefault.TabIndex = 2;
       this.checkBoxDefault.Text = "Set as default";
       this.checkBoxDefault.UseVisualStyleBackColor = true;
-      this.checkBoxDefault.CheckedChanged += new System.EventHandler(this.checkBoxDefault_CheckedChanged);
       // 
       // label6
       // 
@@ -272,9 +287,9 @@ namespace Sipek
       this.panel2.Controls.Add(this.buttonCancel);
       this.panel2.Controls.Add(this.buttonOK);
       this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-      this.panel2.Location = new System.Drawing.Point(0, 327);
+      this.panel2.Location = new System.Drawing.Point(0, 320);
       this.panel2.Name = "panel2";
-      this.panel2.Size = new System.Drawing.Size(275, 48);
+      this.panel2.Size = new System.Drawing.Size(275, 55);
       this.panel2.TabIndex = 12;
       // 
       // buttonApply
@@ -308,6 +323,132 @@ namespace Sipek
       this.buttonOK.UseVisualStyleBackColor = true;
       this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
       // 
+      // tabPageSettingsServices
+      // 
+      this.tabPageSettingsServices.Controls.Add(this.groupBox1);
+      this.tabPageSettingsServices.Controls.Add(this.groupBoxServices);
+      this.tabPageSettingsServices.Location = new System.Drawing.Point(4, 22);
+      this.tabPageSettingsServices.Name = "tabPageSettingsServices";
+      this.tabPageSettingsServices.Padding = new System.Windows.Forms.Padding(3);
+      this.tabPageSettingsServices.Size = new System.Drawing.Size(267, 295);
+      this.tabPageSettingsServices.TabIndex = 2;
+      this.tabPageSettingsServices.Text = "Services";
+      this.tabPageSettingsServices.UseVisualStyleBackColor = true;
+      // 
+      // groupBoxServices
+      // 
+      this.groupBoxServices.Controls.Add(this.checkBoxCFB);
+      this.groupBoxServices.Controls.Add(this.textBoxCFB);
+      this.groupBoxServices.Controls.Add(this.checkBoxCFNR);
+      this.groupBoxServices.Controls.Add(this.textBoxCFNR);
+      this.groupBoxServices.Controls.Add(this.checkBoxCFU);
+      this.groupBoxServices.Controls.Add(this.textBoxCFU);
+      this.groupBoxServices.Dock = System.Windows.Forms.DockStyle.Bottom;
+      this.groupBoxServices.Location = new System.Drawing.Point(3, 166);
+      this.groupBoxServices.Name = "groupBoxServices";
+      this.groupBoxServices.Size = new System.Drawing.Size(261, 126);
+      this.groupBoxServices.TabIndex = 0;
+      this.groupBoxServices.TabStop = false;
+      this.groupBoxServices.Text = "Forwardings....";
+      // 
+      // textBoxCFU
+      // 
+      this.textBoxCFU.Location = new System.Drawing.Point(120, 32);
+      this.textBoxCFU.Name = "textBoxCFU";
+      this.textBoxCFU.Size = new System.Drawing.Size(128, 20);
+      this.textBoxCFU.TabIndex = 0;
+      // 
+      // checkBoxCFU
+      // 
+      this.checkBoxCFU.AutoSize = true;
+      this.checkBoxCFU.Location = new System.Drawing.Point(15, 35);
+      this.checkBoxCFU.Name = "checkBoxCFU";
+      this.checkBoxCFU.Size = new System.Drawing.Size(91, 17);
+      this.checkBoxCFU.TabIndex = 1;
+      this.checkBoxCFU.Text = "Unconditional";
+      this.checkBoxCFU.UseVisualStyleBackColor = true;
+      // 
+      // checkBoxCFNR
+      // 
+      this.checkBoxCFNR.AutoSize = true;
+      this.checkBoxCFNR.Location = new System.Drawing.Point(15, 61);
+      this.checkBoxCFNR.Name = "checkBoxCFNR";
+      this.checkBoxCFNR.Size = new System.Drawing.Size(70, 17);
+      this.checkBoxCFNR.TabIndex = 3;
+      this.checkBoxCFNR.Text = "No Reply";
+      this.checkBoxCFNR.UseVisualStyleBackColor = true;
+      // 
+      // textBoxCFNR
+      // 
+      this.textBoxCFNR.Location = new System.Drawing.Point(120, 58);
+      this.textBoxCFNR.Name = "textBoxCFNR";
+      this.textBoxCFNR.Size = new System.Drawing.Size(128, 20);
+      this.textBoxCFNR.TabIndex = 2;
+      // 
+      // checkBoxCFB
+      // 
+      this.checkBoxCFB.AutoSize = true;
+      this.checkBoxCFB.Location = new System.Drawing.Point(15, 87);
+      this.checkBoxCFB.Name = "checkBoxCFB";
+      this.checkBoxCFB.Size = new System.Drawing.Size(66, 17);
+      this.checkBoxCFB.TabIndex = 5;
+      this.checkBoxCFB.Text = "On Busy";
+      this.checkBoxCFB.UseVisualStyleBackColor = true;
+      // 
+      // textBoxCFB
+      // 
+      this.textBoxCFB.Location = new System.Drawing.Point(120, 84);
+      this.textBoxCFB.Name = "textBoxCFB";
+      this.textBoxCFB.Size = new System.Drawing.Size(128, 20);
+      this.textBoxCFB.TabIndex = 4;
+      // 
+      // groupBox1
+      // 
+      this.groupBox1.Controls.Add(this.comboBox1);
+      this.groupBox1.Controls.Add(this.checkBoxAA);
+      this.groupBox1.Controls.Add(this.checkBoxDND);
+      this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.groupBox1.Location = new System.Drawing.Point(3, 3);
+      this.groupBox1.Name = "groupBox1";
+      this.groupBox1.Size = new System.Drawing.Size(261, 163);
+      this.groupBox1.TabIndex = 1;
+      this.groupBox1.TabStop = false;
+      // 
+      // checkBoxDND
+      // 
+      this.checkBoxDND.AutoSize = true;
+      this.checkBoxDND.Location = new System.Drawing.Point(15, 105);
+      this.checkBoxDND.Name = "checkBoxDND";
+      this.checkBoxDND.Size = new System.Drawing.Size(96, 17);
+      this.checkBoxDND.TabIndex = 2;
+      this.checkBoxDND.Text = "Do Not Disturb";
+      this.checkBoxDND.UseVisualStyleBackColor = true;
+      // 
+      // checkBoxAA
+      // 
+      this.checkBoxAA.AutoSize = true;
+      this.checkBoxAA.Location = new System.Drawing.Point(15, 128);
+      this.checkBoxAA.Name = "checkBoxAA";
+      this.checkBoxAA.Size = new System.Drawing.Size(86, 17);
+      this.checkBoxAA.TabIndex = 3;
+      this.checkBoxAA.Text = "Auto Answer";
+      this.checkBoxAA.UseVisualStyleBackColor = true;
+      // 
+      // comboBox1
+      // 
+      this.comboBox1.FormatString = "N0";
+      this.comboBox1.FormattingEnabled = true;
+      this.comboBox1.Items.AddRange(new object[] {
+            "0",
+            "5",
+            "10",
+            "15",
+            "20"});
+      this.comboBox1.Location = new System.Drawing.Point(120, 124);
+      this.comboBox1.Name = "comboBox1";
+      this.comboBox1.Size = new System.Drawing.Size(41, 21);
+      this.comboBox1.TabIndex = 4;
+      // 
       // SettingsForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -315,26 +456,31 @@ namespace Sipek
       this.CancelButton = this.buttonCancel;
       this.ClientSize = new System.Drawing.Size(275, 375);
       this.Controls.Add(this.panel2);
-      this.Controls.Add(this.tabControl1);
+      this.Controls.Add(this.tabControlSettings);
       this.Name = "SettingsForm";
       this.Text = "Settings";
-      this.tabControl1.ResumeLayout(false);
-      this.tabPage1.ResumeLayout(false);
-      this.tabPage2.ResumeLayout(false);
+      this.tabControlSettings.ResumeLayout(false);
+      this.tabPageSettingsGeneral.ResumeLayout(false);
+      this.tabPageSettingsSIP.ResumeLayout(false);
       this.groupBox2.ResumeLayout(false);
       this.groupBox2.PerformLayout();
       this.groupBox3.ResumeLayout(false);
       this.groupBox3.PerformLayout();
       this.panel2.ResumeLayout(false);
+      this.tabPageSettingsServices.ResumeLayout(false);
+      this.groupBoxServices.ResumeLayout(false);
+      this.groupBoxServices.PerformLayout();
+      this.groupBox1.ResumeLayout(false);
+      this.groupBox1.PerformLayout();
       this.ResumeLayout(false);
 
     }
 
     #endregion
 
-    private System.Windows.Forms.TabControl tabControl1;
-    private System.Windows.Forms.TabPage tabPage1;
-    private System.Windows.Forms.TabPage tabPage2;
+    private System.Windows.Forms.TabControl tabControlSettings;
+    private System.Windows.Forms.TabPage tabPageSettingsGeneral;
+    private System.Windows.Forms.TabPage tabPageSettingsSIP;
     private System.Windows.Forms.GroupBox groupBox3;
     private System.Windows.Forms.CheckBox checkBoxDefault;
     private System.Windows.Forms.Label label6;
@@ -357,5 +503,17 @@ namespace Sipek
     private System.Windows.Forms.Button buttonApply;
     private System.Windows.Forms.Button buttonCancel;
     private System.Windows.Forms.Button buttonOK;
+    private System.Windows.Forms.TabPage tabPageSettingsServices;
+    private System.Windows.Forms.GroupBox groupBox1;
+    private System.Windows.Forms.GroupBox groupBoxServices;
+    private System.Windows.Forms.CheckBox checkBoxCFB;
+    private System.Windows.Forms.TextBox textBoxCFB;
+    private System.Windows.Forms.CheckBox checkBoxCFNR;
+    private System.Windows.Forms.TextBox textBoxCFNR;
+    private System.Windows.Forms.CheckBox checkBoxCFU;
+    private System.Windows.Forms.TextBox textBoxCFU;
+    private System.Windows.Forms.CheckBox checkBoxAA;
+    private System.Windows.Forms.CheckBox checkBoxDND;
+    private System.Windows.Forms.ComboBox comboBox1;
   }
 }

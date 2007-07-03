@@ -31,6 +31,8 @@ namespace Sipek
       {
         toolStripComboDial.Items.Add(item.Number);
       }
+      // Init Buddy list
+      CBuddyList.getInstance();
     }
 
     /////////////////////////////////////////////////////////////////////////////////
@@ -102,12 +104,11 @@ namespace Sipek
           name = name.Trim();
           recorditem = name + ", " + item.Number;
         }
-//        recorditem = recorditem.;
 
         ListViewItem lvi = new ListViewItem(new string[] {
              item.Type.ToString(), recorditem.Trim(), item.Time.ToString(), duration});
 
-        lvi.Tag = item.Number;
+        lvi.Tag = item;
         
         listViewCallRegister.Items.Add(lvi);
       }
@@ -309,11 +310,26 @@ namespace Sipek
         }
         else
         {
-          if (Telephony.CCallManager.getInstance().getCall((int)lvi.Tag).getStateId() == EStateId.INCOMING)
-            contextMenuStripCalls.Items["acceptToolStripMenuItem"].Visible = true;
+          EStateId stateId = Telephony.CCallManager.getInstance().getCall((int)lvi.Tag).getStateId();
+          switch (stateId)
+          {
+            case EStateId.INCOMING:
+              acceptToolStripMenuItem.Visible = true;
+              break;
+            case EStateId.ACTIVE:
+              holdRetrieveToolStripMenuItem.Text = "Hold";
+              holdRetrieveToolStripMenuItem.Visible = true;
+              transferToolStripMenuItem.Visible = true;
+              break;
+            case EStateId.HOLDING:
+              holdRetrieveToolStripMenuItem.Text = "Retrieve";
+              holdRetrieveToolStripMenuItem.Visible = true;
+              break;
+          }
+
         }
         // call
-        contextMenuStripCalls.Items["releaseToolStripMenuItem"].Visible = true;
+        releaseToolStripMenuItem.Visible = true;
       }
     }
 
@@ -430,8 +446,8 @@ namespace Sipek
       if (listViewCallRegister.SelectedItems.Count > 0)
       {
         ListViewItem lvi = listViewCallRegister.SelectedItems[0];
-        string dialname = (string)lvi.Tag;
-        Telephony.CCallManager.getInstance().createSession(dialname);
+        CCallRecord record = (CCallRecord)lvi.Tag;
+        Telephony.CCallManager.getInstance().createSession(record.Number);
       }
     }
 
@@ -451,8 +467,8 @@ namespace Sipek
       if (listViewCallRegister.SelectedItems.Count > 0)
       {
         ListViewItem lvi = listViewCallRegister.SelectedItems[0];
-
-        CCallLog.getInstance().deleteRecord((string)lvi.Tag);
+        CCallRecord record = (CCallRecord) lvi.Tag;
+        CCallLog.getInstance().deleteRecord(record);
       }
       this.UpdateCallRegister();
 
@@ -462,6 +478,22 @@ namespace Sipek
     {
       CCallLog.getInstance().save();
       CBuddyList.getInstance().save();
+    }
+
+    private void toolStripTextBoxTransferTo_KeyDown(object sender, KeyEventArgs e)
+    {
+      if (e.KeyValue == 0x0d)
+      {
+        if (listViewCallLines.SelectedItems.Count > 0)
+        {
+          ListViewItem lvi = listViewCallLines.SelectedItems[0];
+          if (toolStripTextBoxTransferTo.Text.Length > 0)
+          {
+            Telephony.CCallManager.getInstance().onUserTransfer((int)lvi.Tag, toolStripTextBoxTransferTo.Text);
+          }
+        }
+        contextMenuStripCalls.Close();
+      }
     }
   }
 }

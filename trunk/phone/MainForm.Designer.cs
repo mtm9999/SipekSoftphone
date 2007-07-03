@@ -91,6 +91,10 @@ namespace Sipek
       this.toolStripButtonAA = new System.Windows.Forms.ToolStripButton();
       this.columnHeaderType = new System.Windows.Forms.ColumnHeader();
       this.acceptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.holdRetrieveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.transferToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.partyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.toolStripTextBoxTransferTo = new System.Windows.Forms.ToolStripTextBox();
       this.menuStrip.SuspendLayout();
       this.toolStripCall.SuspendLayout();
       this.panel1.SuspendLayout();
@@ -319,6 +323,7 @@ namespace Sipek
       this.listViewCallLines.Dock = System.Windows.Forms.DockStyle.Fill;
       this.listViewCallLines.FullRowSelect = true;
       this.listViewCallLines.Location = new System.Drawing.Point(0, 0);
+      this.listViewCallLines.MultiSelect = false;
       this.listViewCallLines.Name = "listViewCallLines";
       this.listViewCallLines.Size = new System.Drawing.Size(447, 86);
       this.listViewCallLines.TabIndex = 6;
@@ -344,15 +349,18 @@ namespace Sipek
       // 
       this.contextMenuStripCalls.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.acceptToolStripMenuItem,
-            this.releaseToolStripMenuItem});
+            this.releaseToolStripMenuItem,
+            this.holdRetrieveToolStripMenuItem,
+            this.transferToolStripMenuItem,
+            this.partyToolStripMenuItem});
       this.contextMenuStripCalls.Name = "contextMenuStripCalls";
-      this.contextMenuStripCalls.Size = new System.Drawing.Size(124, 48);
+      this.contextMenuStripCalls.Size = new System.Drawing.Size(153, 136);
       this.contextMenuStripCalls.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStripCalls_Opening);
       // 
       // releaseToolStripMenuItem
       // 
       this.releaseToolStripMenuItem.Name = "releaseToolStripMenuItem";
-      this.releaseToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
+      this.releaseToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
       this.releaseToolStripMenuItem.Text = "Release";
       this.releaseToolStripMenuItem.Click += new System.EventHandler(this.releaseToolStripMenuItem_Click);
       // 
@@ -386,6 +394,7 @@ namespace Sipek
             this.columnHeaderDuration});
       this.listViewCallRegister.ContextMenuStrip = this.contextMenuStripCallLog;
       this.listViewCallRegister.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.listViewCallRegister.FullRowSelect = true;
       this.listViewCallRegister.Location = new System.Drawing.Point(3, 3);
       this.listViewCallRegister.MultiSelect = false;
       this.listViewCallRegister.Name = "listViewCallRegister";
@@ -398,17 +407,17 @@ namespace Sipek
       // columnHeaderNameNumber
       // 
       this.columnHeaderNameNumber.Text = "Name/Number";
-      this.columnHeaderNameNumber.Width = 195;
+      this.columnHeaderNameNumber.Width = 103;
       // 
       // columnHeaderDateTime
       // 
       this.columnHeaderDateTime.Text = "Date/Time";
-      this.columnHeaderDateTime.Width = 121;
+      this.columnHeaderDateTime.Width = 89;
       // 
       // columnHeaderDuration
       // 
       this.columnHeaderDuration.Text = "Duration";
-      this.columnHeaderDuration.Width = 111;
+      this.columnHeaderDuration.Width = 78;
       // 
       // contextMenuStripCallLog
       // 
@@ -482,6 +491,7 @@ namespace Sipek
             this.columnHeaderBuddyStatus});
       this.listViewBuddies.ContextMenuStrip = this.contextMenuBuddies;
       this.listViewBuddies.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.listViewBuddies.FullRowSelect = true;
       this.listViewBuddies.Location = new System.Drawing.Point(3, 3);
       this.listViewBuddies.Name = "listViewBuddies";
       this.listViewBuddies.Size = new System.Drawing.Size(135, 186);
@@ -651,14 +661,41 @@ namespace Sipek
       // columnHeaderType
       // 
       this.columnHeaderType.Text = "Type";
-      this.columnHeaderType.Width = 39;
+      this.columnHeaderType.Width = 73;
       // 
       // acceptToolStripMenuItem
       // 
       this.acceptToolStripMenuItem.Name = "acceptToolStripMenuItem";
-      this.acceptToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+      this.acceptToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
       this.acceptToolStripMenuItem.Text = "Accept";
       this.acceptToolStripMenuItem.Click += new System.EventHandler(this.acceptToolStripMenuItem_Click);
+      // 
+      // holdRetrieveToolStripMenuItem
+      // 
+      this.holdRetrieveToolStripMenuItem.Name = "holdRetrieveToolStripMenuItem";
+      this.holdRetrieveToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+      this.holdRetrieveToolStripMenuItem.Text = "Hold/Retrieve";
+      this.holdRetrieveToolStripMenuItem.Click += new System.EventHandler(this.toolStripButton1_Click);
+      // 
+      // transferToolStripMenuItem
+      // 
+      this.transferToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripTextBoxTransferTo});
+      this.transferToolStripMenuItem.Name = "transferToolStripMenuItem";
+      this.transferToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+      this.transferToolStripMenuItem.Text = "Transfer";
+      // 
+      // partyToolStripMenuItem
+      // 
+      this.partyToolStripMenuItem.Name = "partyToolStripMenuItem";
+      this.partyToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+      this.partyToolStripMenuItem.Text = "3-party";
+      // 
+      // toolStripTextBoxTransferTo
+      // 
+      this.toolStripTextBoxTransferTo.Name = "toolStripTextBoxTransferTo";
+      this.toolStripTextBoxTransferTo.Size = new System.Drawing.Size(100, 21);
+      this.toolStripTextBoxTransferTo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.toolStripTextBoxTransferTo_KeyDown);
       // 
       // MainForm
       // 
@@ -766,6 +803,10 @@ namespace Sipek
     private System.Windows.Forms.ToolStripMenuItem sendInstantMessageToolStripMenuItem;
     private System.Windows.Forms.ColumnHeader columnHeaderType;
     private System.Windows.Forms.ToolStripMenuItem acceptToolStripMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem holdRetrieveToolStripMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem transferToolStripMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem partyToolStripMenuItem;
+    private System.Windows.Forms.ToolStripTextBox toolStripTextBoxTransferTo;
 
   }
 }

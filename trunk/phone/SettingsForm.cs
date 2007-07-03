@@ -33,6 +33,15 @@ namespace Sipek
           comboBoxAccounts.SelectedIndex = i;
         }
       }
+
+      /////
+      checkBoxDND.Checked = CSettings.DND;
+      checkBoxAA.Checked = CSettings.AA;
+      checkBoxCFU.Checked = CSettings.CFU;
+      checkBoxCFNR.Checked = CSettings.CFNR;
+
+      textBoxCFU.Text = CSettings.CFUNumber;
+      textBoxCFNR.Text = CSettings.CFNRNumber;
     }
 
     private void buttonCancel_Click(object sender, EventArgs e)
@@ -117,22 +126,25 @@ namespace Sipek
 
         CAccounts.getInstance()[account.Index] = account;
       }
+      // Settings
+      CSettings.DND = checkBoxDND.Checked ;
+      CSettings.AA = checkBoxAA.Checked ;
+      CSettings.CFU = checkBoxCFU.Checked ;
+      CSettings.CFNR = checkBoxCFNR.Checked ;
 
-      CAccounts.getInstance().save();
+      CSettings.CFUNumber = textBoxCFU.Text ;
+      CSettings.CFNRNumber = textBoxCFNR.Text ;
     }
 
     private void buttonOK_Click(object sender, EventArgs e)
     {
       buttonApply_Click(sender, e);
 
+      CAccounts.getInstance().save();
+
       CCallManager.getInstance().initialize();
 
       Close();
-    }
-
-    private void checkBoxDefault_CheckedChanged(object sender, EventArgs e)
-    {
-
     }
 
   }
