@@ -12,6 +12,9 @@ namespace Sipek
 {
   public partial class MainForm : Form
   {
+
+    Timer tmr = new Timer();
+
     public MainForm()
     {
       InitializeComponent();
@@ -31,8 +34,14 @@ namespace Sipek
       {
         toolStripComboDial.Items.Add(item.Number);
       }
+      this.UpdateCallRegister();
+
       // Init Buddy list
-      CBuddyList.getInstance();
+      this.UpdateBuddyList();
+
+      // timer 
+      tmr.Interval = 1000;
+      tmr.Tick += new EventHandler(UpdateCallTimeout);
     }
 
     /////////////////////////////////////////////////////////////////////////////////
@@ -50,6 +59,13 @@ namespace Sipek
 
       // Update Buddy List
       UpdateBuddyList();
+
+      // Refresh toolstripbuttons
+      toolStripButtonDND.Checked = CSettings.DND;
+      toolStripButtonAA.Checked = CSettings.AA;
+      toolStripButtonCFU.Checked = CSettings.CFU;
+
+      toolStripComboBoxUserStatus.Text = toolStripComboBoxUserStatus.Items[0].ToString();
     }
 
     private void UpdateAccountList()
@@ -315,6 +331,7 @@ namespace Sipek
           {
             case EStateId.INCOMING:
               acceptToolStripMenuItem.Visible = true;
+              transferToolStripMenuItem.Visible = true;
               break;
             case EStateId.ACTIVE:
               holdRetrieveToolStripMenuItem.Text = "Hold";
@@ -353,7 +370,7 @@ namespace Sipek
     /// UpdateCallLines delegate
     /// </summary>
     private void UpdateCallLines()
-    {
+    {     
       listViewCallLines.Items.Clear();
 
       try
@@ -378,12 +395,39 @@ namespace Sipek
           // display info
           //toolStripStatusLabel1.Text = item.Value.lastInfoMessage;
         }
+
+        // control refresh timer
+        if (callList.Count > 0) tmr.Start();
+
       }
       catch (Exception e)
       {
         // TODO!!!!!!!!!!! Sychronize SHARED RESOURCES!!!!
       }
       //listViewCallLines.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+    }
+
+    public void UpdateCallTimeout(object sender, EventArgs e)
+    {
+      if (listViewCallLines.Items.Count == 0) return;
+
+      for (int i = 0; i < listViewCallLines.Items.Count; i++ )
+      {
+        ListViewItem item = listViewCallLines.Items[i];
+        CStateMachine sm = CCallManager.getInstance().getCall((int)item.Tag);
+        if (null == sm) continue;
+
+        string duration = sm.RuntimeDuration.ToString();
+        if (duration.IndexOf('.') > 0) duration = duration.Remove(duration.IndexOf('.')); // remove miliseconds
+
+        item.SubItems[2].Text = duration;
+      }
+      // restart timer
+      if (listViewCallLines.Items.Count > 0)
+      {
+        tmr.Start();
+      }
+
     }
 
     private void placeACallToolStripMenuItem_Click(object sender, EventArgs e)
@@ -400,7 +444,7 @@ namespace Sipek
       }
     }
 
-    private void toolStripButton1_Click(object sender, EventArgs e)
+    private void toolStripButtonHoldRetrieve_Click(object sender, EventArgs e)
     {
       if (listViewCallLines.SelectedItems.Count > 0)
       {
@@ -493,6 +537,37 @@ namespace Sipek
           }
         }
         contextMenuStripCalls.Close();
+      }
+    }
+
+    private void toolStripButtonDND_Click(object sender, EventArgs e)
+    {
+      CSettings.DND = toolStripButtonDND.Checked;
+    }
+
+    private void toolStripButtonAA_Click(object sender, EventArgs e)
+    {
+      CSettings.AA = toolStripButtonAA.Checked;
+    }
+
+    private void toolStripButtonCFU_Click(object sender, EventArgs e)
+    {
+      CSettings.CFU = toolStripButtonCFU.Checked;
+    }
+
+    private void sendInstantMessageToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      if (listViewCallRegister.SelectedItems.Count > 0)
+      {
+        ListViewItem lvi = listViewCallRegister.SelectedItems[0];
+        CCallRecord record = (CCallRecord)lvi.Tag;
+        int id = CBuddyList.getInstance().getBuddyId(record.Number);
+        if (id > 0)
+        {
+          ChatForm bf = new ChatForm();
+          bf.BuddyId = id;
+          bf.ShowDialog();
+        }
       }
     }
   }
