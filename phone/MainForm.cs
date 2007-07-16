@@ -26,6 +26,8 @@ namespace Sipek
 
       // Initlialize telephony
       Telephony.CCallManager.getInstance().initialize();
+      // Initialize & load Call Log
+      CCallLog.getInstance().load();
 
       // Initialize dial combo box
       toolStripComboDial.Items.Clear();
