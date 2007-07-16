@@ -8,7 +8,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gui", "phone\Gui.csproj", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telephony", "telephony\Telephony.csproj", "{7C60E672-0016-457E-9D23-445F88FB1640}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "UnitTest\UnitTest.csproj", "{BA6C2384-22AE-422A-8B37-D3963F3A705B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "test\UnitTest.csproj", "{BA6C2384-22AE-422A-8B37-D3963F3A705B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
