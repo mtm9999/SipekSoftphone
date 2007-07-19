@@ -58,7 +58,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_155EB019D3ECF22C786A6B8ECC30E84D"
+        "OwnerKey" = "8:_6EC3B094756643F4B954AAD1E14E77B5"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -70,7 +70,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_6EC3B094756643F4B954AAD1E14E77B5"
+        "OwnerKey" = "8:_155EB019D3ECF22C786A6B8ECC30E84D"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -91,6 +91,22 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Net.Framework.2.0"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 2.0"
+                    "ProductCode" = "8:Microsoft.Net.Framework.2.0"
+                    }
+                }
+            }
         }
         "Release"
         {
@@ -107,6 +123,22 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Net.Framework.2.0"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 2.0"
+                    "ProductCode" = "8:Microsoft.Net.Framework.2.0"
+                    }
+                }
+            }
         }
     }
     "Deployable"
@@ -141,7 +173,7 @@
             "SourcePath" = "8:..\\telephony\\sounds\\congestion.wav"
             "TargetName" = "8:congestion.wav"
             "Tag" = "8:"
-            "Folder" = "8:_B82B0425AC644711B0488FF150DF422C"
+            "Folder" = "8:_A82A129ECFCF4534BFC2E5940692B3A9"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -161,7 +193,7 @@
             "SourcePath" = "8:..\\telephony\\sounds\\dial.wav"
             "TargetName" = "8:dial.wav"
             "Tag" = "8:"
-            "Folder" = "8:_B82B0425AC644711B0488FF150DF422C"
+            "Folder" = "8:_A82A129ECFCF4534BFC2E5940692B3A9"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -243,7 +275,7 @@
             "SourcePath" = "8:..\\telephony\\sounds\\ringback.wav"
             "TargetName" = "8:ringback.wav"
             "Tag" = "8:"
-            "Folder" = "8:_B82B0425AC644711B0488FF150DF422C"
+            "Folder" = "8:_A82A129ECFCF4534BFC2E5940692B3A9"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -263,7 +295,7 @@
             "SourcePath" = "8:..\\telephony\\sounds\\ring.wav"
             "TargetName" = "8:ring.wav"
             "Tag" = "8:"
-            "Folder" = "8:_B82B0425AC644711B0488FF150DF422C"
+            "Folder" = "8:_A82A129ECFCF4534BFC2E5940692B3A9"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -294,6 +326,17 @@
             "Property" = "8:TARGETDIR"
                 "Folders"
                 {
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_A82A129ECFCF4534BFC2E5940692B3A9"
+                    {
+                    "Name" = "8:sounds"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_A20882D265BC426AAC911D778A062D6F"
+                        "Folders"
+                        {
+                        }
+                    }
                 }
             }
             "{1525181F-901A-416C-8A58-119130FE478E}:_DD7879F977D5436BABC18C7081B9F89D"
@@ -345,11 +388,11 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Sipek2"
         "ProductCode" = "8:{607B51A4-08C7-421C-8B05-E200D5F2B2E0}"
-        "PackageCode" = "8:{4A4D509E-F8F3-49C2-A088-BF7554AC6B60}"
+        "PackageCode" = "8:{E10D8E24-EB5E-4221-A53F-921FDACD1A42}"
         "UpgradeCode" = "8:{06F8AC95-6BCA-407E-A06E-6A26BE8A4014}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
-        "DetectNewerInstalledVersion" = "11:TRUE"
+        "DetectNewerInstalledVersion" = "11:FALSE"
         "InstallAllUsers" = "11:FALSE"
         "ProductVersion" = "8:0.0.1"
         "Manufacturer" = "8:SasaCoh"
@@ -466,7 +509,7 @@
         {
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_18AF1648F6A74F2291613FBE067E25CB"
             {
-            "Name" = "8:Shortcut to Sipek2  (Active)"
+            "Name" = "8:Shortcut to Sipek2"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
