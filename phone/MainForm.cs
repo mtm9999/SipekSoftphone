@@ -313,15 +313,16 @@ namespace Sipek
     /// <param name="e"></param>
     private void contextMenuStripCalls_Opening(object sender, CancelEventArgs e)
     {
+      // Hide all items...
+      foreach (ToolStripMenuItem mi in contextMenuStripCalls.Items)
+      {
+        mi.Visible = false;
+      }
+
       if (listViewCallLines.SelectedItems.Count > 0)
       {
         ListViewItem lvi = listViewCallLines.SelectedItems[0];
 
-        // Hide all items...
-        foreach (ToolStripMenuItem mi in contextMenuStripCalls.Items)
-        {
-          mi.Visible = false;
-        }
         if (Telephony.CCallManager.getInstance().Count <= 0)
         {
           return;
