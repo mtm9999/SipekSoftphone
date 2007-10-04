@@ -117,6 +117,7 @@ namespace Sipek
         account.Address = textBoxProxyAddress.Text;
         account.Port = 5060; //int.Parse(_editProxyPort.Caption);
         account.Name = textBoxAccountName.Text;
+        account.DisplayName = textBoxDisplayName.Text;
         account.Id = textBoxUsername.Text;
         account.Username = textBoxUsername.Text;
         account.Password = textBoxPassword.Text;
@@ -146,6 +147,7 @@ namespace Sipek
 
       Close();
     }
+
 
   }
 }
