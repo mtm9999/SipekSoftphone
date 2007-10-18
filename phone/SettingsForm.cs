@@ -68,7 +68,7 @@ namespace Sipek
         return;
       }
      
-      textBoxDisplayName.Text = acc.Id;
+      textBoxDisplayName.Text = acc.DisplayName;
       textBoxUsername.Text = acc.Username;
       textBoxPassword.Text = acc.Password;
       textBoxProxyAddress.Text = acc.Address;
