@@ -102,6 +102,11 @@ namespace Sipek
             toolStripStatusLabel.Text = "Registered"; //acc.Name + " - " + acc.DisplayName; 
             this.Text = HEADER_TEXT + " - " + acc.Name + " (" + acc.DisplayName + ")";
           }
+          else if (acc.RegState == 0)
+          {
+            this.Text = HEADER_TEXT;
+            toolStripStatusLabel.Text = "Registering...";
+          }
           else
           {
             this.Text = HEADER_TEXT;
