@@ -12,12 +12,15 @@ namespace Sipek
 {
   public partial class MainForm : Form
   {
-
+    const string HEADER_TEXT = "Sipek2";
     Timer tmr = new Timer();
 
     public MainForm()
     {
       InitializeComponent();
+
+      // set header text
+
 
       // register callback
       Telephony.CCallManager.getInstance().CallStateChanged += onTelephonyRefresh;
@@ -92,7 +95,20 @@ namespace Sipek
         if (acc.Index == CAccounts.getInstance().DefAccountIndex)
         {
           // todo!!! Coloring!
+
+          // check registration status
+          if (acc.RegState == 200)
+          {
+            toolStripStatusLabel.Text = "Registered"; //acc.Name + " - " + acc.DisplayName; 
+            this.Text = HEADER_TEXT + " - " + acc.Name + " (" + acc.DisplayName + ")";
+          }
+          else
+          {
+            this.Text = HEADER_TEXT;
+            toolStripStatusLabel.Text = "Not registered!";
+          }
         }
+
 
         ListViewItem item = new ListViewItem(new string[] { name, acc.RegState.ToString() });
 
@@ -384,6 +400,7 @@ namespace Sipek
         foreach (KeyValuePair<int, Telephony.CStateMachine> kvp in callList)
         {
           string number = kvp.Value.CallingNo;
+          //string name = kvp.Value.CallingName; //TODO:::get Calling name
 
           string duration = kvp.Value.Duration.ToString();
           if (duration.IndexOf('.') > 0) duration = duration.Remove(duration.IndexOf('.')); // remove miliseconds
