@@ -38,11 +38,14 @@ namespace Sipek
       }
       else
       {
+        if (textBoxNumber.Text.Length == 0) return;
+
         record = new CBuddyRecord();
       }
       record.FirstName = textBoxName.Text;
       //record.LastName = _lname.Caption;
       record.Number = textBoxNumber.Text;
+
 
       CBuddyList.getInstance().addRecord(record);
       CBuddyList.getInstance().save();
