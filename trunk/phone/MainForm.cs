@@ -13,7 +13,9 @@ namespace Sipek
   public partial class MainForm : Form
   {
     const string HEADER_TEXT = "Sipek2";
-    Timer tmr = new Timer();
+ 
+    Timer tmr = new Timer();  // Refresh Call List
+    EUserStatus _lastUserStatus = EUserStatus.AVAILABLE;
 
     public MainForm()
     {
@@ -44,6 +46,9 @@ namespace Sipek
       // Init Buddy list
       this.UpdateBuddyList();
 
+      // Set user status
+      toolStripComboBoxUserStatus.SelectedIndex = (int)EUserStatus.AVAILABLE;
+
       // timer 
       tmr.Interval = 1000;
       tmr.Tick += new EventHandler(UpdateCallTimeout);
@@ -69,8 +74,6 @@ namespace Sipek
       toolStripButtonDND.Checked = CSettings.DND;
       toolStripButtonAA.Checked = CSettings.AA;
       toolStripButtonCFU.Checked = CSettings.CFU;
-
-      toolStripComboBoxUserStatus.Text = toolStripComboBoxUserStatus.Items[0].ToString();
     }
 
     private void UpdateAccountList()
@@ -421,8 +424,23 @@ namespace Sipek
           //toolStripStatusLabel1.Text = item.Value.lastInfoMessage;
         }
 
-        // control refresh timer
-        if (callList.Count > 0) tmr.Start();
+
+        if (callList.Count > 0)
+        {
+          // control refresh timer
+          tmr.Start();
+
+          // Remember last status
+          if (toolStripComboBoxUserStatus.SelectedIndex != (int)EUserStatus.OTP) 
+            _lastUserStatus = (EUserStatus)toolStripComboBoxUserStatus.SelectedIndex;
+
+          // Set user status "On the Phone"
+          toolStripComboBoxUserStatus.SelectedIndex = (int)EUserStatus.OTP;
+        }
+        else
+        {
+          toolStripComboBoxUserStatus.SelectedIndex = (int)_lastUserStatus;
+        }
 
       }
       catch (Exception e)
@@ -594,6 +612,25 @@ namespace Sipek
           bf.ShowDialog();
         }
       }
+    }
+
+    private void toolStripComboBoxUserStatus_SelectedIndexChanged(object sender, EventArgs e)
+    {
+      /*
+       * AVAILABLE, BUSY, OTP, IDLE, AWAY, BRB, OFFLINE
+       * 
+      Available
+      Busy
+      On the Phone
+      Idle
+      Away
+      Be Right Back
+      Offline
+       */
+
+      EUserStatus status = (EUserStatus)toolStripComboBoxUserStatus.SelectedIndex;
+
+      CCallManager.getInstance().CommonProxy.setStatus(CAccounts.getInstance().DefAccountIndex, status);
     }
   }
 }
