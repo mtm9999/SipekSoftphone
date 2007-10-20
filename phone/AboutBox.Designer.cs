@@ -98,7 +98,7 @@ namespace Sipek
       this.labelVersion.Name = "labelVersion";
       this.labelVersion.Size = new System.Drawing.Size(207, 17);
       this.labelVersion.TabIndex = 0;
-      this.labelVersion.Text = "Version 0.1";
+      this.labelVersion.Text = "Version 0.100";
       this.labelVersion.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
       // 
       // labelCopyright
@@ -137,7 +137,7 @@ namespace Sipek
       this.textBoxDescription.Size = new System.Drawing.Size(207, 46);
       this.textBoxDescription.TabIndex = 23;
       this.textBoxDescription.TabStop = false;
-      this.textBoxDescription.Text = "Sipek 2 is a simple SIP client.";
+      this.textBoxDescription.Text = "Sipek2 is a simple SIP client.";
       // 
       // okButton
       // 
