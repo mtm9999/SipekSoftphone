@@ -58,7 +58,8 @@ namespace Sipek
     private int _accountId;
     private string _uri;
 
-    private int _status = 0; 
+    private int _status = 0;
+    private string _statusText;
     private Stack<CBuddyMessage> _messageList;
 
 
@@ -86,6 +87,12 @@ namespace Sipek
     {
       get { return _status; }
       set { _status = value; }
+    }
+
+    public string StatusText
+    {
+      get { return _statusText; }
+      set { _statusText = value; }
     }
 /*
     public CBuddyMessage this[int index]
