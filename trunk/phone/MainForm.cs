@@ -160,7 +160,7 @@ namespace Sipek
     /// 
     delegate void StateChangedDelegate();
     delegate void MessageReceivedDelegate(string from, string message);
-    delegate void BuddyStateChangedDelegate(int buddyId, int status);
+    delegate void BuddyStateChangedDelegate(int buddyId, int status, string text);
 
     public void onTelephonyRefresh()
     {
@@ -174,10 +174,10 @@ namespace Sipek
         this.BeginInvoke(new MessageReceivedDelegate(this.MessageReceived), new object[] { from, message });
     }
 
-    public void onBuddyStateChanged(int buddyId, int status)
+    public void onBuddyStateChanged(int buddyId, int status, string text)
     {
       if (this.Created)
-        this.BeginInvoke(new BuddyStateChangedDelegate(this.BuddyStateChanged), new object[] { buddyId, status});
+        this.BeginInvoke(new BuddyStateChangedDelegate(this.BuddyStateChanged), new object[] { buddyId, status, text});
     }
 
 
@@ -199,8 +199,10 @@ namespace Sipek
           case 2: status = "offline"; break;
           default: status = "?"; break;
         }
+        status += " (" + kvp.Value.StatusText + ")";
         ListViewItem item = new ListViewItem(new string[] { kvp.Value.FirstName + kvp.Value.LastName, status });
         item.Tag = kvp.Value.Id;
+        //item.BackColor = Color.Blue;
         listViewBuddies.Items.Add(item);
       }
     }
@@ -215,9 +217,10 @@ namespace Sipek
       UpdateBuddyList();
     }
 
-    private void BuddyStateChanged(int buddyId, int status)
+    private void BuddyStateChanged(int buddyId, int status, string text)
     {
       CBuddyList.getInstance()[buddyId].Status = status;
+      CBuddyList.getInstance()[buddyId].StatusText = text;
       this.RefreshForm();
     }
 
