@@ -21,7 +21,12 @@ namespace Sipek
     {
       InitializeComponent();
 
-      // set header text
+      // Initlialize telephony and set proxies
+      Telephony.CCallManager.CommonProxy = new Telephony.CSipCommonProxy();
+      Telephony.CCallManager.MediaProxy = new Telephony.CMediaPlayerProxy();
+      Telephony.CCallManager.CallProxy = new Telephony.CSipCallProxy();
+
+      Telephony.CCallManager.CallLog = CCallLog.getInstance();
 
 
       // register callback
@@ -29,8 +34,8 @@ namespace Sipek
       Telephony.CCallManager.getInstance().MessageReceived += onMessageReceived;
       Telephony.CCallManager.getInstance().BuddyStatusChanged += onBuddyStateChanged;
 
-      // Initlialize telephony
       Telephony.CCallManager.getInstance().initialize();
+
       // Initialize & load Call Log
       CCallLog.getInstance().load();
 
@@ -199,7 +204,12 @@ namespace Sipek
           case 2: status = "offline"; break;
           default: status = "?"; break;
         }
-        status += " (" + kvp.Value.StatusText + ")";
+        //if ((null != kvp.Value.StatusText) && (kvp.Value.StatusText.Length > 0))
+        //{
+        //  status += " (" + kvp.Value.StatusText + ")";
+        //}
+        status = kvp.Value.StatusText;
+
         ListViewItem item = new ListViewItem(new string[] { kvp.Value.FirstName + kvp.Value.LastName, status });
         item.Tag = kvp.Value.Id;
         //item.BackColor = Color.Blue;
@@ -496,7 +506,7 @@ namespace Sipek
       {
         ListViewItem lvi = listViewCallLines.SelectedItems[0];
 
-        Telephony.CCallManager.getInstance().HoldRetrieve((int)lvi.Tag);
+        Telephony.CCallManager.getInstance().onUserHoldRetrieve((int)lvi.Tag);
       }
     }
 
@@ -633,7 +643,7 @@ namespace Sipek
 
       EUserStatus status = (EUserStatus)toolStripComboBoxUserStatus.SelectedIndex;
 
-      CCallManager.getInstance().CommonProxy.setStatus(CAccounts.getInstance().DefAccountIndex, status);
+      CCallManager.CommonProxy.setStatus(CAccounts.getInstance().DefAccountIndex, status);
     }
   }
 }
