@@ -415,8 +415,8 @@ namespace Sipek
 
       try
       {
-        //
-        Dictionary<int, Telephony.CStateMachine> callList = Telephony.CCallManager.getInstance().getCallList();
+        // get entire call list
+        Dictionary<int, Telephony.CStateMachine> callList = Telephony.CCallManager.getInstance().CallList;
 
         foreach (KeyValuePair<int, Telephony.CStateMachine> kvp in callList)
         {
