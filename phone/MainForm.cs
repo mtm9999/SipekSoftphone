@@ -645,5 +645,19 @@ namespace Sipek
 
       CCallManager.CommonProxy.setStatus(CAccounts.getInstance().DefAccountIndex, status);
     }
+
+    private void toolStripKeyboardButton_Click(object sender, EventArgs e)
+    {
+      (new KeyboardForm(this)).Show();
+    }
+
+    public void onUserDialDigit(string digits)
+    {
+      if (listViewCallLines.SelectedItems.Count > 0)
+      {
+        ListViewItem lvi = listViewCallLines.SelectedItems[0];
+        Telephony.CCallManager.getInstance().onUserDialDigit((int)lvi.Tag, digits, 0);
+      }
+    }
   }
 }
