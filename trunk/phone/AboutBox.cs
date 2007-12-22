@@ -20,8 +20,8 @@ namespace Sipek
       this.Text = String.Format("About {0}", AssemblyTitle);
       this.labelProductName.Text = AssemblyProduct;
       this.labelVersion.Text = String.Format("Version {0}", AssemblyVersion);
-      //this.labelCopyright.Text = AssemblyCopyright;
-      //this.labelCompanyName.Text = AssemblyCompany;
+      this.labelCopyright.Text = AssemblyCopyright;
+      this.labelCompanyName.Text = AssemblyCompany;
       this.textBoxDescription.Text = AssemblyDescription;
     }
 
@@ -115,6 +115,21 @@ namespace Sipek
     private void okButton_Click(object sender, EventArgs e)
     {
       Close();
+    }
+
+    private void okButton_Click_1(object sender, EventArgs e)
+    {
+       
+    }
+
+    private void labelProductName_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void labelVersion_Click(object sender, EventArgs e)
+    {
+
     }
   }
 }

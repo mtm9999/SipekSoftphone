@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("sipek2")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Sipek2")]
+[assembly: AssemblyDescription("Free SIP phone - Powered by pjsip.org SIP stack (0.8.0)")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("IskraTEL")]
-[assembly: AssemblyProduct("sipek2")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("Sipek2")]
 [assembly: AssemblyCopyright("Copyright © Sasa Coh 2007")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -29,5 +29,5 @@ using System.Runtime.InteropServices;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("0.1.0.0")]
+[assembly: AssemblyFileVersion("0.1.0.0")]
