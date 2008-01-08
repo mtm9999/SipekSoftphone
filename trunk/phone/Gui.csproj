@@ -11,9 +11,9 @@
     <AssemblyName>sipek2</AssemblyName>
     <ManifestCertificateThumbprint>DA6B9EF4563F33236E3D1708CCDCCBD9C9226C4E</ManifestCertificateThumbprint>
     <ManifestKeyFile>Gui_TemporaryKey.pfx</ManifestKeyFile>
-    <GenerateManifests>true</GenerateManifests>
+    <GenerateManifests>false</GenerateManifests>
     <TargetZone>LocalIntranet</TargetZone>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
