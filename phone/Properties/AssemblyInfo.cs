@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Sipek2")]
-[assembly: AssemblyCopyright("Copyright © Sasa Coh 2007")]
+[assembly: AssemblyCopyright("Copyright © Sasa Coh 2008")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -29,5 +29,5 @@ using System.Runtime.InteropServices;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("0.1.0.0")]
+[assembly: AssemblyVersion("0.0.35.114")]
 [assembly: AssemblyFileVersion("0.1.0.0")]
