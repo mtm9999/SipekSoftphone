@@ -7,6 +7,8 @@ using System.Text;
 using System.Windows.Forms;
 using System.Collections.ObjectModel;
 using Telephony;
+using System.Windows.Forms.Design;
+using WaveLib.AudioMixer;
 
 namespace Sipek
 {
@@ -659,5 +661,283 @@ namespace Sipek
         Telephony.CCallManager.getInstance().onUserDialDigit((int)lvi.Tag, digits, 0);
       }
     }
+    
+    /////////////////////////////////////////////////////////////////////////////////////////
+    /// Audio Control
+
+    private Mixers mMixers;
+    private bool mAvoidEvents = false;
+
+    private void LoadAudioValues()
+    {
+      mMixers = new Mixers();
+      // set callback
+      mMixers.Playback.MixerLineChanged += new WaveLib.AudioMixer.Mixer.MixerLineChangeHandler(mMixer_MixerLineChanged);
+      mMixers.Recording.MixerLineChanged += new WaveLib.AudioMixer.Mixer.MixerLineChangeHandler(mMixer_MixerLineChanged);
+
+      MixerLine pbline = mMixers.Playback.UserLines.GetMixerFirstLineByComponentType(MIXERLINE_COMPONENTTYPE.SRC_WAVEOUT);
+
+      toolStripTrackBar1.Tag = pbline;
+      toolStripMuteButton.Tag = pbline;
+      MixerLine recline = mMixers.Recording.UserLines.GetMixerFirstLineByComponentType(MIXERLINE_COMPONENTTYPE.SRC_MICROPHONE); ;
+      toolStripMicMuteButton.Tag = recline;
+
+      //If it is 2 channels then ask both and set the volume to the bigger but keep relation between them (Balance)
+      int volume = 0;
+      float balance = 0;
+      if (pbline.Channels != 2)
+        volume = pbline.Volume;
+      else
+      {
+        pbline.Channel = Channel.Left;
+        int left = pbline.Volume;
+        pbline.Channel = Channel.Right;
+        int right = pbline.Volume;
+        if (left > right)
+        {
+          volume = left;
+          balance = (volume > 0) ? -(1 - (right / (float)left)) : 0;
+        }
+        else
+        {
+          volume = right;
+          balance = (volume > 0) ? (1 - (left / (float)right)) : 0;
+        }
+      }
+
+      if (volume >= 0)
+        this.toolStripTrackBar1.Value = volume;
+      else
+        this.toolStripTrackBar1.Enabled = false;
+
+      // toolstrip checkboxes
+      this.toolStripMuteButton.Checked = pbline.Mute;
+      this.toolStripMicMuteButton.Checked = recline.Volume == 0 ? true : false;
+      _lastMicVol = recline.Volume;
+    }
+
+    private void MainForm_Load(object sender, EventArgs e)
+    {
+      LoadAudioValues();
+    }
+
+    private void toolStripTrackBar1_ValueChanged(object sender, EventArgs e)
+    {
+      if (mAvoidEvents)
+        return;
+
+      TrackBar tBar = (TrackBar)sender;
+      MixerLine line = (MixerLine)tBar.Tag;
+      if (line.Channels != 2)
+      {
+        // One channel or more than two let set the volume uniform
+        line.Channel = Channel.Uniform;
+        line.Volume = tBar.Value;
+      }
+      else
+      {
+        //Set independent volume
+        line.Channel = Channel.Uniform;
+        line.Volume = toolStripTrackBar1.Value;
+      }
+    }
+
+    /// <summary>
+    /// Callback from Windows Volume Control
+    /// </summary>
+    /// <param name="mixer"></param>
+    /// <param name="line"></param>
+    private void mMixer_MixerLineChanged(Mixer mixer, MixerLine line)
+    {
+      mAvoidEvents = true;
+
+      try
+      {
+        float balance = -1;
+        MixerLine frontEndLine = (MixerLine)toolStripTrackBar1.Tag;
+        if (frontEndLine == line)
+        {
+          int volume = 0;
+          if (line.Channels != 2)
+            volume = line.Volume;
+          else
+          {
+            line.Channel = Channel.Left;
+            int left = line.Volume;
+            line.Channel = Channel.Right;
+            int right = line.Volume;
+            if (left > right)
+            {
+              volume = left;
+              // TIP: Do not reset the balance if both left and right channel have 0 value
+              if (left != 0 && right != 0)
+                balance = (volume > 0) ? -(1 - (right / (float)left)) : 0;
+            }
+            else
+            {
+              volume = right;
+              // TIP: Do not reset the balance if both left and right channel have 0 value
+              if (left != 0 && right != 0)
+                balance = (volume > 0) ? 1 - (left / (float)right) : 0;
+            }
+          }
+
+          if (volume >= 0)
+            toolStripTrackBar1.Value = volume;
+
+        }
+
+        // adjust toolstrip checkboxes
+        if ((MixerLine)toolStripMicMuteButton.Tag == line)
+        {
+          toolStripMicMuteButton.Checked = line.Volume == 0 ? true : false;
+        }
+        else if ((MixerLine)toolStripMuteButton.Tag == line)
+        {
+           toolStripMuteButton.Checked = line.Mute;
+        }
+      }
+      finally
+      {
+        mAvoidEvents = false;
+      }
+    }
+
+    private int _lastMicVol = 0;
+
+    private void toolStripMuteButton_Click(object sender, EventArgs e)
+    {
+      ToolStripButton chkBox = (ToolStripButton)sender;
+      MixerLine line = (MixerLine)chkBox.Tag;
+      if (line.Direction == MixerType.Recording)
+      {
+        //line.Selected = chkBox.Checked;
+        if (chkBox.Checked == true)
+        {
+          _lastMicVol = line.Volume;
+          line.Volume = 0;
+        }
+        else 
+        {
+          line.Volume = _lastMicVol;
+        }
+      }
+      else
+      {
+        line.Mute = chkBox.Checked;
+      }
+    }
+  }
+
+
+
+  [System.ComponentModel.DesignerCategory("code")]
+  [ToolStripItemDesignerAvailability(ToolStripItemDesignerAvailability.ToolStrip | ToolStripItemDesignerAvailability.StatusStrip)]
+  public partial class ToolStripTrackBar : ToolStripControlHost
+  {
+    public ToolStripTrackBar()
+      : base(CreateControlInstance())
+    {
+
+    }
+
+    /// <summary>
+    /// Create a strongly typed property called TrackBar - handy to prevent casting everywhere.
+    /// </summary>
+    public TrackBar TrackBar
+    {
+      get
+      {
+        return Control as TrackBar;
+      }
+    }
+
+    /// <summary>
+    /// Create the actual control, note this is static so it can be called from the
+    /// constructor.
+    ///
+    /// </summary>
+    /// <returns></returns>
+    private static Control CreateControlInstance()
+    {
+      TrackBar t = new TrackBar();
+      t.AutoSize = false;
+      t.Height = 16;
+      t.TickFrequency = 6553;
+      t.SmallChange = 6553;
+      t.LargeChange = 10000;
+      t.Minimum = 0;
+      t.Maximum = 65535;
+
+      // Add other initialization code here.
+      return t;
+    }
+
+    [DefaultValue(0)]
+    public int Value
+    {
+      get { return TrackBar.Value; }
+      set { TrackBar.Value = value; }
+    }
+    
+    [DefaultValue(0)]
+    public object Tag
+    {
+      get { return TrackBar.Tag; }
+      set { TrackBar.Tag = value; }
+    }
+
+    /// <summary>
+    /// Attach to events we want to re-wrap
+    /// </summary>
+    /// <param name="control"></param>
+    protected override void OnSubscribeControlEvents(Control control)
+    {
+      base.OnSubscribeControlEvents(control);
+      TrackBar trackBar = control as TrackBar;
+      trackBar.ValueChanged += new EventHandler(trackBar_ValueChanged);
+    }
+
+    /// <summary>
+    /// Detach from events.
+    /// </summary>
+    /// <param name="control"></param>
+    protected override void OnUnsubscribeControlEvents(Control control)
+    {
+      base.OnUnsubscribeControlEvents(control);
+      TrackBar trackBar = control as TrackBar;
+      trackBar.ValueChanged -= new EventHandler(trackBar_ValueChanged);
+
+    }
+
+
+    /// <summary>
+    /// Routing for event
+    /// TrackBar.ValueChanged -> ToolStripTrackBar.ValueChanged
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    void trackBar_ValueChanged(object sender, EventArgs e)
+    {
+      // when the trackbar value changes, fire an event.
+      if (this.ValueChanged != null)
+      {
+        ValueChanged(sender, e);
+      }
+    }
+
+    // add an event that is subscribable from the designer.
+    public event EventHandler ValueChanged;
+
+
+    // set other defaults that are interesting
+    protected override Size DefaultSize
+    {
+      get
+      {
+        return new Size(200, 16);
+      }
+    }
+
   }
 }
