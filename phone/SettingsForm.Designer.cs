@@ -49,10 +49,13 @@ namespace Sipek
       this.comboBoxAccounts = new System.Windows.Forms.ComboBox();
       this.tabPageSettingsGeneral = new System.Windows.Forms.TabPage();
       this.groupBox5 = new System.Windows.Forms.GroupBox();
+      this.checkBoxRecordingMute = new System.Windows.Forms.CheckBox();
+      this.label9 = new System.Windows.Forms.Label();
       this.checkBoxSelectMic = new System.Windows.Forms.CheckBox();
       this.trackBarRecordingVolume = new System.Windows.Forms.TrackBar();
       this.comboBoxRecordingDevices = new System.Windows.Forms.ComboBox();
       this.groupBox4 = new System.Windows.Forms.GroupBox();
+      this.label8 = new System.Windows.Forms.Label();
       this.trackBarPlaybackBalance = new System.Windows.Forms.TrackBar();
       this.comboBoxPlaybackDevices = new System.Windows.Forms.ComboBox();
       this.trackBarPlaybackVolume = new System.Windows.Forms.TrackBar();
@@ -73,9 +76,6 @@ namespace Sipek
       this.buttonApply = new System.Windows.Forms.Button();
       this.buttonCancel = new System.Windows.Forms.Button();
       this.buttonOK = new System.Windows.Forms.Button();
-      this.label8 = new System.Windows.Forms.Label();
-      this.label9 = new System.Windows.Forms.Label();
-      this.checkBoxRecordingMute = new System.Windows.Forms.CheckBox();
       this.tabControlSettings.SuspendLayout();
       this.tabPageSettingsSIP.SuspendLayout();
       this.groupBox2.SuspendLayout();
@@ -304,6 +304,26 @@ namespace Sipek
       this.groupBox5.TabStop = false;
       this.groupBox5.Text = "Recording";
       // 
+      // checkBoxRecordingMute
+      // 
+      this.checkBoxRecordingMute.AutoSize = true;
+      this.checkBoxRecordingMute.Location = new System.Drawing.Point(185, 59);
+      this.checkBoxRecordingMute.Name = "checkBoxRecordingMute";
+      this.checkBoxRecordingMute.Size = new System.Drawing.Size(50, 17);
+      this.checkBoxRecordingMute.TabIndex = 4;
+      this.checkBoxRecordingMute.Text = "Mute";
+      this.checkBoxRecordingMute.UseVisualStyleBackColor = true;
+      this.checkBoxRecordingMute.Click += new System.EventHandler(this.checkBoxPlaybackMute_CheckedChanged);
+      // 
+      // label9
+      // 
+      this.label9.AutoSize = true;
+      this.label9.Location = new System.Drawing.Point(7, 60);
+      this.label9.Name = "label9";
+      this.label9.Size = new System.Drawing.Size(94, 13);
+      this.label9.TabIndex = 3;
+      this.label9.Text = "Recording Volume";
+      // 
       // checkBoxSelectMic
       // 
       this.checkBoxSelectMic.AutoSize = true;
@@ -353,6 +373,15 @@ namespace Sipek
       this.groupBox4.TabStop = false;
       this.groupBox4.Text = "Playback";
       // 
+      // label8
+      // 
+      this.label8.AutoSize = true;
+      this.label8.Location = new System.Drawing.Point(4, 59);
+      this.label8.Name = "label8";
+      this.label8.Size = new System.Drawing.Size(77, 13);
+      this.label8.TabIndex = 4;
+      this.label8.Text = "Master Volume";
+      // 
       // trackBarPlaybackBalance
       // 
       this.trackBarPlaybackBalance.LargeChange = 50;
@@ -379,7 +408,7 @@ namespace Sipek
       // 
       // trackBarPlaybackVolume
       // 
-      this.trackBarPlaybackVolume.Cursor = System.Windows.Forms.Cursors.No;
+      this.trackBarPlaybackVolume.Cursor = System.Windows.Forms.Cursors.Default;
       this.trackBarPlaybackVolume.LargeChange = 10000;
       this.trackBarPlaybackVolume.Location = new System.Drawing.Point(7, 92);
       this.trackBarPlaybackVolume.Maximum = 65535;
@@ -569,35 +598,6 @@ namespace Sipek
       this.buttonOK.Text = "OK";
       this.buttonOK.UseVisualStyleBackColor = true;
       this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
-      // 
-      // label8
-      // 
-      this.label8.AutoSize = true;
-      this.label8.Location = new System.Drawing.Point(4, 59);
-      this.label8.Name = "label8";
-      this.label8.Size = new System.Drawing.Size(77, 13);
-      this.label8.TabIndex = 4;
-      this.label8.Text = "Master Volume";
-      // 
-      // label9
-      // 
-      this.label9.AutoSize = true;
-      this.label9.Location = new System.Drawing.Point(7, 60);
-      this.label9.Name = "label9";
-      this.label9.Size = new System.Drawing.Size(94, 13);
-      this.label9.TabIndex = 3;
-      this.label9.Text = "Recording Volume";
-      // 
-      // checkBoxRecordingMute
-      // 
-      this.checkBoxRecordingMute.AutoSize = true;
-      this.checkBoxRecordingMute.Location = new System.Drawing.Point(185, 59);
-      this.checkBoxRecordingMute.Name = "checkBoxRecordingMute";
-      this.checkBoxRecordingMute.Size = new System.Drawing.Size(50, 17);
-      this.checkBoxRecordingMute.TabIndex = 4;
-      this.checkBoxRecordingMute.Text = "Mute";
-      this.checkBoxRecordingMute.UseVisualStyleBackColor = true;
-      this.checkBoxRecordingMute.Click += new System.EventHandler(this.checkBoxPlaybackMute_CheckedChanged);
       // 
       // SettingsForm
       // 
