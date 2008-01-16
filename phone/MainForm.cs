@@ -1,3 +1,23 @@
+/* 
+ * Copyright (C) 2008 Sasa Coh <sasacoh@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
+ * 
+ * WaveLib library sources http://www.codeproject.com/KB/graphics/AudioLib.aspx
+ */
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,7 +28,10 @@ using System.Windows.Forms;
 using System.Collections.ObjectModel;
 using Telephony;
 using System.Windows.Forms.Design;
-using WaveLib.AudioMixer;
+using WaveLib.AudioMixer; // see http://www.codeproject.com/KB/graphics/AudioLib.aspx
+
+
+
 
 namespace Sipek
 {
@@ -379,6 +402,7 @@ namespace Sipek
               holdRetrieveToolStripMenuItem.Text = "Hold";
               holdRetrieveToolStripMenuItem.Visible = true;
               transferToolStripMenuItem.Visible = true;
+              //sendMessageToolStripMenuItem.Visible = true;
               break;
             case EStateId.HOLDING:
               holdRetrieveToolStripMenuItem.Text = "Retrieve";
@@ -826,6 +850,13 @@ namespace Sipek
       {
         line.Mute = chkBox.Checked;
       }
+    }
+
+    private void listViewAccounts_DoubleClick(object sender, EventArgs e)
+    {
+      SettingsForm sf = new SettingsForm();
+      //sf.activateTab("");
+      sf.ShowDialog();
     }
   }
 
