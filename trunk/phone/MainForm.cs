@@ -911,7 +911,7 @@ namespace Sipek
 
     private void toolStrip3PtyButton_Click(object sender, EventArgs e)
     {
-      if (listViewBuddies.SelectedItems.Count > 0)
+      if (listViewCallLines.SelectedItems.Count > 0)
       {
         ListViewItem lvi = listViewCallLines.SelectedItems[0];
         // TODO implement 3Pty
