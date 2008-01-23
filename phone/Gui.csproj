@@ -97,7 +97,7 @@
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="MainForm.cs">
-      <SubType>Form</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -138,6 +138,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="SipekFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\telephony\Telephony.csproj">
@@ -152,8 +153,6 @@
     <None Include="Resources\toolStripButtonRelease.Image.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Gui_TemporaryKey.pfx" />
-    <BaseApplicationManifest Include="Properties\app.manifest" />
     <None Include="Resources\IconCall.ico" />
   </ItemGroup>
   <ItemGroup>

@@ -326,10 +326,10 @@ namespace Sipek
     public void addRecord(CBuddyRecord record)
     {
       // Call stack to add buddy and get buddy id
-      // TODO
-      int buddyindex = Telephony.CCallManager.CommonProxy.addBuddy(record.Number);
+      int buddyindex = Telephony.CCallManager.getInstance().Factory.getCommonProxy().addBuddy(record.Number);
       if (buddyindex == -1)
       {
+        // TODO:::check if ok
         return;
         Random rnd = new System.Random((int)DateTime.Now.Ticks);
         buddyindex = rnd.Next(10000);
