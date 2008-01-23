@@ -58,7 +58,7 @@ namespace Sipek
       if (buddy != null)
       {
         // Invoke SIP stack wrapper function to send message
-        CCallManager.CommonProxy.sendMessage(buddy.Number, textBoxChatInput.Text);
+        CCallManager.getInstance().Factory.getCommonProxy().sendMessage(buddy.Number, textBoxChatInput.Text);
 
         richTextBoxChatHistory.Text += "(me) " + DateTime.Now;
         
