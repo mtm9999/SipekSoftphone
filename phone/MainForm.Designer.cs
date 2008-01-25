@@ -49,8 +49,8 @@ namespace Sipek
       this.toolStripButtonCall = new System.Windows.Forms.ToolStripButton();
       this.toolStripButtonRelease = new System.Windows.Forms.ToolStripButton();
       this.toolStripButtonHoldRetrieve = new System.Windows.Forms.ToolStripButton();
-      this.toolStripKeyboardButton = new System.Windows.Forms.ToolStripButton();
       this.toolStrip3PtyButton = new System.Windows.Forms.ToolStripButton();
+      this.toolStripKeyboardButton = new System.Windows.Forms.ToolStripButton();
       this.panel1 = new System.Windows.Forms.Panel();
       this.splitContainerEW = new System.Windows.Forms.SplitContainer();
       this.splitContainerENS = new System.Windows.Forms.SplitContainer();
@@ -310,6 +310,16 @@ namespace Sipek
       this.toolStripButtonHoldRetrieve.ToolTipText = "Hold/Retrieve";
       this.toolStripButtonHoldRetrieve.Click += new System.EventHandler(this.toolStripButtonHoldRetrieve_Click);
       // 
+      // toolStrip3PtyButton
+      // 
+      this.toolStrip3PtyButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      this.toolStrip3PtyButton.Image = ((System.Drawing.Image)(resources.GetObject("toolStrip3PtyButton.Image")));
+      this.toolStrip3PtyButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.toolStrip3PtyButton.Name = "toolStrip3PtyButton";
+      this.toolStrip3PtyButton.Size = new System.Drawing.Size(23, 22);
+      this.toolStrip3PtyButton.ToolTipText = "Conference";
+      this.toolStrip3PtyButton.Click += new System.EventHandler(this.toolStrip3PtyButton_Click);
+      // 
       // toolStripKeyboardButton
       // 
       this.toolStripKeyboardButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -320,16 +330,6 @@ namespace Sipek
       this.toolStripKeyboardButton.Text = "toolStripButton1";
       this.toolStripKeyboardButton.ToolTipText = "Keyboard";
       this.toolStripKeyboardButton.Click += new System.EventHandler(this.toolStripKeyboardButton_Click);
-      // 
-      // toolStrip3PtyButton
-      // 
-      this.toolStrip3PtyButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      this.toolStrip3PtyButton.Image = ((System.Drawing.Image)(resources.GetObject("toolStrip3PtyButton.Image")));
-      this.toolStrip3PtyButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this.toolStrip3PtyButton.Name = "toolStrip3PtyButton";
-      this.toolStrip3PtyButton.Size = new System.Drawing.Size(23, 22);
-      this.toolStrip3PtyButton.ToolTipText = "Conference";
-      this.toolStrip3PtyButton.Click += new System.EventHandler(this.toolStrip3PtyButton_Click);
       // 
       // panel1
       // 
@@ -681,7 +681,10 @@ namespace Sipek
             this.columnHeaderAccountName,
             this.columnHeaderStatus});
       this.listViewAccounts.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.listViewAccounts.FullRowSelect = true;
+      this.listViewAccounts.HideSelection = false;
       this.listViewAccounts.Location = new System.Drawing.Point(3, 3);
+      this.listViewAccounts.MultiSelect = false;
       this.listViewAccounts.Name = "listViewAccounts";
       this.listViewAccounts.Size = new System.Drawing.Size(146, 111);
       this.listViewAccounts.TabIndex = 0;
