@@ -89,31 +89,34 @@ namespace Sipek
         {
           name = acc.Name;
         }
-
+        // create listviewitem
+        ListViewItem item = new ListViewItem(new string[] { name, acc.RegState.ToString() });
+        // mark default account
         if (acc.Index == CAccounts.getInstance().DefAccountIndex)
         {
-          // todo!!! Coloring!
+          // Mark default account; todo!!! Coloring!
+          item.BackColor = Color.LightGray;
 
+          string label = "";
           // check registration status
           if (acc.RegState == 200)
           {
-            toolStripStatusLabel.Text = "Registered"; //acc.Name + " - " + acc.DisplayName; 
-            this.Text = HEADER_TEXT + " - " + acc.Name + " (" + acc.DisplayName + ")";
+            this.Text = HEADER_TEXT + " - " + acc.Name + " (" + acc.DisplayName + ")"; ;
+            label = "Registered" + " - " + acc.Name + " (" + acc.DisplayName + ")";
           }
           else if (acc.RegState == 0)
           {
-            this.Text = HEADER_TEXT;
-            toolStripStatusLabel.Text = "Registering...";
+            label = "Trying..." + " - " + acc.Name;
           }
           else
           {
-            this.Text = HEADER_TEXT;
-            toolStripStatusLabel.Text = "Not registered!";
+            label = "Not registered" + " - " + acc.Name;
           }
+          toolStripStatusLabel.Text = label;
         }
-
-
-        ListViewItem item = new ListViewItem(new string[] { name, acc.RegState.ToString() });
+        else
+        {
+        }
 
         listViewAccounts.Items.Add(item);
       }
@@ -422,8 +425,10 @@ namespace Sipek
           if (duration.IndexOf('.') > 0) duration = duration.Remove(duration.IndexOf('.')); // remove miliseconds
           // show name & number or just number
           string display = name.Length > 0 ? name + " / " + number : number;
+          string stateName = kvp.Value.getStateName();
+          if (CCallManager.getInstance().Is3Pty) stateName = "CONFERENCE";
           ListViewItem lvi = new ListViewItem(new string[] {
-            kvp.Value.getStateName(), display, duration});
+            stateName, display, duration});
 
           lvi.Tag = kvp.Value.Session;
           listViewCallLines.Items.Add(lvi);
@@ -918,6 +923,7 @@ namespace Sipek
         CCallManager.getInstance().onUserConference((int)lvi.Tag);
       }
     }
+
   }
 
   //[System.ComponentModel.DesignerCategory("code")]
