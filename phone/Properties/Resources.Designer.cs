@@ -59,5 +59,348 @@ namespace Sipek.Properties {
                 resourceCulture = value;
             }
         }
+        
+        internal static System.Drawing.Bitmap Dial {
+            get {
+                object obj = ResourceManager.GetObject("Dial", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap DialOV {
+            get {
+                object obj = ResourceManager.GetObject("DialOV", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap DialPad0 {
+            get {
+                object obj = ResourceManager.GetObject("DialPad0", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap DialPad0OV {
+            get {
+                object obj = ResourceManager.GetObject("DialPad0OV", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap DialPad1 {
+            get {
+                object obj = ResourceManager.GetObject("DialPad1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap DialPad1OV {
+            get {
+                object obj = ResourceManager.GetObject("DialPad1OV", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap DialPad2 {
+            get {
+                object obj = ResourceManager.GetObject("DialPad2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap DialPad2OV {
+            get {
+                object obj = ResourceManager.GetObject("DialPad2OV", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap DialPad3 {
+            get {
+                object obj = ResourceManager.GetObject("DialPad3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap DialPad3OV {
+            get {
+                object obj = ResourceManager.GetObject("DialPad3OV", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap DialPad4 {
+            get {
+                object obj = ResourceManager.GetObject("DialPad4", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap DialPad4OV {
+            get {
+                object obj = ResourceManager.GetObject("DialPad4OV", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap DialPad5 {
+            get {
+                object obj = ResourceManager.GetObject("DialPad5", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap DialPad5OV {
+            get {
+                object obj = ResourceManager.GetObject("DialPad5OV", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap DialPad6 {
+            get {
+                object obj = ResourceManager.GetObject("DialPad6", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap DialPad6OV {
+            get {
+                object obj = ResourceManager.GetObject("DialPad6OV", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap DialPad7 {
+            get {
+                object obj = ResourceManager.GetObject("DialPad7", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap DialPad7OV {
+            get {
+                object obj = ResourceManager.GetObject("DialPad7OV", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap DialPad8 {
+            get {
+                object obj = ResourceManager.GetObject("DialPad8", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap DialPad8OV {
+            get {
+                object obj = ResourceManager.GetObject("DialPad8OV", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap DialPad9 {
+            get {
+                object obj = ResourceManager.GetObject("DialPad9", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap DialPad9OV {
+            get {
+                object obj = ResourceManager.GetObject("DialPad9OV", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap DialPadHash {
+            get {
+                object obj = ResourceManager.GetObject("DialPadHash", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap DialPadHashOV {
+            get {
+                object obj = ResourceManager.GetObject("DialPadHashOV", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap DialPadStar {
+            get {
+                object obj = ResourceManager.GetObject("DialPadStar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap DialPadStarOV {
+            get {
+                object obj = ResourceManager.GetObject("DialPadStarOV", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Hangup {
+            get {
+                object obj = ResourceManager.GetObject("Hangup", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap HangupOV {
+            get {
+                object obj = ResourceManager.GetObject("HangupOV", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap keyboard_key {
+            get {
+                object obj = ResourceManager.GetObject("keyboard_key", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap loudspeaker {
+            get {
+                object obj = ResourceManager.GetObject("loudspeaker", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap loudspeaker_add {
+            get {
+                object obj = ResourceManager.GetObject("loudspeaker_add", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap loudspeaker_delete {
+            get {
+                object obj = ResourceManager.GetObject("loudspeaker_delete", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap loudspeaker_edit {
+            get {
+                object obj = ResourceManager.GetObject("loudspeaker_edit", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap loudspeaker_network {
+            get {
+                object obj = ResourceManager.GetObject("loudspeaker_network", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap loudspeaker_pause {
+            get {
+                object obj = ResourceManager.GetObject("loudspeaker_pause", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap loudspeaker_preferences {
+            get {
+                object obj = ResourceManager.GetObject("loudspeaker_preferences", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap loudspeaker_run {
+            get {
+                object obj = ResourceManager.GetObject("loudspeaker_run", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap loudspeaker_stop {
+            get {
+                object obj = ResourceManager.GetObject("loudspeaker_stop", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap microphone1 {
+            get {
+                object obj = ResourceManager.GetObject("microphone1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap microphone2 {
+            get {
+                object obj = ResourceManager.GetObject("microphone2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap phone_call {
+            get {
+                object obj = ResourceManager.GetObject("phone_call", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap phone_conference {
+            get {
+                object obj = ResourceManager.GetObject("phone_conference", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap phone_hang_up {
+            get {
+                object obj = ResourceManager.GetObject("phone_hang_up", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap phone_hold {
+            get {
+                object obj = ResourceManager.GetObject("phone_hold", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap phone_pick_up {
+            get {
+                object obj = ResourceManager.GetObject("phone_pick_up", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap phone_recall {
+            get {
+                object obj = ResourceManager.GetObject("phone_recall", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap phone_redirect {
+            get {
+                object obj = ResourceManager.GetObject("phone_redirect", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap phone_reject {
+            get {
+                object obj = ResourceManager.GetObject("phone_reject", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap phone_speaker {
+            get {
+                object obj = ResourceManager.GetObject("phone_speaker", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }
