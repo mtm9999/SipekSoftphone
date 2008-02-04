@@ -29,7 +29,6 @@ namespace Sipek
     private void InitializeComponent()
     {
       this.components = new System.ComponentModel.Container();
-      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
       this.BottomToolStripPanel = new System.Windows.Forms.ToolStripPanel();
       this.TopToolStripPanel = new System.Windows.Forms.ToolStripPanel();
       this.RightToolStripPanel = new System.Windows.Forms.ToolStripPanel();
@@ -95,12 +94,13 @@ namespace Sipek
       this.columnHeaderAccountName = new System.Windows.Forms.ColumnHeader();
       this.columnHeaderStatus = new System.Windows.Forms.ColumnHeader();
       this.toolStripContainer2 = new System.Windows.Forms.ToolStripContainer();
-      this.toolStripUserStatus = new System.Windows.Forms.ToolStrip();
-      this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
-      this.toolStripComboBoxUserStatus = new System.Windows.Forms.ToolStripComboBox();
       this.toolStrip1 = new System.Windows.Forms.ToolStrip();
       this.toolStripMuteButton = new System.Windows.Forms.ToolStripButton();
       this.toolStripMicMuteButton = new System.Windows.Forms.ToolStripButton();
+      this.toolStripTrackBar1 = new Sipek.ToolStripTrackBar();
+      this.toolStripUserStatus = new System.Windows.Forms.ToolStrip();
+      this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+      this.toolStripComboBoxUserStatus = new System.Windows.Forms.ToolStripComboBox();
       this.toolStripServices = new System.Windows.Forms.ToolStrip();
       this.toolStripButtonDND = new System.Windows.Forms.ToolStripButton();
       this.toolStripButtonAA = new System.Windows.Forms.ToolStripButton();
@@ -111,7 +111,6 @@ namespace Sipek
       this.toolStripTextBoxCFNRNumber = new System.Windows.Forms.ToolStripTextBox();
       this.busyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripTextBoxCFBNumber = new System.Windows.Forms.ToolStripTextBox();
-      this.toolStripTrackBar1 = new Sipek.ToolStripTrackBar();
       this.statusStrip.SuspendLayout();
       this.menuStrip.SuspendLayout();
       this.toolStripCall.SuspendLayout();
@@ -134,8 +133,8 @@ namespace Sipek
       this.toolStripContainer2.ContentPanel.SuspendLayout();
       this.toolStripContainer2.TopToolStripPanel.SuspendLayout();
       this.toolStripContainer2.SuspendLayout();
-      this.toolStripUserStatus.SuspendLayout();
       this.toolStrip1.SuspendLayout();
+      this.toolStripUserStatus.SuspendLayout();
       this.toolStripServices.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -669,7 +668,7 @@ namespace Sipek
       this.tabPageAccounts.Location = new System.Drawing.Point(4, 22);
       this.tabPageAccounts.Name = "tabPageAccounts";
       this.tabPageAccounts.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPageAccounts.Size = new System.Drawing.Size(152, 167);
+      this.tabPageAccounts.Size = new System.Drawing.Size(152, 117);
       this.tabPageAccounts.TabIndex = 2;
       this.tabPageAccounts.Text = "Accounts";
       this.tabPageAccounts.UseVisualStyleBackColor = true;
@@ -686,7 +685,7 @@ namespace Sipek
       this.listViewAccounts.Location = new System.Drawing.Point(3, 3);
       this.listViewAccounts.MultiSelect = false;
       this.listViewAccounts.Name = "listViewAccounts";
-      this.listViewAccounts.Size = new System.Drawing.Size(146, 161);
+      this.listViewAccounts.Size = new System.Drawing.Size(146, 111);
       this.listViewAccounts.TabIndex = 0;
       this.listViewAccounts.UseCompatibleStateImageBehavior = false;
       this.listViewAccounts.View = System.Windows.Forms.View.Details;
@@ -723,9 +722,54 @@ namespace Sipek
       // 
       this.toolStripContainer2.TopToolStripPanel.Controls.Add(this.menuStrip);
       this.toolStripContainer2.TopToolStripPanel.Controls.Add(this.toolStripCall);
+      this.toolStripContainer2.TopToolStripPanel.Controls.Add(this.toolStripServices);
       this.toolStripContainer2.TopToolStripPanel.Controls.Add(this.toolStrip1);
       this.toolStripContainer2.TopToolStripPanel.Controls.Add(this.toolStripUserStatus);
-      this.toolStripContainer2.TopToolStripPanel.Controls.Add(this.toolStripServices);
+      // 
+      // toolStrip1
+      // 
+      this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
+      this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMuteButton,
+            this.toolStripMicMuteButton,
+            this.toolStripTrackBar1});
+      this.toolStrip1.Location = new System.Drawing.Point(341, 24);
+      this.toolStrip1.Name = "toolStrip1";
+      this.toolStrip1.Size = new System.Drawing.Size(160, 25);
+      this.toolStrip1.TabIndex = 10;
+      // 
+      // toolStripMuteButton
+      // 
+      this.toolStripMuteButton.CheckOnClick = true;
+      this.toolStripMuteButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      this.toolStripMuteButton.Image = global::Sipek.Properties.Resources.loudspeaker_run;
+      this.toolStripMuteButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.toolStripMuteButton.Name = "toolStripMuteButton";
+      this.toolStripMuteButton.Size = new System.Drawing.Size(23, 22);
+      this.toolStripMuteButton.Text = "toolStripButton1";
+      this.toolStripMuteButton.ToolTipText = "Silence";
+      this.toolStripMuteButton.Click += new System.EventHandler(this.toolStripMuteButton_Click);
+      // 
+      // toolStripMicMuteButton
+      // 
+      this.toolStripMicMuteButton.CheckOnClick = true;
+      this.toolStripMicMuteButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      this.toolStripMicMuteButton.Image = global::Sipek.Properties.Resources.microphone2;
+      this.toolStripMicMuteButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.toolStripMicMuteButton.Name = "toolStripMicMuteButton";
+      this.toolStripMicMuteButton.Size = new System.Drawing.Size(23, 22);
+      this.toolStripMicMuteButton.ToolTipText = "Microphone Mute";
+      this.toolStripMicMuteButton.Click += new System.EventHandler(this.toolStripMuteButton_Click);
+      // 
+      // toolStripTrackBar1
+      // 
+      this.toolStripTrackBar1.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+      this.toolStripTrackBar1.Name = "toolStripTrackBar1";
+      this.toolStripTrackBar1.Size = new System.Drawing.Size(104, 22);
+      this.toolStripTrackBar1.Tag = null;
+      this.toolStripTrackBar1.Text = "toolStripTrackBar1";
+      this.toolStripTrackBar1.ToolTipText = "Volume Control";
+      this.toolStripTrackBar1.ValueChanged += new System.EventHandler(this.toolStripTrackBar1_ValueChanged);
       // 
       // toolStripUserStatus
       // 
@@ -760,41 +804,6 @@ namespace Sipek
       this.toolStripComboBoxUserStatus.ToolTipText = "Select User Status";
       this.toolStripComboBoxUserStatus.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBoxUserStatus_SelectedIndexChanged);
       // 
-      // toolStrip1
-      // 
-      this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
-      this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMuteButton,
-            this.toolStripMicMuteButton,
-            this.toolStripTrackBar1});
-      this.toolStrip1.Location = new System.Drawing.Point(339, 24);
-      this.toolStrip1.Name = "toolStrip1";
-      this.toolStrip1.Size = new System.Drawing.Size(160, 25);
-      this.toolStrip1.TabIndex = 10;
-      // 
-      // toolStripMuteButton
-      // 
-      this.toolStripMuteButton.CheckOnClick = true;
-      this.toolStripMuteButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      this.toolStripMuteButton.Image = global::Sipek.Properties.Resources.loudspeaker_run;
-      this.toolStripMuteButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this.toolStripMuteButton.Name = "toolStripMuteButton";
-      this.toolStripMuteButton.Size = new System.Drawing.Size(23, 22);
-      this.toolStripMuteButton.Text = "toolStripButton1";
-      this.toolStripMuteButton.ToolTipText = "Silence";
-      this.toolStripMuteButton.Click += new System.EventHandler(this.toolStripMuteButton_Click);
-      // 
-      // toolStripMicMuteButton
-      // 
-      this.toolStripMicMuteButton.CheckOnClick = true;
-      this.toolStripMicMuteButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      this.toolStripMicMuteButton.Image = global::Sipek.Properties.Resources.microphone2;
-      this.toolStripMicMuteButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this.toolStripMicMuteButton.Name = "toolStripMicMuteButton";
-      this.toolStripMicMuteButton.Size = new System.Drawing.Size(23, 22);
-      this.toolStripMicMuteButton.ToolTipText = "Microphone Mute";
-      this.toolStripMicMuteButton.Click += new System.EventHandler(this.toolStripMuteButton_Click);
-      // 
       // toolStripServices
       // 
       this.toolStripServices.Dock = System.Windows.Forms.DockStyle.None;
@@ -823,7 +832,7 @@ namespace Sipek
       // 
       this.toolStripButtonAA.CheckOnClick = true;
       this.toolStripButtonAA.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      this.toolStripButtonAA.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonAA.Image")));
+      this.toolStripButtonAA.Image = global::Sipek.Properties.Resources.phone_recall;
       this.toolStripButtonAA.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.toolStripButtonAA.Name = "toolStripButtonAA";
       this.toolStripButtonAA.Size = new System.Drawing.Size(23, 22);
@@ -891,16 +900,6 @@ namespace Sipek
       this.toolStripTextBoxCFBNumber.Size = new System.Drawing.Size(100, 21);
       this.toolStripTextBoxCFBNumber.TextChanged += new System.EventHandler(this.toolStripTextBoxCFBNumber_TextChanged);
       // 
-      // toolStripTrackBar1
-      // 
-      this.toolStripTrackBar1.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
-      this.toolStripTrackBar1.Name = "toolStripTrackBar1";
-      this.toolStripTrackBar1.Size = new System.Drawing.Size(104, 22);
-      this.toolStripTrackBar1.Tag = null;
-      this.toolStripTrackBar1.Text = "toolStripTrackBar1";
-      this.toolStripTrackBar1.ToolTipText = "Volume Control";
-      this.toolStripTrackBar1.ValueChanged += new System.EventHandler(this.toolStripTrackBar1_ValueChanged);
-      // 
       // MainForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -941,10 +940,10 @@ namespace Sipek
       this.toolStripContainer2.TopToolStripPanel.PerformLayout();
       this.toolStripContainer2.ResumeLayout(false);
       this.toolStripContainer2.PerformLayout();
-      this.toolStripUserStatus.ResumeLayout(false);
-      this.toolStripUserStatus.PerformLayout();
       this.toolStrip1.ResumeLayout(false);
       this.toolStrip1.PerformLayout();
+      this.toolStripUserStatus.ResumeLayout(false);
+      this.toolStripUserStatus.PerformLayout();
       this.toolStripServices.ResumeLayout(false);
       this.toolStripServices.PerformLayout();
       this.ResumeLayout(false);
