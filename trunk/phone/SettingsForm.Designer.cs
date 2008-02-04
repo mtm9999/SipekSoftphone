@@ -341,7 +341,7 @@ namespace Sipek
       this.trackBarRecordingVolume.Location = new System.Drawing.Point(6, 97);
       this.trackBarRecordingVolume.Maximum = 65535;
       this.trackBarRecordingVolume.Name = "trackBarRecordingVolume";
-      this.trackBarRecordingVolume.Size = new System.Drawing.Size(165, 45);
+      this.trackBarRecordingVolume.Size = new System.Drawing.Size(165, 42);
       this.trackBarRecordingVolume.SmallChange = 6553;
       this.trackBarRecordingVolume.TabIndex = 1;
       this.trackBarRecordingVolume.TickFrequency = 6553;
@@ -390,7 +390,7 @@ namespace Sipek
       this.trackBarPlaybackBalance.Minimum = -320;
       this.trackBarPlaybackBalance.Name = "trackBarPlaybackBalance";
       this.trackBarPlaybackBalance.Orientation = System.Windows.Forms.Orientation.Vertical;
-      this.trackBarPlaybackBalance.Size = new System.Drawing.Size(45, 65);
+      this.trackBarPlaybackBalance.Size = new System.Drawing.Size(42, 65);
       this.trackBarPlaybackBalance.SmallChange = 10;
       this.trackBarPlaybackBalance.TabIndex = 1;
       this.trackBarPlaybackBalance.TickFrequency = 320;
@@ -413,7 +413,7 @@ namespace Sipek
       this.trackBarPlaybackVolume.Location = new System.Drawing.Point(7, 92);
       this.trackBarPlaybackVolume.Maximum = 65535;
       this.trackBarPlaybackVolume.Name = "trackBarPlaybackVolume";
-      this.trackBarPlaybackVolume.Size = new System.Drawing.Size(167, 45);
+      this.trackBarPlaybackVolume.Size = new System.Drawing.Size(167, 42);
       this.trackBarPlaybackVolume.SmallChange = 6553;
       this.trackBarPlaybackVolume.TabIndex = 2;
       this.trackBarPlaybackVolume.TickFrequency = 6553;

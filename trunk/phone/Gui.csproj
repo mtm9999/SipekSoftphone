@@ -77,6 +77,7 @@
     <Compile Include="BuddyForm.Designer.cs">
       <DependentUpon>BuddyForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="calllog.cs" />
     <Compile Include="ChatForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -90,6 +91,12 @@
       <DependentUpon>KeyboardForm.cs</DependentUpon>
     </Compile>
     <Compile Include="phonebook.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -141,19 +148,21 @@
     <Compile Include="SipekFactory.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\pjsipWrapper\pjsipWrapper.csproj">
+      <Project>{0780DDB5-AE6E-4F6A-BCA3-A768606A6F84}</Project>
+      <Name>pjsipWrapper</Name>
+    </ProjectReference>
     <ProjectReference Include="..\telephony\Telephony.csproj">
       <Project>{7C60E672-0016-457E-9D23-445F88FB1640}</Project>
       <Name>Telephony</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\toolStripButtonCall.Image.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\toolStripButtonRelease.Image.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\IconCall.ico" />
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
@@ -161,6 +170,57 @@
       <ProductName>.NET Framework 2.0</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\Dial.png" />
+    <Content Include="Resources\DialOV.png" />
+    <Content Include="Resources\DialPad0.png" />
+    <Content Include="Resources\DialPad0OV.png" />
+    <Content Include="Resources\DialPad1.png" />
+    <Content Include="Resources\DialPad1OV.png" />
+    <Content Include="Resources\DialPad2.png" />
+    <Content Include="Resources\DialPad2OV.png" />
+    <Content Include="Resources\DialPad3.png" />
+    <Content Include="Resources\DialPad3OV.png" />
+    <Content Include="Resources\DialPad4.png" />
+    <Content Include="Resources\DialPad4OV.png" />
+    <Content Include="Resources\DialPad5.png" />
+    <Content Include="Resources\DialPad5OV.png" />
+    <Content Include="Resources\DialPad6.png" />
+    <Content Include="Resources\DialPad6OV.png" />
+    <Content Include="Resources\DialPad7.png" />
+    <Content Include="Resources\DialPad7OV.png" />
+    <Content Include="Resources\DialPad8.png" />
+    <Content Include="Resources\DialPad8OV.png" />
+    <Content Include="Resources\DialPad9.png" />
+    <Content Include="Resources\DialPad9OV.png" />
+    <Content Include="Resources\DialPadHash.png" />
+    <Content Include="Resources\DialPadHashOV.png" />
+    <Content Include="Resources\DialPadStar.png" />
+    <Content Include="Resources\DialPadStarOV.png" />
+    <Content Include="Resources\Hangup.png" />
+    <Content Include="Resources\HangupOV.png" />
+    <Content Include="Resources\keyboard_key.png" />
+    <Content Include="Resources\loudspeaker.png" />
+    <Content Include="Resources\loudspeaker_add.png" />
+    <Content Include="Resources\loudspeaker_delete.png" />
+    <Content Include="Resources\loudspeaker_edit.png" />
+    <Content Include="Resources\loudspeaker_network.png" />
+    <Content Include="Resources\loudspeaker_pause.png" />
+    <Content Include="Resources\loudspeaker_preferences.png" />
+    <Content Include="Resources\loudspeaker_run.png" />
+    <Content Include="Resources\loudspeaker_stop.png" />
+    <Content Include="Resources\microphone1.png" />
+    <Content Include="Resources\microphone2.png" />
+    <Content Include="Resources\phone_call.png" />
+    <Content Include="Resources\phone_conference.png" />
+    <Content Include="Resources\phone_hang_up.png" />
+    <Content Include="Resources\phone_hold.png" />
+    <Content Include="Resources\phone_pick_up.png" />
+    <Content Include="Resources\phone_recall.png" />
+    <Content Include="Resources\phone_redirect.png" />
+    <Content Include="Resources\phone_reject.png" />
+    <Content Include="Resources\phone_speaker.png" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -9,8 +9,13 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telephony", "telephony\Telephony.csproj", "{7C60E672-0016-457E-9D23-445F88FB1640}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "test\UnitTest.csproj", "{BA6C2384-22AE-422A-8B37-D3963F3A705B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D3EE2A06-D617-45F8-879E-8D0931BC8982} = {D3EE2A06-D617-45F8-879E-8D0931BC8982}
+	EndProjectSection
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{DC632D21-59DF-4195-9333-7445C85325F4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pjsipWrapper", "pjsipWrapper\pjsipWrapper.csproj", "{0780DDB5-AE6E-4F6A-BCA3-A768606A6F84}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +37,10 @@ Global
 		{BA6C2384-22AE-422A-8B37-D3963F3A705B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DC632D21-59DF-4195-9333-7445C85325F4}.Debug|Any CPU.ActiveCfg = Debug
 		{DC632D21-59DF-4195-9333-7445C85325F4}.Release|Any CPU.ActiveCfg = Release
+		{0780DDB5-AE6E-4F6A-BCA3-A768606A6F84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0780DDB5-AE6E-4F6A-BCA3-A768606A6F84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0780DDB5-AE6E-4F6A-BCA3-A768606A6F84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0780DDB5-AE6E-4F6A-BCA3-A768606A6F84}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

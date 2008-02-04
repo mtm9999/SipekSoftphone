@@ -4,6 +4,7 @@ using System.Text;
 using System.Timers;
 using System.Runtime.InteropServices;
 using Telephony;
+using PjsipWrapper; // for CSipCommonProxy,...
 
 namespace Sipek
 {
@@ -112,18 +113,220 @@ namespace Sipek
     }
   }
 
+
+  // Accounts
+  public class SipekAccount : IAccount
+  {
+    private int _index = -1;
+    public SipekAccount(int index)
+    {
+      _index = index;
+    }
+
+    #region Properties
+
+    public override string AccountName
+    {
+      get
+      {
+        return Properties.Settings.Default.cfgSipAccountNames[_index];
+      }
+      set
+      {
+        Properties.Settings.Default.cfgSipAccountNames[_index] = value;
+      }
+    }
+
+    public override string HostName
+    {
+      get
+      {
+        return Properties.Settings.Default.cfgSipAccountAddresses[_index];
+      }
+      set
+      {
+        Properties.Settings.Default.cfgSipAccountAddresses[_index] = value;
+      }
+    }
+
+    public override string Id
+    {
+      get
+      {
+        return Properties.Settings.Default.cfgSipAccountIds[_index];
+      }
+      set
+      {
+        Properties.Settings.Default.cfgSipAccountIds[_index] = value;
+      }
+    }
+
+    public override string UserName
+    {
+      get
+      {
+        return Properties.Settings.Default.cfgSipAccountUsername[_index];
+      }
+      set
+      {
+        Properties.Settings.Default.cfgSipAccountUsername[_index] = value;
+      }
+    }
+
+    public override string Password
+    {
+      get
+      {
+        return Properties.Settings.Default.cfgSipAccountPassword[_index];
+      }
+      set
+      {
+        Properties.Settings.Default.cfgSipAccountPassword[_index] = value;
+      }
+    }
+
+    public override string DisplayName
+    {
+      get
+      {
+        return Properties.Settings.Default.cfgSipAccountDisplayName[_index];
+      }
+      set
+      {
+        Properties.Settings.Default.cfgSipAccountDisplayName[_index] = value;
+      }
+    }
+
+    public override string DomainName
+    {
+      get
+      {
+        return Properties.Settings.Default.cfgSipAccountDomains[_index];
+      }
+      set
+      {
+        Properties.Settings.Default.cfgSipAccountDomains[_index] = value;
+      }
+    }
+
+    public override int Port
+    {
+      get
+      {
+        return 5060;//throw new Exception("The method or operation is not implemented.");
+      }
+      set
+      {
+        //throw new Exception("The method or operation is not implemented.");
+      }
+    }
+
+    public override int RegState
+    {
+      get 
+      {
+        short value;
+        if (Int16.TryParse(Properties.Settings.Default.cfgSipAccountState[_index], out value))
+        {
+          return value;
+        }
+        return 0; 
+      }
+      set
+      {
+        Properties.Settings.Default.cfgSipAccountState[_index] = value.ToString();
+      }
+    }
+
+    #endregion
+
+  }
+
   /// <summary>
   /// 
   /// </summary>
   public class SipekConfigurator : IConfiguratorInterface
   {
-    public override bool CFUFlag { get { return CSettings.CFU; } }
-    public override string CFUNumber { get { return CSettings.CFUNumber; } }
-    public override bool CFNRFlag { get { return CSettings.CFNR; } }
-    public override string CFNRNumber { get { return CSettings.CFNRNumber; } }
-    public override bool DNDFlag { get { return CSettings.DND; } }
-    public override bool AAFlag { get { return CSettings.AA; } }
-    public override int SipPort { get { return 5060; } }
+    public override bool CFUFlag {
+      get { return Properties.Settings.Default.cfgCFUFlag; }
+      set { Properties.Settings.Default.cfgCFUFlag = value; }
+    }
+    public override string CFUNumber 
+    {
+      get { return Properties.Settings.Default.cfgCFUNumber; }
+      set { Properties.Settings.Default.cfgCFUNumber = value; }
+    }
+    public override bool CFNRFlag 
+    {
+      get { return Properties.Settings.Default.cfgCFNRFlag; }
+      set { Properties.Settings.Default.cfgCFNRFlag = value; }
+    }
+    public override string CFNRNumber 
+    {
+      get { return Properties.Settings.Default.cfgCFNRNumber; }
+      set { Properties.Settings.Default.cfgCFNRNumber = value; }
+    }
+    public override bool DNDFlag {
+      get { return Properties.Settings.Default.cfgDNDFlag; }
+      set { Properties.Settings.Default.cfgDNDFlag = value; }
+    }
+    public override bool AAFlag {
+      get { return Properties.Settings.Default.cfgAAFlag; }
+      set { Properties.Settings.Default.cfgAAFlag = value; }
+    }
+
+    public override bool CFBFlag
+    {
+      get { return Properties.Settings.Default.cfgCFBFlag; }
+      set { Properties.Settings.Default.cfgCFBFlag = value; }
+    }
+
+    public override string CFBNumber
+    {
+      get { return Properties.Settings.Default.cfgCFBNumber; }
+      set { Properties.Settings.Default.cfgCFBNumber = value; }
+    }
+
+    public override int SIPPort
+    {
+      get { return Properties.Settings.Default.cfgSipPort; }
+      set { Properties.Settings.Default.cfgSipPort = value; }
+    }
+
+    public override int DefaultAccountIndex
+    {
+      get
+      {
+        //throw new Exception("The method or operation is not implemented.");
+        return Properties.Settings.Default.cfgSipAccountDefault;
+      }
+      set
+      {
+        //throw new Exception("The method or operation is not implemented.");
+        Properties.Settings.Default.cfgSipAccountDefault = value;
+      }
+    }
+
+    public override int NumOfAccounts
+    {
+      get {
+        return 5;//throw new Exception("The method or operation is not implemented.");
+      }
+      set
+      {
+        throw new Exception("The method or operation is not implemented.");
+      }
+    }
+
+    public override IAccount getAccount(int index)
+    {
+      return new SipekAccount(index);
+    }
+
+    public override void Save()
+    {
+      Properties.Settings.Default.Save();
+    }
   }
 
 

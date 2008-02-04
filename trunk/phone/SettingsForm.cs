@@ -36,11 +36,17 @@ namespace Sipek
     private Mixers mMixers;
     private bool mAvoidEvents;
     private int _lastMicVolume = 0;
+    IConfiguratorInterface _configurator;
+    public IConfiguratorInterface SipekConfigurator
+    {
+      get { return _configurator; }
+    }
 
-    public SettingsForm()
+    public SettingsForm(IConfiguratorInterface config)
     {
       InitializeComponent();
 
+      _configurator = config;
       //Initialization
       mMixers = new Mixers();
       mMixers.Playback.MixerLineChanged += new WaveLib.AudioMixer.Mixer.MixerLineChangeHandler(mMixer_MixerLineChanged);
@@ -48,33 +54,36 @@ namespace Sipek
 
 
       // Continued
-      int size = CAccounts.getInstance().getSize();
-      for (int i=0; i<size; i++)
-      {
-        CAccount acc = CAccounts.getInstance()[i];
+      updateAccountList();
+      comboBoxAccounts.SelectedIndex = SipekConfigurator.DefaultAccountIndex;
 
-        if (acc.Name.Length == 0)
+      /////
+      checkBoxDND.Checked = SipekConfigurator.DNDFlag;
+      checkBoxAA.Checked = SipekConfigurator.AAFlag;
+      checkBoxCFU.Checked = SipekConfigurator.CFUFlag;
+      checkBoxCFNR.Checked = SipekConfigurator.CFNRFlag;
+
+      textBoxCFU.Text = SipekConfigurator.CFUNumber;
+      textBoxCFNR.Text = SipekConfigurator.CFNRNumber;
+    }
+
+    private void updateAccountList()
+    {
+      int size = SipekConfigurator.NumOfAccounts;
+      comboBoxAccounts.Items.Clear();
+      for (int i = 0; i < size; i++)
+      {
+        IAccount acc = SipekConfigurator.getAccount(i);
+
+        if (acc.AccountName.Length == 0)
         {
           comboBoxAccounts.Items.Add("--empty--");
         }
         else
         {
-          comboBoxAccounts.Items.Add(acc.Name);
-        }
-        if (acc.Index == CAccounts.getInstance().DefAccountIndex)
-        {
-          comboBoxAccounts.SelectedIndex = i;
+          comboBoxAccounts.Items.Add(acc.AccountName);
         }
       }
-
-      /////
-      checkBoxDND.Checked = CSettings.DND;
-      checkBoxAA.Checked = CSettings.AA;
-      checkBoxCFU.Checked = CSettings.CFU;
-      checkBoxCFNR.Checked = CSettings.CFNR;
-
-      textBoxCFU.Text = CSettings.CFUNumber;
-      textBoxCFNR.Text = CSettings.CFNRNumber;
     }
 
     private void buttonCancel_Click(object sender, EventArgs e)
@@ -85,14 +94,14 @@ namespace Sipek
     private void comboBoxAccounts_SelectedIndexChanged(object sender, EventArgs e)
     {
       string accname = comboBoxAccounts.Text;
-      if (CAccounts.getInstance().DefAccount.Name == accname)
+      if (SipekConfigurator.getAccount().AccountName == accname)
         checkBoxDefault.Checked = true;
       else
         checkBoxDefault.Checked = false;
 
       textBoxAccountName.Text = accname;
 
-      CAccount acc = getAccount(accname);
+      IAccount acc = getAccount(accname);
 
       if (acc == null) 
       {
@@ -102,23 +111,23 @@ namespace Sipek
       }
      
       textBoxDisplayName.Text = acc.DisplayName;
-      textBoxUsername.Text = acc.Username;
+      textBoxUsername.Text = acc.UserName;
       textBoxPassword.Text = acc.Password;
-      textBoxProxyAddress.Text = acc.Address;
-      textBoxDomain.Text = acc.Domain;
+      textBoxProxyAddress.Text = acc.HostName;
+      textBoxDomain.Text = acc.DomainName;
     }
 
-    private CAccount getAccount(string accname)
+    private IAccount getAccount(string accname)
     {
-      CAccount acc = null;
+      IAccount acc = null;
       // get account
-      int size = CAccounts.getInstance().getSize();
+      int size = SipekConfigurator.NumOfAccounts;
       for (int i=0; i<size; i++)
       {
-        string tempName = CAccounts.getInstance()[i].Name;
+        string tempName = SipekConfigurator.getAccount(i).AccountName;
         if (tempName == accname)
         {
-          acc = CAccounts.getInstance()[i];
+          acc = SipekConfigurator.getAccount(i);
           break;
         }
       }
@@ -137,44 +146,39 @@ namespace Sipek
 
     private void buttonApply_Click(object sender, EventArgs e)
     {
-      for (int i = 0; i < 5; i++)
+      int index = this.comboBoxAccounts.SelectedIndex;
+      if (index >= 0)
       {
-        CAccount account = getAccount(comboBoxAccounts.Text);
+        IAccount account = SipekConfigurator.getAccount(index);
 
-        if (account == null)
-        {
-          account = new CAccount();
-          account.Index = comboBoxAccounts.SelectedIndex;
-        }
-
-        account.Address = textBoxProxyAddress.Text;
+        account.HostName = textBoxProxyAddress.Text;
         account.Port = 5060; //int.Parse(_editProxyPort.Caption);
-        account.Name = textBoxAccountName.Text;
+        account.AccountName = textBoxAccountName.Text;
         account.DisplayName = textBoxDisplayName.Text;
         account.Id = textBoxUsername.Text;
-        account.Username = textBoxUsername.Text;
+        account.UserName = textBoxUsername.Text;
         account.Password = textBoxPassword.Text;
-        account.Domain = textBoxDomain.Text;
+        account.DomainName = textBoxDomain.Text;
 
-        if (checkBoxDefault.Checked) CAccounts.getInstance().DefAccountIndex = account.Index;
+        updateAccountList();
 
-        CAccounts.getInstance()[account.Index] = account;
+        if (checkBoxDefault.Checked) SipekConfigurator.DefaultAccountIndex = index;
       }
       // Settings
-      CSettings.DND = checkBoxDND.Checked ;
-      CSettings.AA = checkBoxAA.Checked ;
-      CSettings.CFU = checkBoxCFU.Checked ;
-      CSettings.CFNR = checkBoxCFNR.Checked ;
+      SipekConfigurator.DNDFlag = checkBoxDND.Checked ;
+      SipekConfigurator.AAFlag = checkBoxAA.Checked;
+      SipekConfigurator.CFUFlag = checkBoxCFU.Checked;
+      SipekConfigurator.CFNRFlag = checkBoxCFNR.Checked;
 
-      CSettings.CFUNumber = textBoxCFU.Text ;
-      CSettings.CFNRNumber = textBoxCFNR.Text ;
+      SipekConfigurator.CFUNumber = textBoxCFU.Text;
+      SipekConfigurator.CFNRNumber = textBoxCFNR.Text;
     }
 
     private void buttonOK_Click(object sender, EventArgs e)
     {
       buttonApply_Click(sender, e);
 
-      CAccounts.getInstance().save();
+      SipekConfigurator.Save();
 
       CCallManager.getInstance().initialize();
 

@@ -44,6 +44,11 @@ namespace Sipek
     {
       get { return _factory; }
     }
+    private IConfiguratorInterface _configurator;
+    public IConfiguratorInterface SipekConfigurator
+    {
+      get { return _configurator; }
+    }
 
     public MainForm()
     {
@@ -67,32 +72,31 @@ namespace Sipek
       UpdateBuddyList();
 
       // Refresh toolstripbuttons
-      toolStripButtonDND.Checked = CSettings.DND;
-      toolStripButtonAA.Checked = CSettings.AA;
+      toolStripButtonDND.Checked = SipekConfigurator.DNDFlag;
+      toolStripButtonAA.Checked = SipekConfigurator.AAFlag;
     }
 
     private void UpdateAccountList()
     {
       listViewAccounts.Items.Clear();
 
-      int size = CAccounts.getInstance().getSize();
-      for (int i = 0; i < size; i++)
+      for (int i = 0; i < SipekConfigurator.NumOfAccounts; i++)
       {
-        CAccount acc = CAccounts.getInstance()[i];
+        IAccount acc = SipekConfigurator.getAccount(i);
         string name;
 
-        if (acc.Name.Length == 0)
+        if (acc.AccountName.Length == 0)
         {
           name = "--empty--";
         }
         else
         {
-          name = acc.Name;
+          name = acc.AccountName;
         }
         // create listviewitem
         ListViewItem item = new ListViewItem(new string[] { name, acc.RegState.ToString() });
         // mark default account
-        if (acc.Index == CAccounts.getInstance().DefAccountIndex)
+        if (i == SipekConfigurator.DefaultAccountIndex)
         {
           // Mark default account; todo!!! Coloring!
           item.BackColor = Color.LightGray;
@@ -101,16 +105,16 @@ namespace Sipek
           // check registration status
           if (acc.RegState == 200)
           {
-            this.Text = HEADER_TEXT + " - " + acc.Name + " (" + acc.DisplayName + ")"; ;
-            label = "Registered" + " - " + acc.Name + " (" + acc.DisplayName + ")";
+            this.Text = HEADER_TEXT + " - " + acc.AccountName + " (" + acc.DisplayName + ")"; ;
+            label = "Registered" + " - " + acc.AccountName + " (" + acc.DisplayName + ")";
           }
           else if (acc.RegState == 0)
           {
-            label = "Trying..." + " - " + acc.Name;
+            label = "Trying..." + " - " + acc.AccountName;
           }
           else
           {
-            label = "Not registered" + " - " + acc.Name;
+            label = "Not registered" + " - " + acc.AccountName;
           }
           toolStripStatusLabel.Text = label;
         }
@@ -337,7 +341,7 @@ namespace Sipek
 
     private void toolStripMenuItem1_Click(object sender, EventArgs e)
     {
-      (new SettingsForm()).ShowDialog();
+      (new SettingsForm(this.SipekConfigurator)).ShowDialog();
     }
 
     /// <summary>
@@ -592,7 +596,7 @@ namespace Sipek
     {
       SipekFactory.getCallLogger().save();
       CBuddyList.getInstance().save();
-      CSettings.Save();
+      SipekConfigurator.Save();
     }
 
     private void toolStripTextBoxTransferTo_KeyDown(object sender, KeyEventArgs e)
@@ -613,12 +617,12 @@ namespace Sipek
 
     private void toolStripButtonDND_Click(object sender, EventArgs e)
     {
-      CSettings.DND = toolStripButtonDND.Checked;
+      SipekConfigurator.DNDFlag = toolStripButtonDND.Checked;
     }
 
     private void toolStripButtonAA_Click(object sender, EventArgs e)
     {
-      CSettings.AA = toolStripButtonAA.Checked;
+      SipekConfigurator.AAFlag = toolStripButtonAA.Checked;
     }
 
     private void sendInstantMessageToolStripMenuItem_Click(object sender, EventArgs e)
@@ -653,7 +657,7 @@ namespace Sipek
 
       EUserStatus status = (EUserStatus)toolStripComboBoxUserStatus.SelectedIndex;
 
-      SipekFactory.getCommonProxy().setStatus(CAccounts.getInstance().DefAccountIndex, status);
+      SipekFactory.getCommonProxy().setStatus(SipekConfigurator.DefaultAccountIndex, status);
     }
 
     private void toolStripKeyboardButton_Click(object sender, EventArgs e)
@@ -730,19 +734,21 @@ namespace Sipek
       
       // create factory
       _factory = new ConcreteFactory(this);
+      _configurator = new SipekConfigurator();
+
       // Set factory for CallManager
       CCallManager.getInstance().Factory = _factory;
       CCallManager.getInstance().initialize();
 
       // load settings
-      unconditionalToolStripMenuItem.Checked = CSettings.CFU;
-      toolStripTextBoxCFUNumber.Text = CSettings.CFUNumber;
-      
-      noReplyToolStripMenuItem.Checked = CSettings.CFNR;
-      toolStripTextBoxCFNRNumber.Text = CSettings.CFNRNumber;
+      unconditionalToolStripMenuItem.Checked = SipekConfigurator.CFUFlag;
+      toolStripTextBoxCFUNumber.Text = SipekConfigurator.CFUNumber;
 
-      busyToolStripMenuItem.Checked = CSettings.CFB;
-      toolStripTextBoxCFBNumber.Text = CSettings.CFBNumber;
+      noReplyToolStripMenuItem.Checked = SipekConfigurator.CFNRFlag;
+      toolStripTextBoxCFNRNumber.Text = SipekConfigurator.CFNRNumber;
+
+      busyToolStripMenuItem.Checked = SipekConfigurator.CFBFlag;
+      toolStripTextBoxCFBNumber.Text = SipekConfigurator.CFBNumber;
 
 
       // register callback
@@ -879,39 +885,39 @@ namespace Sipek
 
     private void listViewAccounts_DoubleClick(object sender, EventArgs e)
     {
-      SettingsForm sf = new SettingsForm();
+      SettingsForm sf = new SettingsForm(this.SipekConfigurator);
       //sf.activateTab("");
       sf.ShowDialog();
     }
 
     private void unconditionalToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      CSettings.CFU = unconditionalToolStripMenuItem.Checked;
+      SipekConfigurator.CFUFlag = unconditionalToolStripMenuItem.Checked;
     }
 
     private void noReplyToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      CSettings.CFNR = noReplyToolStripMenuItem.Checked;
+      SipekConfigurator.CFNRFlag = noReplyToolStripMenuItem.Checked;
     }
 
     private void busyToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      CSettings.CFB = busyToolStripMenuItem.Checked;
+      SipekConfigurator.CFBFlag = busyToolStripMenuItem.Checked;
     }
 
     private void toolStripTextBoxCFUNumber_TextChanged(object sender, EventArgs e)
     {
-      CSettings.CFUNumber = toolStripTextBoxCFUNumber.Text;
+      SipekConfigurator.CFUNumber = toolStripTextBoxCFUNumber.Text;
     }
 
     private void toolStripTextBoxCFNRNumber_TextChanged(object sender, EventArgs e)
     {
-      CSettings.CFNRNumber = toolStripTextBoxCFNRNumber.Text;
+      SipekConfigurator.CFNRNumber = toolStripTextBoxCFNRNumber.Text;
     }
 
     private void toolStripTextBoxCFBNumber_TextChanged(object sender, EventArgs e)
     {
-      CSettings.CFBNumber = toolStripTextBoxCFBNumber.Text;
+      SipekConfigurator.CFBNumber = toolStripTextBoxCFBNumber.Text;
     }
 
     private void toolStrip3PtyButton_Click(object sender, EventArgs e)
