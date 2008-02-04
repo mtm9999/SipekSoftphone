@@ -669,7 +669,7 @@ namespace Sipek
       this.tabPageAccounts.Location = new System.Drawing.Point(4, 22);
       this.tabPageAccounts.Name = "tabPageAccounts";
       this.tabPageAccounts.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPageAccounts.Size = new System.Drawing.Size(152, 117);
+      this.tabPageAccounts.Size = new System.Drawing.Size(152, 167);
       this.tabPageAccounts.TabIndex = 2;
       this.tabPageAccounts.Text = "Accounts";
       this.tabPageAccounts.UseVisualStyleBackColor = true;
@@ -686,7 +686,7 @@ namespace Sipek
       this.listViewAccounts.Location = new System.Drawing.Point(3, 3);
       this.listViewAccounts.MultiSelect = false;
       this.listViewAccounts.Name = "listViewAccounts";
-      this.listViewAccounts.Size = new System.Drawing.Size(146, 111);
+      this.listViewAccounts.Size = new System.Drawing.Size(146, 161);
       this.listViewAccounts.TabIndex = 0;
       this.listViewAccounts.UseCompatibleStateImageBehavior = false;
       this.listViewAccounts.View = System.Windows.Forms.View.Details;
@@ -723,8 +723,8 @@ namespace Sipek
       // 
       this.toolStripContainer2.TopToolStripPanel.Controls.Add(this.menuStrip);
       this.toolStripContainer2.TopToolStripPanel.Controls.Add(this.toolStripCall);
-      this.toolStripContainer2.TopToolStripPanel.Controls.Add(this.toolStripUserStatus);
       this.toolStripContainer2.TopToolStripPanel.Controls.Add(this.toolStrip1);
+      this.toolStripContainer2.TopToolStripPanel.Controls.Add(this.toolStripUserStatus);
       this.toolStripContainer2.TopToolStripPanel.Controls.Add(this.toolStripServices);
       // 
       // toolStripUserStatus
@@ -733,7 +733,7 @@ namespace Sipek
       this.toolStripUserStatus.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabel1,
             this.toolStripComboBoxUserStatus});
-      this.toolStripUserStatus.Location = new System.Drawing.Point(3, 49);
+      this.toolStripUserStatus.Location = new System.Drawing.Point(453, 49);
       this.toolStripUserStatus.Name = "toolStripUserStatus";
       this.toolStripUserStatus.Size = new System.Drawing.Size(160, 25);
       this.toolStripUserStatus.TabIndex = 9;
@@ -767,9 +767,9 @@ namespace Sipek
             this.toolStripMuteButton,
             this.toolStripMicMuteButton,
             this.toolStripTrackBar1});
-      this.toolStrip1.Location = new System.Drawing.Point(251, 24);
+      this.toolStrip1.Location = new System.Drawing.Point(339, 24);
       this.toolStrip1.Name = "toolStrip1";
-      this.toolStrip1.Size = new System.Drawing.Size(191, 25);
+      this.toolStrip1.Size = new System.Drawing.Size(160, 25);
       this.toolStrip1.TabIndex = 10;
       // 
       // toolStripMuteButton
@@ -802,7 +802,7 @@ namespace Sipek
             this.toolStripButtonDND,
             this.toolStripButtonAA,
             this.toolStripSplitButtonCF});
-      this.toolStripServices.Location = new System.Drawing.Point(417, 49);
+      this.toolStripServices.Location = new System.Drawing.Point(251, 24);
       this.toolStripServices.Name = "toolStripServices";
       this.toolStripServices.Size = new System.Drawing.Size(88, 25);
       this.toolStripServices.TabIndex = 8;
