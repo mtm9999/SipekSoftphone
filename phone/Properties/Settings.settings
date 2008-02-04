@@ -107,6 +107,7 @@
   &lt;string /&gt;
   &lt;string /&gt;
   &lt;string /&gt;
+  &lt;string /&gt;
 &lt;/ArrayOfString&gt;</Value>
     </Setting>
     <Setting Name="cfgSipAccountIds" Type="System.Collections.Specialized.StringCollection" Scope="User">
