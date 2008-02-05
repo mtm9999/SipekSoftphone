@@ -29,6 +29,7 @@ using System.Collections.ObjectModel;
 using Telephony;
 using System.Windows.Forms.Design;
 using WaveLib.AudioMixer; // see http://www.codeproject.com/KB/graphics/AudioLib.aspx
+using PjsipWrapper; 
 
 
 namespace Sipek
@@ -341,7 +342,7 @@ namespace Sipek
 
     private void toolStripMenuItem1_Click(object sender, EventArgs e)
     {
-      (new SettingsForm(this.SipekConfigurator)).ShowDialog();
+      (new SettingsForm(this.SipekFactory)).ShowDialog();
     }
 
     /// <summary>
@@ -771,6 +772,14 @@ namespace Sipek
       // Set user status
       toolStripComboBoxUserStatus.SelectedIndex = (int)EUserStatus.AVAILABLE;
 
+      // set codecs priority...
+      List<string> codeclist = SipekConfigurator.CodecList;
+      int index = 0;
+      foreach (string item in codeclist)
+      {
+        ((CSipCommonProxy)SipekFactory.getCommonProxy()).setCodecPrioroty(item, index++);
+      }
+
       // timer 
       tmr.Interval = 1000;
       tmr.Tick += new EventHandler(UpdateCallTimeout);
@@ -885,7 +894,7 @@ namespace Sipek
 
     private void listViewAccounts_DoubleClick(object sender, EventArgs e)
     {
-      SettingsForm sf = new SettingsForm(this.SipekConfigurator);
+      SettingsForm sf = new SettingsForm(this.SipekFactory);
       //sf.activateTab("");
       sf.ShowDialog();
     }
