@@ -191,6 +191,12 @@ namespace PjsipWrapper
     private static extern int dll_setStatus(int accId, int presence_state);
     [DllImport("pjsipDll.dll")]
     private static extern int dll_removeAccounts();
+    [DllImport("pjsipDll.dll")]
+    private static extern string dll_getCodec(int index);
+    [DllImport("pjsipDll.dll")]
+    private static extern int dll_getNumOfCodecs();
+    [DllImport("pjsipDll.dll")]
+    private static extern int dll_setCodecPriority(string name, int prio);
 
     // call API callbacks
     [DllImport("pjsipDll.dll")]
@@ -326,6 +332,24 @@ namespace PjsipWrapper
     public int setStatus(int accId, EUserStatus status)
     {
       return dll_setStatus(accId, (int)status);
+    }
+
+    public string getCodec(int index)
+    {
+      string temp = dll_getCodec(index);
+      return temp;
+    }
+
+    public int getNoOfCodecs()
+    {
+      int no = dll_getNumOfCodecs();
+      return no;
+    }
+
+
+    public void setCodecPrioroty(string codecname, int priority)
+    {
+      dll_setCodecPriority(codecname, priority);
     }
 
     #endregion Methods
