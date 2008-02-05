@@ -312,10 +312,7 @@ namespace Sipek
       get {
         return 5;//throw new Exception("The method or operation is not implemented.");
       }
-      set
-      {
-        throw new Exception("The method or operation is not implemented.");
-      }
+      set { }
     }
 
     public override IAccount getAccount(int index)
@@ -325,7 +322,31 @@ namespace Sipek
 
     public override void Save()
     {
+      // save properties
       Properties.Settings.Default.Save();
+    }
+
+    public override List<string> CodecList
+    {
+      get 
+      {
+        List<string> codecList = new List<string>();
+        foreach (string item in Properties.Settings.Default.cfgCodecList)
+        {
+          codecList.Add(item);
+        }
+        return codecList; 
+      }
+      set 
+      {
+        int ind = 0;
+        Properties.Settings.Default.cfgCodecList.Clear();
+        List<string> cl = value;
+        foreach (string item in cl)
+        {
+          Properties.Settings.Default.cfgCodecList.Add(item);
+        }
+      }
     }
   }
 

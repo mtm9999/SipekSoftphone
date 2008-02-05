@@ -28,6 +28,7 @@ using System.Text;
 using System.Windows.Forms;
 using Telephony;
 using WaveLib.AudioMixer; // see http://www.codeproject.com/KB/graphics/AudioLib.aspx
+using PjsipWrapper; 
 
 namespace Sipek
 {
@@ -36,35 +37,25 @@ namespace Sipek
     private Mixers mMixers;
     private bool mAvoidEvents;
     private int _lastMicVolume = 0;
-    IConfiguratorInterface _configurator;
+    AbstractFactory _factory;
     public IConfiguratorInterface SipekConfigurator
     {
-      get { return _configurator; }
+      get { return _factory.getConfigurator(); }
+    }
+    public AbstractFactory SipekFactory
+    {
+      get { return _factory; }
     }
 
-    public SettingsForm(IConfiguratorInterface config)
+    public SettingsForm(AbstractFactory factory)
     {
       InitializeComponent();
 
-      _configurator = config;
-      //Initialization
+      _factory = factory;
+      // Initialization   TODO try catch
       mMixers = new Mixers();
       mMixers.Playback.MixerLineChanged += new WaveLib.AudioMixer.Mixer.MixerLineChangeHandler(mMixer_MixerLineChanged);
       mMixers.Recording.MixerLineChanged += new WaveLib.AudioMixer.Mixer.MixerLineChangeHandler(mMixer_MixerLineChanged);
-
-
-      // Continued
-      updateAccountList();
-      comboBoxAccounts.SelectedIndex = SipekConfigurator.DefaultAccountIndex;
-
-      /////
-      checkBoxDND.Checked = SipekConfigurator.DNDFlag;
-      checkBoxAA.Checked = SipekConfigurator.AAFlag;
-      checkBoxCFU.Checked = SipekConfigurator.CFUFlag;
-      checkBoxCFNR.Checked = SipekConfigurator.CFNRFlag;
-
-      textBoxCFU.Text = SipekConfigurator.CFUNumber;
-      textBoxCFNR.Text = SipekConfigurator.CFNRNumber;
     }
 
     private void updateAccountList()
@@ -146,6 +137,12 @@ namespace Sipek
 
     private void buttonApply_Click(object sender, EventArgs e)
     {
+      // check if at least 1 codec selected
+      if (listBoxEnCodecs.Items.Count == 0)
+      {
+        (new SettingsWarning("No codec selected!")).ShowDialog();
+        return;
+      }
       int index = this.comboBoxAccounts.SelectedIndex;
       if (index >= 0)
       {
@@ -172,6 +169,14 @@ namespace Sipek
 
       SipekConfigurator.CFUNumber = textBoxCFU.Text;
       SipekConfigurator.CFNRNumber = textBoxCFNR.Text;
+
+      // save enabled codec list
+      List<string> cl = new List<string>();
+      foreach (string item in listBoxEnCodecs.Items)
+      {
+        cl.Add(item);
+      }
+      SipekConfigurator.CodecList = cl;
     }
 
     private void buttonOK_Click(object sender, EventArgs e)
@@ -180,14 +185,56 @@ namespace Sipek
 
       SipekConfigurator.Save();
 
+      // reinitialize stack
       CCallManager.getInstance().initialize();
+
+      // set codecs priority...
+      List<string> codeclist = SipekConfigurator.CodecList;
+      int index = 0;
+      foreach (string item in codeclist)
+      {
+        ((CSipCommonProxy)SipekFactory.getCommonProxy()).setCodecPrioroty(item, index++);
+      }
 
       Close();
     }
 
     private void SettingsForm_Load(object sender, EventArgs e)
     {
+      // Continued
+      updateAccountList();
+      comboBoxAccounts.SelectedIndex = SipekConfigurator.DefaultAccountIndex;
+
+      /////
+      checkBoxDND.Checked = SipekConfigurator.DNDFlag;
+      checkBoxAA.Checked = SipekConfigurator.AAFlag;
+      checkBoxCFU.Checked = SipekConfigurator.CFUFlag;
+      checkBoxCFNR.Checked = SipekConfigurator.CFNRFlag;
+
+      textBoxCFU.Text = SipekConfigurator.CFUNumber;
+      textBoxCFNR.Text = SipekConfigurator.CFNRNumber;
+
       LoadDeviceCombos(mMixers);
+
+      // load codecs from system
+      int noofcodecs = ((CSipCommonProxy)(SipekFactory.getCommonProxy())).getNoOfCodecs();
+      for (int i = 0; i < noofcodecs; i++)
+      {
+        string name = ((CSipCommonProxy)(SipekFactory.getCommonProxy())).getCodec(i);
+        listBoxDisCodecs.Items.Add(name);
+      }
+      // load enabled codecs from settings
+      List<string> codeclist = SipekConfigurator.CodecList;
+      foreach (string item in codeclist)
+      {
+        // item match with disabled list (all supported codec)
+        if (listBoxDisCodecs.FindString(item) >= 0)
+        {
+          // move item from disabled list to enabled
+          listBoxDisCodecs.Items.Remove(item);
+          listBoxEnCodecs.Items.Add(item);
+        }
+      }
     }
 
 
@@ -557,6 +604,28 @@ namespace Sipek
     public void activateTab(int index)
     {
       this.tabControlSettings.SelectTab(index);
+    }
+
+    private void buttonEnable_Click(object sender, EventArgs e)
+    {
+      if (listBoxDisCodecs.SelectedItems.Count > 0)
+      {
+        // get selected item from disabled codecs
+        listBoxEnCodecs.Items.Add(listBoxDisCodecs.SelectedItem);
+        // remove from disabled list
+        listBoxDisCodecs.Items.Remove(listBoxDisCodecs.SelectedItem);
+      }
+    }
+
+    private void buttonDisable_Click(object sender, EventArgs e)
+    {
+      if (listBoxEnCodecs.SelectedItems.Count > 0)
+      { 
+        // get selected item from enabled codecs
+        listBoxDisCodecs.Items.Add(listBoxEnCodecs.SelectedItem);
+        // remove from enabled list
+        listBoxEnCodecs.Items.Remove(listBoxEnCodecs.SelectedItem);
+      }
     }
   }
 }
