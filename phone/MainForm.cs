@@ -752,7 +752,7 @@ namespace Sipek
       toolStripTextBoxCFBNumber.Text = SipekConfigurator.CFBNumber;
 
 
-      // register callback
+      // register callbacks
       CCallManager.getInstance().CallStateChanged += onTelephonyRefresh;
       CCallManager.getInstance().MessageReceived += onMessageReceived;
       CCallManager.getInstance().BuddyStatusChanged += onBuddyStateChanged;
