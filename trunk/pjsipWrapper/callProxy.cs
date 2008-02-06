@@ -172,6 +172,7 @@ namespace PjsipWrapper
     delegate int OnCallHoldConfirm(int callId);
     delegate int OnMessageReceivedCallback(string from, string message);
     delegate int OnBuddyStatusChangedCallback(int buddyId, int status, string statusText);
+    delegate int OnDtmfDigitCallback(int callId, int digit);
 
     [DllImport("pjsipDll.dll")]
     private static extern int dll_init(int listenPort);
@@ -213,6 +214,8 @@ namespace PjsipWrapper
     private static extern int onMessageReceivedCallback(OnMessageReceivedCallback cb);
     [DllImport("pjsipDll.dll")]
     private static extern int onBuddyStatusChangedCallback(OnBuddyStatusChangedCallback cb);
+    [DllImport("pjsipDll.dll")]
+    private static extern int onDtmfDigitCallback(OnDtmfDigitCallback cb);
 
     #endregion Wrapper functions
 
@@ -225,6 +228,7 @@ namespace PjsipWrapper
     static OnCallHoldConfirm chDel = new OnCallHoldConfirm(onCallHoldConfirm);
     static OnMessageReceivedCallback mrdel = new OnMessageReceivedCallback(onMessageReceived);
     static OnBuddyStatusChangedCallback bscdel = new OnBuddyStatusChangedCallback(onBuddyStatusChanged);
+    static OnDtmfDigitCallback dtdel = new OnDtmfDigitCallback(onDtmfDigitCallback);
 
     private static CCallManager CallManager
     {
@@ -244,6 +248,7 @@ namespace PjsipWrapper
       onCallHoldConfirmCallback(chDel);
       onBuddyStatusChangedCallback(bscdel);
       onMessageReceivedCallback(mrdel);
+      onDtmfDigitCallback(dtdel);
 
       // Initialize pjsip...
       int status = start();
@@ -459,6 +464,12 @@ namespace PjsipWrapper
     private static int onBuddyStatusChanged(int buddyId, int status, string text)
     {
       CallManager.setBuddyState(buddyId, status, text);
+      return 1;
+    }
+
+    private static int onDtmfDigitCallback(int callId, int digit)
+    {
+      CallManager.dtmfDigitReceived(callId, digit);
       return 1;
     }
 
