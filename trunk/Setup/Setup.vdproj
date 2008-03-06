@@ -480,7 +480,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Sipek2"
         "ProductCode" = "8:{607B51A4-08C7-421C-8B05-E200D5F2B2E0}"
-        "PackageCode" = "8:{8166319C-C60E-4AE6-B692-B2C2D94B5A73}"
+        "PackageCode" = "8:{92783733-20CE-4DE2-B4BA-1CA32885150C}"
         "UpgradeCode" = "8:{06F8AC95-6BCA-407E-A06E-6A26BE8A4014}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
@@ -489,7 +489,7 @@
         "ProductVersion" = "8:0.0.1"
         "Manufacturer" = "8:SasaCoh"
         "ARPHELPTELEPHONE" = "8:"
-        "ARPHELPLINK" = "8:http://sipekphone2.googlepages.com/"
+        "ARPHELPLINK" = "8:http://sipekphone.googlepages.com/"
         "Title" = "8:Sipek2 Setup"
         "Subject" = "8:"
         "ARPCONTACT" = "8:SasaCoh"
@@ -1012,6 +1012,34 @@
         }
         "ProjectOutput"
         {
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_471E0544C1334272B0B90BE1B50A2310"
+            {
+            "SourcePath" = "8:"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_DD7879F977D5436BABC18C7081B9F89D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:LocalizedResourceDlls"
+            "OutputProjectGuid" = "8:{D3EE2A06-D617-45F8-879E-8D0931BC8982}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_6EC3B094756643F4B954AAD1E14E77B5"
             {
             "SourcePath" = "8:..\\phone\\obj\\Release\\sipek2.exe"
