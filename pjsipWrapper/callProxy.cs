@@ -14,6 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
+ * 
+ * @see http://pages.google.com/edit/sipekphone/pjsipwrapper
+ * 
  */
 
 using System.Runtime.InteropServices;
@@ -21,7 +24,8 @@ using System.Threading;
 using System;
 using System.Net;
 using System.Net.Sockets;
-using Telephony;
+using System.Text;
+using Common;
 
 namespace PjsipWrapper
 {
@@ -57,13 +61,20 @@ namespace PjsipWrapper
     #endregion
 
     #region Properties
-    private CCallManager Manager
+    private AbstractFactory _factory = new NullFactory();
+
+    public IConfiguratorInterface Config
     {
-      get { return CCallManager.getInstance(); }
+      get { return _factory.getConfigurator(); }
     }
     #endregion
 
     #region Constructor
+
+    public CSipCallProxy(AbstractFactory factory)
+    {
+      _factory = factory;
+    }
 
     #endregion Constructor
 
@@ -78,7 +89,9 @@ namespace PjsipWrapper
     /// <returns>SessionId selected by sip stack</returns>
     public int makeCall(string dialedNo, int accountId)
     {
-      string uri = "sip:" + dialedNo + "@" + Manager.Config.getAccount(accountId).HostName;
+      if (!_factory.getCommonProxy().IsInitialized) return -1;
+
+      string uri = "sip:" + dialedNo + "@" + Config.getAccount(accountId).HostName;
       int sessionId = dll_makeCall(accountId, uri);
       return sessionId;
     }
@@ -115,7 +128,7 @@ namespace PjsipWrapper
           
     public bool xferCall(int sessionId, string number)
     {
-      string uri = "sip:" + number + "@" + Manager.Config.getAccount().HostName;
+      string uri = "sip:" + number + "@" + Config.getAccount().HostName;
       dll_xferCall(sessionId, uri);
       return true;
     }
@@ -134,7 +147,7 @@ namespace PjsipWrapper
     
     public bool serviceRequest(int sessionId, int code, string dest)
     {
-      string destUri = "<sip:" + dest + "@" + Manager.Config.getAccount().HostName + ">";
+      string destUri = "<sip:" + dest + "@" + Config.getAccount().HostName + ">";
       dll_serviceReq(sessionId, (int)code, destUri);
       return true;
     }
@@ -161,18 +174,50 @@ namespace PjsipWrapper
   /// 
   /// </summary>
   public class CSipCommonProxy : ICommonProxyInterface
-  {  
+  {
+    #region Constructor
+
+    private static CSipCommonProxy _instance = null;
+
+    public static CSipCommonProxy GetInstance()
+    { 
+      if (_instance == null)
+      {
+        _instance = new CSipCommonProxy();
+      }
+      return _instance;
+    }
+
+    protected CSipCommonProxy()
+    {
+    }
+    #endregion
+
+    #region Properties
+
+    private AbstractFactory _factory = new NullFactory();
+    public AbstractFactory Factory
+    {
+      set { _factory = value; }
+    }
+
+    private IConfiguratorInterface Config
+    {
+      get { return _factory.getConfigurator(); }
+    }
+    #endregion
 
     #region Wrapper functions
     // callback delegates
     delegate int GetConfigData(int cfgId);
     delegate int OnRegStateChanged(int accountId, int regState);
     delegate int OnCallStateChanged(int callId, int stateId);
-    delegate int OnCallIncoming(int callId, string number);
+    delegate int OnCallIncoming(int callId, StringBuilder number);
     delegate int OnCallHoldConfirm(int callId);
-    delegate int OnMessageReceivedCallback(string from, string message);
-    delegate int OnBuddyStatusChangedCallback(int buddyId, int status, string statusText);
+    delegate int OnMessageReceivedCallback(StringBuilder from, StringBuilder message);
+    delegate int OnBuddyStatusChangedCallback(int buddyId, int status, StringBuilder statusText);
     delegate int OnDtmfDigitCallback(int callId, int digit);
+    delegate int OnMessageWaitingCallback(int mwi, StringBuilder info);
 
     [DllImport("pjsipDll.dll")]
     private static extern int dll_init(int listenPort);
@@ -193,13 +238,14 @@ namespace PjsipWrapper
     [DllImport("pjsipDll.dll")]
     private static extern int dll_removeAccounts();
     [DllImport("pjsipDll.dll")]
-    private static extern string dll_getCodec(int index);
+    private static extern StringBuilder dll_getCodec(int index);
     [DllImport("pjsipDll.dll")]
     private static extern int dll_getNumOfCodecs();
     [DllImport("pjsipDll.dll")]
-    private static extern int dll_setCodecPriority(string name, int prio);
+    private static extern int dll_setCodecPriority(String name, int prio);
 
-    // call API callbacks
+    // Callback function registration declarations 
+    // passing delegate to unmanaged code (.dll)
     [DllImport("pjsipDll.dll")]
     private static extern int onCallStateCallback(OnCallStateChanged cb);
     [DllImport("pjsipDll.dll")]
@@ -216,30 +262,29 @@ namespace PjsipWrapper
     private static extern int onBuddyStatusChangedCallback(OnBuddyStatusChangedCallback cb);
     [DllImport("pjsipDll.dll")]
     private static extern int onDtmfDigitCallback(OnDtmfDigitCallback cb);
+    [DllImport("pjsipDll.dll")]
+    private static extern int onMessageWaitingCallback(OnMessageWaitingCallback cb);
 
     #endregion Wrapper functions
 
     #region Variables
-
+    // Static declaration because of CallbackonCollectedDelegate exception!
     static OnCallStateChanged csDel = new OnCallStateChanged(onCallStateChanged);
     static OnRegStateChanged rsDel = new OnRegStateChanged(onRegStateChanged);
     static OnCallIncoming ciDel = new OnCallIncoming(onCallIncoming);
-    //static GetConfigData gdDel = new GetConfigData(getConfigData);
     static OnCallHoldConfirm chDel = new OnCallHoldConfirm(onCallHoldConfirm);
     static OnMessageReceivedCallback mrdel = new OnMessageReceivedCallback(onMessageReceived);
     static OnBuddyStatusChangedCallback bscdel = new OnBuddyStatusChangedCallback(onBuddyStatusChanged);
     static OnDtmfDigitCallback dtdel = new OnDtmfDigitCallback(onDtmfDigitCallback);
+    static OnMessageWaitingCallback mwidel = new OnMessageWaitingCallback(onMessageWaitingCallback);
 
-    private static CCallManager CallManager
-    {
-      get { return CCallManager.getInstance(); }
-    }
 
     #endregion Variables
 
     #region Methods
 
-    public int initialize()
+
+    public override int initialize()
     {
       // register callbacks (delegates)
       onCallIncoming( ciDel );
@@ -249,50 +294,62 @@ namespace PjsipWrapper
       onBuddyStatusChangedCallback(bscdel);
       onMessageReceivedCallback(mrdel);
       onDtmfDigitCallback(dtdel);
+      onMessageWaitingCallback(mwidel);
 
       // Initialize pjsip...
       int status = start();
+      // set initialized flag
+      IsInitialized = (status == 0) ? true : false;
+
       return status;
     }
 
-    public int shutdown()
-    {
-      return dll_shutdown();
-    }
 
     public int start()
     {
       int status = -1;
       
-      //int port = CallManager.SipPort;
-      int port = 5060;
+      int port = Config.SIPPort;
       status = dll_init(port);
+
+      if (status != 0) return status;
+
       status |= dll_main();
       return status;
+    }
+
+    public override int shutdown()
+    {
+      return dll_shutdown();
     }
 
     /////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////
     // Call API
     //
-    public int registerAccounts()
+    public override int registerAccounts()
     {
       return registerAccounts(false);
     }
 
-    public int registerAccounts(bool renew)
+    public override int registerAccounts(bool renew)
     {
+      if (!IsInitialized) return -1;
+
       if (renew == true)
       {
         dll_removeAccounts();
       } 
 
-      for (int i = 0; i < CallManager.Config.NumOfAccounts; i++)
+      for (int i = 0; i < Config.NumOfAccounts; i++)
       {
-        IAccount acc = CallManager.Config.getAccount(i);
+        IAccount acc = Config.getAccount(i);
+        // check if accounts available
+        if (null == acc) return -1;
 
         // reset account state
-        CallManager.setAccountState(i, 0);
+        //CallManager.setAccountState(i, 0);
+        BaseAccountStateChanged(i, 0);
 
         if (acc.Id.Length > 0)
         {
@@ -317,43 +374,47 @@ namespace PjsipWrapper
     }
 
     // Buddy list handling
-    public int addBuddy(string ident)
+    public override int addBuddy(string ident)
     {
-      string uri = "sip:" + ident + "@" + CallManager.Config.getAccount().HostName;
+      string uri = "sip:" + ident + "@" + Config.getAccount().HostName;
       return dll_addBuddy(uri, true);
     }
 
-    public int delBuddy(int buddyId)
+    public override int delBuddy(int buddyId)
     {
       return dll_removeBuddy(buddyId);
     }
 
-    public int sendMessage(string dest, string message)
+    public override int sendMessage(string dest, string message)
     {
-      string uri = "sip:" + dest + "@" + CallManager.Config.getAccount().HostName;
-      return dll_sendMessage(CallManager.Config.DefaultAccountIndex, uri, message);
+      string uri = "sip:" + dest + "@" + Config.getAccount().HostName;
+      return dll_sendMessage(Config.DefaultAccountIndex, uri, message);
     }
 
-    public int setStatus(int accId, EUserStatus status)
+    public override int setStatus(int accId, EUserStatus status)
     {
       return dll_setStatus(accId, (int)status);
     }
 
-    public string getCodec(int index)
+    public override string getCodec(int index)
     {
-      string temp = dll_getCodec(index);
-      return temp;
+      StringBuilder buf = dll_getCodec(index);
+      return buf.ToString();
     }
 
-    public int getNoOfCodecs()
+    public override int getNoOfCodecs()
     {
+      if (!IsInitialized) return 0;
+
       int no = dll_getNumOfCodecs();
       return no;
     }
 
 
-    public void setCodecPrioroty(string codecname, int priority)
+    public override void setCodecPrioroty(string codecname, int priority)
     {
+      if (!IsInitialized) return;
+
       dll_setCodecPriority(codecname, priority);
     }
 
@@ -361,51 +422,35 @@ namespace PjsipWrapper
 
     #region Callbacks
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="callId"></param>
+    /// <param name="callState"></param>
+    /// <returns></returns>
     private static int onCallStateChanged(int callId, int callState)
     {
-//    PJSIP_INV_STATE_NULL,	    /**< Before INVITE is sent or received  */
-//    PJSIP_INV_STATE_CALLING,	    /**< After INVITE is sent		    */
-//    PJSIP_INV_STATE_INCOMING,	    /**< After INVITE is received.	    */
-//    PJSIP_INV_STATE_EARLY,	    /**< After response with To tag.	    */
-//    PJSIP_INV_STATE_CONNECTING,	    /**< After 2xx is sent/received.	    */
-//    PJSIP_INV_STATE_CONFIRMED,	    /**< After ACK is sent/received.	    */
-//    PJSIP_INV_STATE_DISCONNECTED,   /**< Session is terminated.		    */
-      if (callState == 2) return 0;
-
-      CStateMachine sm = CallManager.getCall(callId);
-      if (sm == null) return 0;
-
-      switch (callState)
-      {
-        case 1:
-          //sm.getState().onCalling();
-          break;
-        case 2:
-          //sm.getState().incomingCall("4444");
-          break;
-        case 3:
-          sm.getState().onAlerting();
-          break;
-        case 4:
-          sm.getState().onConnect();
-          break;
-        case 6:
-          sm.getState().onReleased();
-          break;
-      }
-      return 1;
+      GetInstance().BaseCallStateChanged(callId, callState, "");
+      return 0;
     }
 
-    private static int onCallIncoming(int callId, string uri)
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="callId"></param>
+    /// <param name="sturi"></param>
+    /// <returns></returns>
+    private static int onCallIncoming(int callId, StringBuilder sturi)
     {
+      string uri = sturi.ToString();
       string display  = "";
       string number = "";
-      
+    
       // get indices
       int startNum = uri.IndexOf("<sip:");
       int atPos = uri.IndexOf('@');
       // search for number
-      if ((startNum > 0)&&(atPos > startNum))
+      if ((startNum >= 0)&&(atPos > startNum))
       {
         number = uri.Substring(startNum + 5, atPos - startNum - 5);  
       }
@@ -432,44 +477,57 @@ namespace PjsipWrapper
         }
 
       }
-
-      CStateMachine sm = CallManager.createSession(callId, number);
-      sm.getState().incomingCall(number, display);
+      // invoke callback
+      GetInstance().BaseIncomingCall(callId, number, display);
       return 1;
     }
 
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="accId"></param>
+    /// <param name="regState"></param>
+    /// <returns></returns>
     private static int onRegStateChanged(int accId, int regState)
     {
-      CallManager.setAccountState(accId, regState);
+      GetInstance().Config.getAccount(accId).RegState = regState;
+      GetInstance().BaseAccountStateChanged(accId, regState);
       return 1;
     }
 
 
     private static int onCallHoldConfirm(int callId)
     {
-      CStateMachine sm = CallManager.getCall(callId);
-      if (sm != null) sm.getState().onHoldConfirm();
+      //CStateMachine sm = CallManager.getCall(callId);
+      //if (sm != null) sm.getState().onHoldConfirm();
+      // TODO:::implement proper callback
+      GetInstance().BaseCallNotification(callId, ECallNotification.CN_HOLDCONFIRM, "");
       return 1;
     }
 
     //////////////////////////////////////////////////////////////////////////////////
 
-    private static int onMessageReceived(string from, string message)
+    private static int onMessageReceived(StringBuilder from, StringBuilder text)
     {
-      CallManager.setMessageReceived(from, message);
+      GetInstance().BaseMessageReceived(from.ToString(), text.ToString());
       return 1;
     }
 
-    private static int onBuddyStatusChanged(int buddyId, int status, string text)
+    private static int onBuddyStatusChanged(int buddyId, int status, StringBuilder text)
     {
-      CallManager.setBuddyState(buddyId, status, text);
+      GetInstance().BaseBuddyStatusChanged(buddyId, status, text.ToString());
       return 1;
     }
 
     private static int onDtmfDigitCallback(int callId, int digit)
     {
-      CallManager.dtmfDigitReceived(callId, digit);
+      GetInstance().BaseDtmfDigitReceived(callId, digit);
+      return 1;
+    }
+
+    private static int onMessageWaitingCallback(int mwi, StringBuilder info)
+    {
+      GetInstance().BaseMessageWaitingIndication(mwi, info.ToString());
       return 1;
     }
 
