@@ -45,7 +45,7 @@ namespace Sipek
       record.FirstName = textBoxName.Text;
       //record.LastName = _lname.Caption;
       record.Number = textBoxNumber.Text;
-
+      record.PresenceEnabled = checkBoxPresence.Checked;
 
       CBuddyList.getInstance().addRecord(record);
       CBuddyList.getInstance().save();
@@ -62,8 +62,9 @@ namespace Sipek
       textBoxName.Text = record.FirstName;
       //textBoxName.Caption = record.LastName;
       textBoxNumber.Text = record.Number;
-    }
 
+      checkBoxPresence.Checked = record.PresenceEnabled;
+    }
 
   }
 }

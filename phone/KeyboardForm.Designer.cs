@@ -203,9 +203,12 @@ namespace Sipek
       this.ClientSize = new System.Drawing.Size(128, 166);
       this.Controls.Add(this.panel1);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+      this.KeyPreview = true;
       this.Name = "KeyboardForm";
       this.ShowInTaskbar = false;
       this.Text = "KeyboardForm";
+      this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.KeyboardForm_KeyPress);
+      this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.KeyboardForm_KeyDown);
       this.panel1.ResumeLayout(false);
       this.ResumeLayout(false);
 

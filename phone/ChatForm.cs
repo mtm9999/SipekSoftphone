@@ -5,7 +5,8 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using Telephony;
+using Common;
+
 
 namespace Sipek
 {
@@ -40,9 +41,17 @@ namespace Sipek
       }
     }
 
-    public ChatForm()
+    private AbstractFactory _factory = new NullFactory();
+    private AbstractFactory Factory
+    {
+      get { return _factory;  }
+    }
+
+    public ChatForm(AbstractFactory factory)
     {
       InitializeComponent();
+
+      _factory = factory;
     }
 
     private void ChatForm_Activated(object sender, EventArgs e)
@@ -58,7 +67,7 @@ namespace Sipek
       if (buddy != null)
       {
         // Invoke SIP stack wrapper function to send message
-        CCallManager.getInstance().Factory.getCommonProxy().sendMessage(buddy.Number, textBoxChatInput.Text);
+        Factory.getCommonProxy().sendMessage(buddy.Number, textBoxChatInput.Text);
 
         richTextBoxChatHistory.Text += "(me) " + DateTime.Now;
         

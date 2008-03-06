@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Timers;
 using System.Runtime.InteropServices;
-using Telephony;
-using PjsipWrapper; // for CSipCommonProxy,...
+using CallControl;
+using PjsipWrapper;
+using Common; // for CSipCommonProxy,...
 
 namespace Sipek
 {
@@ -17,13 +18,15 @@ namespace Sipek
     MainForm _form; // reference to MainForm to provide timer context
     IMediaProxyInterface _mediaProxy = new CMediaPlayerProxy();
     ICallLogInterface _callLogger = new CCallLog();
-    ICommonProxyInterface _commonProxy = new CSipCommonProxy();
+    ICommonProxyInterface _commonProxy = null;
     IConfiguratorInterface _config = new SipekConfigurator();
 
     #region Constructor
     public ConcreteFactory(MainForm mf)
     {
       _form = mf;
+      _commonProxy = CSipCommonProxy.GetInstance();
+      CSipCommonProxy.GetInstance().Factory = this;
     }
     #endregion Constructor
 
@@ -40,7 +43,7 @@ namespace Sipek
 
     public ICallProxyInterface createCallProxy()
     {
-      return new CSipCallProxy();
+      return new CSipCallProxy(this);
     }
 
     public IConfiguratorInterface getConfigurator()
@@ -84,7 +87,8 @@ namespace Sipek
       _guiTimer.Stop();
       //_elapsed(sender, e);
       // Synchronize thread with GUI because SIP stack works with GUI thread only
-      _form.Invoke(_elapsed, new object[] { sender, e});
+      if (!_form.Disposing)
+        _form.Invoke(_elapsed, new object[] { sender, e});
     }
 
     public override void Start()
@@ -118,6 +122,7 @@ namespace Sipek
   public class SipekAccount : IAccount
   {
     private int _index = -1;
+    
     public SipekAccount(int index)
     {
       _index = index;
@@ -213,11 +218,11 @@ namespace Sipek
     {
       get
       {
-        return 5060;//throw new Exception("The method or operation is not implemented.");
+        return 5060;
       }
       set
       {
-        //throw new Exception("The method or operation is not implemented.");
+        
       }
     }
 
@@ -297,12 +302,10 @@ namespace Sipek
     {
       get
       {
-        //throw new Exception("The method or operation is not implemented.");
         return Properties.Settings.Default.cfgSipAccountDefault;
       }
       set
       {
-        //throw new Exception("The method or operation is not implemented.");
         Properties.Settings.Default.cfgSipAccountDefault = value;
       }
     }
@@ -310,7 +313,7 @@ namespace Sipek
     public override int NumOfAccounts
     {
       get {
-        return 5;//throw new Exception("The method or operation is not implemented.");
+        return 5;
       }
       set { }
     }
@@ -322,7 +325,14 @@ namespace Sipek
 
     public override void Save()
     {
+
       // save properties
+      // do not save account state
+      for (int i=0; i<5; i++)
+      {
+        Properties.Settings.Default.cfgSipAccountState[i] = "0";
+      }
+
       Properties.Settings.Default.Save();
     }
 
@@ -339,7 +349,6 @@ namespace Sipek
       }
       set 
       {
-        int ind = 0;
         Properties.Settings.Default.cfgCodecList.Clear();
         List<string> cl = value;
         foreach (string item in cl)

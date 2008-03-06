@@ -21,7 +21,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Xml;
 using System.Collections.ObjectModel;
-using Telephony;
+using CallControl;
+using Common;
 
 namespace Sipek
 {
@@ -36,9 +37,7 @@ namespace Sipek
     private const string TYPE = "Type";
     private const string DURATION = "Duration";
     private const string COUNT = "Count";
-
-    private static CCallLog _instance = null;
-    
+   
     private string XMLCallLogFile = "calllog.xml";
 
     private Stack<CCallRecord> _callList;

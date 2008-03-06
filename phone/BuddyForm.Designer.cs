@@ -29,25 +29,21 @@ namespace Sipek
     private void InitializeComponent()
     {
       this.groupBox1 = new System.Windows.Forms.GroupBox();
+      this.checkBoxPresence = new System.Windows.Forms.CheckBox();
       this.buttonOk = new System.Windows.Forms.Button();
       this.buttonCancel = new System.Windows.Forms.Button();
-      this.comboBox1 = new System.Windows.Forms.ComboBox();
-      this.label3 = new System.Windows.Forms.Label();
       this.label2 = new System.Windows.Forms.Label();
       this.textBoxNumber = new System.Windows.Forms.TextBox();
       this.label1 = new System.Windows.Forms.Label();
       this.textBoxName = new System.Windows.Forms.TextBox();
-      this.checkBox1 = new System.Windows.Forms.CheckBox();
       this.groupBox1.SuspendLayout();
       this.SuspendLayout();
       // 
       // groupBox1
       // 
-      this.groupBox1.Controls.Add(this.checkBox1);
+      this.groupBox1.Controls.Add(this.checkBoxPresence);
       this.groupBox1.Controls.Add(this.buttonOk);
       this.groupBox1.Controls.Add(this.buttonCancel);
-      this.groupBox1.Controls.Add(this.comboBox1);
-      this.groupBox1.Controls.Add(this.label3);
       this.groupBox1.Controls.Add(this.label2);
       this.groupBox1.Controls.Add(this.textBoxNumber);
       this.groupBox1.Controls.Add(this.label1);
@@ -55,13 +51,23 @@ namespace Sipek
       this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.groupBox1.Location = new System.Drawing.Point(0, 0);
       this.groupBox1.Name = "groupBox1";
-      this.groupBox1.Size = new System.Drawing.Size(247, 194);
+      this.groupBox1.Size = new System.Drawing.Size(247, 169);
       this.groupBox1.TabIndex = 0;
       this.groupBox1.TabStop = false;
       // 
+      // checkBoxPresence
+      // 
+      this.checkBoxPresence.AutoSize = true;
+      this.checkBoxPresence.Location = new System.Drawing.Point(93, 94);
+      this.checkBoxPresence.Name = "checkBoxPresence";
+      this.checkBoxPresence.Size = new System.Drawing.Size(121, 17);
+      this.checkBoxPresence.TabIndex = 9;
+      this.checkBoxPresence.Text = "Subscribe Presence";
+      this.checkBoxPresence.UseVisualStyleBackColor = true;
+      // 
       // buttonOk
       // 
-      this.buttonOk.Location = new System.Drawing.Point(139, 159);
+      this.buttonOk.Location = new System.Drawing.Point(139, 132);
       this.buttonOk.Name = "buttonOk";
       this.buttonOk.Size = new System.Drawing.Size(75, 23);
       this.buttonOk.TabIndex = 8;
@@ -72,30 +78,13 @@ namespace Sipek
       // buttonCancel
       // 
       this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-      this.buttonCancel.Location = new System.Drawing.Point(16, 159);
+      this.buttonCancel.Location = new System.Drawing.Point(16, 132);
       this.buttonCancel.Name = "buttonCancel";
       this.buttonCancel.Size = new System.Drawing.Size(75, 23);
       this.buttonCancel.TabIndex = 7;
       this.buttonCancel.Text = "Cancel";
       this.buttonCancel.UseVisualStyleBackColor = true;
       this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
-      // 
-      // comboBox1
-      // 
-      this.comboBox1.FormattingEnabled = true;
-      this.comboBox1.Location = new System.Drawing.Point(93, 85);
-      this.comboBox1.Name = "comboBox1";
-      this.comboBox1.Size = new System.Drawing.Size(121, 21);
-      this.comboBox1.TabIndex = 6;
-      // 
-      // label3
-      // 
-      this.label3.AutoSize = true;
-      this.label3.Location = new System.Drawing.Point(44, 88);
-      this.label3.Name = "label3";
-      this.label3.Size = new System.Drawing.Size(41, 13);
-      this.label3.TabIndex = 5;
-      this.label3.Text = "Melody";
       // 
       // label2
       // 
@@ -129,23 +118,13 @@ namespace Sipek
       this.textBoxName.Size = new System.Drawing.Size(121, 20);
       this.textBoxName.TabIndex = 0;
       // 
-      // checkBox1
-      // 
-      this.checkBox1.AutoSize = true;
-      this.checkBox1.Location = new System.Drawing.Point(93, 113);
-      this.checkBox1.Name = "checkBox1";
-      this.checkBox1.Size = new System.Drawing.Size(71, 17);
-      this.checkBox1.TabIndex = 9;
-      this.checkBox1.Text = "Presence";
-      this.checkBox1.UseVisualStyleBackColor = true;
-      // 
       // BuddyForm
       // 
       this.AcceptButton = this.buttonOk;
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.CancelButton = this.buttonCancel;
-      this.ClientSize = new System.Drawing.Size(247, 194);
+      this.ClientSize = new System.Drawing.Size(247, 169);
       this.Controls.Add(this.groupBox1);
       this.Name = "BuddyForm";
       this.Text = "Buddy Room";
@@ -163,10 +142,8 @@ namespace Sipek
     private System.Windows.Forms.TextBox textBoxName;
     private System.Windows.Forms.Button buttonOk;
     private System.Windows.Forms.Button buttonCancel;
-    private System.Windows.Forms.ComboBox comboBox1;
-    private System.Windows.Forms.Label label3;
     private System.Windows.Forms.Label label2;
     private System.Windows.Forms.TextBox textBoxNumber;
-    private System.Windows.Forms.CheckBox checkBox1;
+    private System.Windows.Forms.CheckBox checkBoxPresence;
   }
 }

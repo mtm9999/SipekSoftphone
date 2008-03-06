@@ -47,6 +47,18 @@ namespace Sipek
       this.checkBoxDefault = new System.Windows.Forms.CheckBox();
       this.label6 = new System.Windows.Forms.Label();
       this.comboBoxAccounts = new System.Windows.Forms.ComboBox();
+      this.tabPageSettingsServices = new System.Windows.Forms.TabPage();
+      this.groupBox1 = new System.Windows.Forms.GroupBox();
+      this.comboBox1 = new System.Windows.Forms.ComboBox();
+      this.checkBoxAA = new System.Windows.Forms.CheckBox();
+      this.checkBoxDND = new System.Windows.Forms.CheckBox();
+      this.groupBoxServices = new System.Windows.Forms.GroupBox();
+      this.checkBoxCFB = new System.Windows.Forms.CheckBox();
+      this.textBoxCFB = new System.Windows.Forms.TextBox();
+      this.checkBoxCFNR = new System.Windows.Forms.CheckBox();
+      this.textBoxCFNR = new System.Windows.Forms.TextBox();
+      this.checkBoxCFU = new System.Windows.Forms.CheckBox();
+      this.textBoxCFU = new System.Windows.Forms.TextBox();
       this.tabPageSettingsAudio = new System.Windows.Forms.TabPage();
       this.groupBox5 = new System.Windows.Forms.GroupBox();
       this.checkBoxRecordingMute = new System.Windows.Forms.CheckBox();
@@ -60,44 +72,36 @@ namespace Sipek
       this.comboBoxPlaybackDevices = new System.Windows.Forms.ComboBox();
       this.trackBarPlaybackVolume = new System.Windows.Forms.TrackBar();
       this.checkBoxPlaybackMute = new System.Windows.Forms.CheckBox();
-      this.tabPageSettingsServices = new System.Windows.Forms.TabPage();
-      this.groupBox1 = new System.Windows.Forms.GroupBox();
-      this.comboBox1 = new System.Windows.Forms.ComboBox();
-      this.checkBoxAA = new System.Windows.Forms.CheckBox();
-      this.checkBoxDND = new System.Windows.Forms.CheckBox();
-      this.groupBoxServices = new System.Windows.Forms.GroupBox();
-      this.checkBoxCFB = new System.Windows.Forms.CheckBox();
-      this.textBoxCFB = new System.Windows.Forms.TextBox();
-      this.checkBoxCFNR = new System.Windows.Forms.CheckBox();
-      this.textBoxCFNR = new System.Windows.Forms.TextBox();
-      this.checkBoxCFU = new System.Windows.Forms.CheckBox();
-      this.textBoxCFU = new System.Windows.Forms.TextBox();
       this.tabCodecsPage = new System.Windows.Forms.TabPage();
+      this.label11 = new System.Windows.Forms.Label();
+      this.label10 = new System.Windows.Forms.Label();
+      this.buttonDisable = new System.Windows.Forms.Button();
+      this.buttonEnable = new System.Windows.Forms.Button();
+      this.listBoxEnCodecs = new System.Windows.Forms.ListBox();
       this.listBoxDisCodecs = new System.Windows.Forms.ListBox();
       this.panel2 = new System.Windows.Forms.Panel();
       this.buttonApply = new System.Windows.Forms.Button();
       this.buttonCancel = new System.Windows.Forms.Button();
       this.buttonOK = new System.Windows.Forms.Button();
-      this.listBoxEnCodecs = new System.Windows.Forms.ListBox();
-      this.buttonEnable = new System.Windows.Forms.Button();
-      this.buttonDisable = new System.Windows.Forms.Button();
-      this.label10 = new System.Windows.Forms.Label();
-      this.label11 = new System.Windows.Forms.Label();
+      this.groupBox6 = new System.Windows.Forms.GroupBox();
+      this.textBoxListenPort = new System.Windows.Forms.TextBox();
+      this.label12 = new System.Windows.Forms.Label();
       this.tabControlSettings.SuspendLayout();
       this.tabPageSettingsSIP.SuspendLayout();
       this.groupBox2.SuspendLayout();
       this.groupBox3.SuspendLayout();
+      this.tabPageSettingsServices.SuspendLayout();
+      this.groupBox1.SuspendLayout();
+      this.groupBoxServices.SuspendLayout();
       this.tabPageSettingsAudio.SuspendLayout();
       this.groupBox5.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.trackBarRecordingVolume)).BeginInit();
       this.groupBox4.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.trackBarPlaybackBalance)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.trackBarPlaybackVolume)).BeginInit();
-      this.tabPageSettingsServices.SuspendLayout();
-      this.groupBox1.SuspendLayout();
-      this.groupBoxServices.SuspendLayout();
       this.tabCodecsPage.SuspendLayout();
       this.panel2.SuspendLayout();
+      this.groupBox6.SuspendLayout();
       this.SuspendLayout();
       // 
       // tabControlSettings
@@ -117,6 +121,7 @@ namespace Sipek
       // 
       this.tabPageSettingsSIP.Controls.Add(this.groupBox2);
       this.tabPageSettingsSIP.Controls.Add(this.groupBox3);
+      this.tabPageSettingsSIP.Controls.Add(this.groupBox6);
       this.tabPageSettingsSIP.Location = new System.Drawing.Point(4, 22);
       this.tabPageSettingsSIP.Name = "tabPageSettingsSIP";
       this.tabPageSettingsSIP.Padding = new System.Windows.Forms.Padding(3);
@@ -138,9 +143,9 @@ namespace Sipek
       this.groupBox2.Controls.Add(this.label3);
       this.groupBox2.Controls.Add(this.textBoxDisplayName);
       this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.groupBox2.Location = new System.Drawing.Point(3, 110);
+      this.groupBox2.Location = new System.Drawing.Point(3, 98);
       this.groupBox2.Name = "groupBox2";
-      this.groupBox2.Size = new System.Drawing.Size(291, 211);
+      this.groupBox2.Size = new System.Drawing.Size(291, 170);
       this.groupBox2.TabIndex = 10;
       this.groupBox2.TabStop = false;
       this.groupBox2.Text = "User";
@@ -148,7 +153,7 @@ namespace Sipek
       // label2
       // 
       this.label2.AutoSize = true;
-      this.label2.Location = new System.Drawing.Point(7, 155);
+      this.label2.Location = new System.Drawing.Point(7, 144);
       this.label2.Name = "label2";
       this.label2.Size = new System.Drawing.Size(43, 13);
       this.label2.TabIndex = 3;
@@ -157,7 +162,7 @@ namespace Sipek
       // label1
       // 
       this.label1.AutoSize = true;
-      this.label1.Location = new System.Drawing.Point(7, 129);
+      this.label1.Location = new System.Drawing.Point(7, 118);
       this.label1.Name = "label1";
       this.label1.Size = new System.Drawing.Size(95, 13);
       this.label1.TabIndex = 11;
@@ -165,7 +170,7 @@ namespace Sipek
       // 
       // textBoxDomain
       // 
-      this.textBoxDomain.Location = new System.Drawing.Point(108, 149);
+      this.textBoxDomain.Location = new System.Drawing.Point(108, 138);
       this.textBoxDomain.Name = "textBoxDomain";
       this.textBoxDomain.Size = new System.Drawing.Size(137, 20);
       this.textBoxDomain.TabIndex = 8;
@@ -173,7 +178,7 @@ namespace Sipek
       // 
       // textBoxProxyAddress
       // 
-      this.textBoxProxyAddress.Location = new System.Drawing.Point(108, 123);
+      this.textBoxProxyAddress.Location = new System.Drawing.Point(108, 112);
       this.textBoxProxyAddress.Name = "textBoxProxyAddress";
       this.textBoxProxyAddress.Size = new System.Drawing.Size(137, 20);
       this.textBoxProxyAddress.TabIndex = 7;
@@ -237,7 +242,7 @@ namespace Sipek
       this.groupBox3.Dock = System.Windows.Forms.DockStyle.Top;
       this.groupBox3.Location = new System.Drawing.Point(3, 3);
       this.groupBox3.Name = "groupBox3";
-      this.groupBox3.Size = new System.Drawing.Size(291, 107);
+      this.groupBox3.Size = new System.Drawing.Size(291, 95);
       this.groupBox3.TabIndex = 3;
       this.groupBox3.TabStop = false;
       this.groupBox3.Text = "Accounts";
@@ -245,7 +250,7 @@ namespace Sipek
       // label7
       // 
       this.label7.AutoSize = true;
-      this.label7.Location = new System.Drawing.Point(7, 77);
+      this.label7.Location = new System.Drawing.Point(6, 73);
       this.label7.Name = "label7";
       this.label7.Size = new System.Drawing.Size(35, 13);
       this.label7.TabIndex = 7;
@@ -253,7 +258,7 @@ namespace Sipek
       // 
       // textBoxAccountName
       // 
-      this.textBoxAccountName.Location = new System.Drawing.Point(90, 74);
+      this.textBoxAccountName.Location = new System.Drawing.Point(90, 70);
       this.textBoxAccountName.Name = "textBoxAccountName";
       this.textBoxAccountName.Size = new System.Drawing.Size(155, 20);
       this.textBoxAccountName.TabIndex = 3;
@@ -261,7 +266,7 @@ namespace Sipek
       // checkBoxDefault
       // 
       this.checkBoxDefault.AutoSize = true;
-      this.checkBoxDefault.Location = new System.Drawing.Point(90, 51);
+      this.checkBoxDefault.Location = new System.Drawing.Point(90, 46);
       this.checkBoxDefault.Name = "checkBoxDefault";
       this.checkBoxDefault.Size = new System.Drawing.Size(91, 17);
       this.checkBoxDefault.TabIndex = 2;
@@ -285,160 +290,6 @@ namespace Sipek
       this.comboBoxAccounts.Size = new System.Drawing.Size(155, 21);
       this.comboBoxAccounts.TabIndex = 0;
       this.comboBoxAccounts.SelectedIndexChanged += new System.EventHandler(this.comboBoxAccounts_SelectedIndexChanged);
-      // 
-      // tabPageSettingsAudio
-      // 
-      this.tabPageSettingsAudio.Controls.Add(this.groupBox5);
-      this.tabPageSettingsAudio.Controls.Add(this.groupBox4);
-      this.tabPageSettingsAudio.Location = new System.Drawing.Point(4, 22);
-      this.tabPageSettingsAudio.Name = "tabPageSettingsAudio";
-      this.tabPageSettingsAudio.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPageSettingsAudio.Size = new System.Drawing.Size(297, 324);
-      this.tabPageSettingsAudio.TabIndex = 0;
-      this.tabPageSettingsAudio.Text = "Audio";
-      this.tabPageSettingsAudio.UseVisualStyleBackColor = true;
-      // 
-      // groupBox5
-      // 
-      this.groupBox5.Controls.Add(this.checkBoxRecordingMute);
-      this.groupBox5.Controls.Add(this.label9);
-      this.groupBox5.Controls.Add(this.checkBoxSelectMic);
-      this.groupBox5.Controls.Add(this.trackBarRecordingVolume);
-      this.groupBox5.Controls.Add(this.comboBoxRecordingDevices);
-      this.groupBox5.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.groupBox5.Location = new System.Drawing.Point(3, 163);
-      this.groupBox5.Name = "groupBox5";
-      this.groupBox5.Size = new System.Drawing.Size(291, 158);
-      this.groupBox5.TabIndex = 1;
-      this.groupBox5.TabStop = false;
-      this.groupBox5.Text = "Recording";
-      // 
-      // checkBoxRecordingMute
-      // 
-      this.checkBoxRecordingMute.AutoSize = true;
-      this.checkBoxRecordingMute.Location = new System.Drawing.Point(185, 59);
-      this.checkBoxRecordingMute.Name = "checkBoxRecordingMute";
-      this.checkBoxRecordingMute.Size = new System.Drawing.Size(50, 17);
-      this.checkBoxRecordingMute.TabIndex = 4;
-      this.checkBoxRecordingMute.Text = "Mute";
-      this.checkBoxRecordingMute.UseVisualStyleBackColor = true;
-      this.checkBoxRecordingMute.Click += new System.EventHandler(this.checkBoxPlaybackMute_CheckedChanged);
-      // 
-      // label9
-      // 
-      this.label9.AutoSize = true;
-      this.label9.Location = new System.Drawing.Point(7, 60);
-      this.label9.Name = "label9";
-      this.label9.Size = new System.Drawing.Size(94, 13);
-      this.label9.TabIndex = 3;
-      this.label9.Text = "Recording Volume";
-      // 
-      // checkBoxSelectMic
-      // 
-      this.checkBoxSelectMic.AutoSize = true;
-      this.checkBoxSelectMic.Location = new System.Drawing.Point(117, 59);
-      this.checkBoxSelectMic.Name = "checkBoxSelectMic";
-      this.checkBoxSelectMic.Size = new System.Drawing.Size(56, 17);
-      this.checkBoxSelectMic.TabIndex = 2;
-      this.checkBoxSelectMic.Text = "Select";
-      this.checkBoxSelectMic.UseVisualStyleBackColor = true;
-      this.checkBoxSelectMic.CheckedChanged += new System.EventHandler(this.checkBoxPlaybackMute_CheckedChanged);
-      // 
-      // trackBarRecordingVolume
-      // 
-      this.trackBarRecordingVolume.LargeChange = 10000;
-      this.trackBarRecordingVolume.Location = new System.Drawing.Point(6, 97);
-      this.trackBarRecordingVolume.Maximum = 65535;
-      this.trackBarRecordingVolume.Name = "trackBarRecordingVolume";
-      this.trackBarRecordingVolume.Size = new System.Drawing.Size(165, 42);
-      this.trackBarRecordingVolume.SmallChange = 6553;
-      this.trackBarRecordingVolume.TabIndex = 1;
-      this.trackBarRecordingVolume.TickFrequency = 6553;
-      this.trackBarRecordingVolume.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
-      this.trackBarRecordingVolume.ValueChanged += new System.EventHandler(this.trackBarRecordingVolume_ValueChanged);
-      // 
-      // comboBoxRecordingDevices
-      // 
-      this.comboBoxRecordingDevices.FormattingEnabled = true;
-      this.comboBoxRecordingDevices.Location = new System.Drawing.Point(7, 19);
-      this.comboBoxRecordingDevices.Name = "comboBoxRecordingDevices";
-      this.comboBoxRecordingDevices.Size = new System.Drawing.Size(165, 21);
-      this.comboBoxRecordingDevices.TabIndex = 0;
-      this.comboBoxRecordingDevices.SelectedIndexChanged += new System.EventHandler(this.comboBoxRecordingDevices_SelectedIndexChanged);
-      // 
-      // groupBox4
-      // 
-      this.groupBox4.BackColor = System.Drawing.Color.Transparent;
-      this.groupBox4.Controls.Add(this.label8);
-      this.groupBox4.Controls.Add(this.trackBarPlaybackBalance);
-      this.groupBox4.Controls.Add(this.comboBoxPlaybackDevices);
-      this.groupBox4.Controls.Add(this.trackBarPlaybackVolume);
-      this.groupBox4.Controls.Add(this.checkBoxPlaybackMute);
-      this.groupBox4.Dock = System.Windows.Forms.DockStyle.Top;
-      this.groupBox4.Location = new System.Drawing.Point(3, 3);
-      this.groupBox4.Name = "groupBox4";
-      this.groupBox4.Size = new System.Drawing.Size(291, 160);
-      this.groupBox4.TabIndex = 0;
-      this.groupBox4.TabStop = false;
-      this.groupBox4.Text = "Playback";
-      // 
-      // label8
-      // 
-      this.label8.AutoSize = true;
-      this.label8.Location = new System.Drawing.Point(4, 59);
-      this.label8.Name = "label8";
-      this.label8.Size = new System.Drawing.Size(77, 13);
-      this.label8.TabIndex = 4;
-      this.label8.Text = "Master Volume";
-      // 
-      // trackBarPlaybackBalance
-      // 
-      this.trackBarPlaybackBalance.LargeChange = 50;
-      this.trackBarPlaybackBalance.Location = new System.Drawing.Point(190, 85);
-      this.trackBarPlaybackBalance.Maximum = 320;
-      this.trackBarPlaybackBalance.Minimum = -320;
-      this.trackBarPlaybackBalance.Name = "trackBarPlaybackBalance";
-      this.trackBarPlaybackBalance.Orientation = System.Windows.Forms.Orientation.Vertical;
-      this.trackBarPlaybackBalance.Size = new System.Drawing.Size(42, 65);
-      this.trackBarPlaybackBalance.SmallChange = 10;
-      this.trackBarPlaybackBalance.TabIndex = 1;
-      this.trackBarPlaybackBalance.TickFrequency = 320;
-      this.trackBarPlaybackBalance.TickStyle = System.Windows.Forms.TickStyle.Both;
-      this.trackBarPlaybackBalance.ValueChanged += new System.EventHandler(this.trackBarPlaybackBalance_ValueChanged);
-      // 
-      // comboBoxPlaybackDevices
-      // 
-      this.comboBoxPlaybackDevices.FormattingEnabled = true;
-      this.comboBoxPlaybackDevices.Location = new System.Drawing.Point(7, 19);
-      this.comboBoxPlaybackDevices.Name = "comboBoxPlaybackDevices";
-      this.comboBoxPlaybackDevices.Size = new System.Drawing.Size(166, 21);
-      this.comboBoxPlaybackDevices.TabIndex = 3;
-      this.comboBoxPlaybackDevices.SelectedIndexChanged += new System.EventHandler(this.comboBoxPlaybackDevices_SelectedIndexChanged);
-      // 
-      // trackBarPlaybackVolume
-      // 
-      this.trackBarPlaybackVolume.Cursor = System.Windows.Forms.Cursors.Default;
-      this.trackBarPlaybackVolume.LargeChange = 10000;
-      this.trackBarPlaybackVolume.Location = new System.Drawing.Point(7, 92);
-      this.trackBarPlaybackVolume.Maximum = 65535;
-      this.trackBarPlaybackVolume.Name = "trackBarPlaybackVolume";
-      this.trackBarPlaybackVolume.Size = new System.Drawing.Size(167, 42);
-      this.trackBarPlaybackVolume.SmallChange = 6553;
-      this.trackBarPlaybackVolume.TabIndex = 2;
-      this.trackBarPlaybackVolume.TickFrequency = 6553;
-      this.trackBarPlaybackVolume.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
-      this.trackBarPlaybackVolume.ValueChanged += new System.EventHandler(this.trackBarPlaybackVolume_ValueChanged);
-      // 
-      // checkBoxPlaybackMute
-      // 
-      this.checkBoxPlaybackMute.AutoSize = true;
-      this.checkBoxPlaybackMute.Location = new System.Drawing.Point(123, 59);
-      this.checkBoxPlaybackMute.Name = "checkBoxPlaybackMute";
-      this.checkBoxPlaybackMute.Size = new System.Drawing.Size(50, 17);
-      this.checkBoxPlaybackMute.TabIndex = 0;
-      this.checkBoxPlaybackMute.Text = "Mute";
-      this.checkBoxPlaybackMute.UseVisualStyleBackColor = true;
-      this.checkBoxPlaybackMute.CheckedChanged += new System.EventHandler(this.checkBoxPlaybackMute_CheckedChanged);
       // 
       // tabPageSettingsServices
       // 
@@ -566,6 +417,160 @@ namespace Sipek
       this.textBoxCFU.Size = new System.Drawing.Size(128, 20);
       this.textBoxCFU.TabIndex = 0;
       // 
+      // tabPageSettingsAudio
+      // 
+      this.tabPageSettingsAudio.Controls.Add(this.groupBox5);
+      this.tabPageSettingsAudio.Controls.Add(this.groupBox4);
+      this.tabPageSettingsAudio.Location = new System.Drawing.Point(4, 22);
+      this.tabPageSettingsAudio.Name = "tabPageSettingsAudio";
+      this.tabPageSettingsAudio.Padding = new System.Windows.Forms.Padding(3);
+      this.tabPageSettingsAudio.Size = new System.Drawing.Size(297, 324);
+      this.tabPageSettingsAudio.TabIndex = 0;
+      this.tabPageSettingsAudio.Text = "Audio";
+      this.tabPageSettingsAudio.UseVisualStyleBackColor = true;
+      // 
+      // groupBox5
+      // 
+      this.groupBox5.Controls.Add(this.checkBoxRecordingMute);
+      this.groupBox5.Controls.Add(this.label9);
+      this.groupBox5.Controls.Add(this.checkBoxSelectMic);
+      this.groupBox5.Controls.Add(this.trackBarRecordingVolume);
+      this.groupBox5.Controls.Add(this.comboBoxRecordingDevices);
+      this.groupBox5.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.groupBox5.Location = new System.Drawing.Point(3, 163);
+      this.groupBox5.Name = "groupBox5";
+      this.groupBox5.Size = new System.Drawing.Size(291, 158);
+      this.groupBox5.TabIndex = 1;
+      this.groupBox5.TabStop = false;
+      this.groupBox5.Text = "Recording";
+      // 
+      // checkBoxRecordingMute
+      // 
+      this.checkBoxRecordingMute.AutoSize = true;
+      this.checkBoxRecordingMute.Location = new System.Drawing.Point(185, 59);
+      this.checkBoxRecordingMute.Name = "checkBoxRecordingMute";
+      this.checkBoxRecordingMute.Size = new System.Drawing.Size(50, 17);
+      this.checkBoxRecordingMute.TabIndex = 4;
+      this.checkBoxRecordingMute.Text = "Mute";
+      this.checkBoxRecordingMute.UseVisualStyleBackColor = true;
+      this.checkBoxRecordingMute.Click += new System.EventHandler(this.checkBoxPlaybackMute_CheckedChanged);
+      // 
+      // label9
+      // 
+      this.label9.AutoSize = true;
+      this.label9.Location = new System.Drawing.Point(7, 60);
+      this.label9.Name = "label9";
+      this.label9.Size = new System.Drawing.Size(94, 13);
+      this.label9.TabIndex = 3;
+      this.label9.Text = "Recording Volume";
+      // 
+      // checkBoxSelectMic
+      // 
+      this.checkBoxSelectMic.AutoSize = true;
+      this.checkBoxSelectMic.Location = new System.Drawing.Point(117, 59);
+      this.checkBoxSelectMic.Name = "checkBoxSelectMic";
+      this.checkBoxSelectMic.Size = new System.Drawing.Size(56, 17);
+      this.checkBoxSelectMic.TabIndex = 2;
+      this.checkBoxSelectMic.Text = "Select";
+      this.checkBoxSelectMic.UseVisualStyleBackColor = true;
+      this.checkBoxSelectMic.CheckedChanged += new System.EventHandler(this.checkBoxPlaybackMute_CheckedChanged);
+      // 
+      // trackBarRecordingVolume
+      // 
+      this.trackBarRecordingVolume.LargeChange = 10000;
+      this.trackBarRecordingVolume.Location = new System.Drawing.Point(6, 97);
+      this.trackBarRecordingVolume.Maximum = 65535;
+      this.trackBarRecordingVolume.Name = "trackBarRecordingVolume";
+      this.trackBarRecordingVolume.Size = new System.Drawing.Size(165, 45);
+      this.trackBarRecordingVolume.SmallChange = 6553;
+      this.trackBarRecordingVolume.TabIndex = 1;
+      this.trackBarRecordingVolume.TickFrequency = 6553;
+      this.trackBarRecordingVolume.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
+      this.trackBarRecordingVolume.ValueChanged += new System.EventHandler(this.trackBarRecordingVolume_ValueChanged);
+      // 
+      // comboBoxRecordingDevices
+      // 
+      this.comboBoxRecordingDevices.FormattingEnabled = true;
+      this.comboBoxRecordingDevices.Location = new System.Drawing.Point(7, 19);
+      this.comboBoxRecordingDevices.Name = "comboBoxRecordingDevices";
+      this.comboBoxRecordingDevices.Size = new System.Drawing.Size(165, 21);
+      this.comboBoxRecordingDevices.TabIndex = 0;
+      this.comboBoxRecordingDevices.SelectedIndexChanged += new System.EventHandler(this.comboBoxRecordingDevices_SelectedIndexChanged);
+      // 
+      // groupBox4
+      // 
+      this.groupBox4.BackColor = System.Drawing.Color.Transparent;
+      this.groupBox4.Controls.Add(this.label8);
+      this.groupBox4.Controls.Add(this.trackBarPlaybackBalance);
+      this.groupBox4.Controls.Add(this.comboBoxPlaybackDevices);
+      this.groupBox4.Controls.Add(this.trackBarPlaybackVolume);
+      this.groupBox4.Controls.Add(this.checkBoxPlaybackMute);
+      this.groupBox4.Dock = System.Windows.Forms.DockStyle.Top;
+      this.groupBox4.Location = new System.Drawing.Point(3, 3);
+      this.groupBox4.Name = "groupBox4";
+      this.groupBox4.Size = new System.Drawing.Size(291, 160);
+      this.groupBox4.TabIndex = 0;
+      this.groupBox4.TabStop = false;
+      this.groupBox4.Text = "Playback";
+      // 
+      // label8
+      // 
+      this.label8.AutoSize = true;
+      this.label8.Location = new System.Drawing.Point(4, 59);
+      this.label8.Name = "label8";
+      this.label8.Size = new System.Drawing.Size(77, 13);
+      this.label8.TabIndex = 4;
+      this.label8.Text = "Master Volume";
+      // 
+      // trackBarPlaybackBalance
+      // 
+      this.trackBarPlaybackBalance.LargeChange = 50;
+      this.trackBarPlaybackBalance.Location = new System.Drawing.Point(190, 85);
+      this.trackBarPlaybackBalance.Maximum = 320;
+      this.trackBarPlaybackBalance.Minimum = -320;
+      this.trackBarPlaybackBalance.Name = "trackBarPlaybackBalance";
+      this.trackBarPlaybackBalance.Orientation = System.Windows.Forms.Orientation.Vertical;
+      this.trackBarPlaybackBalance.Size = new System.Drawing.Size(45, 65);
+      this.trackBarPlaybackBalance.SmallChange = 10;
+      this.trackBarPlaybackBalance.TabIndex = 1;
+      this.trackBarPlaybackBalance.TickFrequency = 320;
+      this.trackBarPlaybackBalance.TickStyle = System.Windows.Forms.TickStyle.Both;
+      this.trackBarPlaybackBalance.ValueChanged += new System.EventHandler(this.trackBarPlaybackBalance_ValueChanged);
+      // 
+      // comboBoxPlaybackDevices
+      // 
+      this.comboBoxPlaybackDevices.FormattingEnabled = true;
+      this.comboBoxPlaybackDevices.Location = new System.Drawing.Point(7, 19);
+      this.comboBoxPlaybackDevices.Name = "comboBoxPlaybackDevices";
+      this.comboBoxPlaybackDevices.Size = new System.Drawing.Size(166, 21);
+      this.comboBoxPlaybackDevices.TabIndex = 3;
+      this.comboBoxPlaybackDevices.SelectedIndexChanged += new System.EventHandler(this.comboBoxPlaybackDevices_SelectedIndexChanged);
+      // 
+      // trackBarPlaybackVolume
+      // 
+      this.trackBarPlaybackVolume.Cursor = System.Windows.Forms.Cursors.Default;
+      this.trackBarPlaybackVolume.LargeChange = 10000;
+      this.trackBarPlaybackVolume.Location = new System.Drawing.Point(7, 92);
+      this.trackBarPlaybackVolume.Maximum = 65535;
+      this.trackBarPlaybackVolume.Name = "trackBarPlaybackVolume";
+      this.trackBarPlaybackVolume.Size = new System.Drawing.Size(167, 45);
+      this.trackBarPlaybackVolume.SmallChange = 6553;
+      this.trackBarPlaybackVolume.TabIndex = 2;
+      this.trackBarPlaybackVolume.TickFrequency = 6553;
+      this.trackBarPlaybackVolume.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
+      this.trackBarPlaybackVolume.ValueChanged += new System.EventHandler(this.trackBarPlaybackVolume_ValueChanged);
+      // 
+      // checkBoxPlaybackMute
+      // 
+      this.checkBoxPlaybackMute.AutoSize = true;
+      this.checkBoxPlaybackMute.Location = new System.Drawing.Point(123, 59);
+      this.checkBoxPlaybackMute.Name = "checkBoxPlaybackMute";
+      this.checkBoxPlaybackMute.Size = new System.Drawing.Size(50, 17);
+      this.checkBoxPlaybackMute.TabIndex = 0;
+      this.checkBoxPlaybackMute.Text = "Mute";
+      this.checkBoxPlaybackMute.UseVisualStyleBackColor = true;
+      this.checkBoxPlaybackMute.CheckedChanged += new System.EventHandler(this.checkBoxPlaybackMute_CheckedChanged);
+      // 
       // tabCodecsPage
       // 
       this.tabCodecsPage.Controls.Add(this.label11);
@@ -581,6 +586,52 @@ namespace Sipek
       this.tabCodecsPage.TabIndex = 3;
       this.tabCodecsPage.Text = "Codecs";
       this.tabCodecsPage.UseVisualStyleBackColor = true;
+      // 
+      // label11
+      // 
+      this.label11.AutoSize = true;
+      this.label11.Location = new System.Drawing.Point(169, 11);
+      this.label11.Name = "label11";
+      this.label11.Size = new System.Drawing.Size(87, 13);
+      this.label11.TabIndex = 5;
+      this.label11.Text = "Enabled codecs:";
+      // 
+      // label10
+      // 
+      this.label10.AutoSize = true;
+      this.label10.Location = new System.Drawing.Point(9, 12);
+      this.label10.Name = "label10";
+      this.label10.Size = new System.Drawing.Size(89, 13);
+      this.label10.TabIndex = 4;
+      this.label10.Text = "Disabled codecs:";
+      // 
+      // buttonDisable
+      // 
+      this.buttonDisable.Location = new System.Drawing.Point(135, 84);
+      this.buttonDisable.Name = "buttonDisable";
+      this.buttonDisable.Size = new System.Drawing.Size(29, 23);
+      this.buttonDisable.TabIndex = 3;
+      this.buttonDisable.Text = "<=";
+      this.buttonDisable.UseVisualStyleBackColor = true;
+      this.buttonDisable.Click += new System.EventHandler(this.buttonDisable_Click);
+      // 
+      // buttonEnable
+      // 
+      this.buttonEnable.Location = new System.Drawing.Point(135, 44);
+      this.buttonEnable.Name = "buttonEnable";
+      this.buttonEnable.Size = new System.Drawing.Size(29, 23);
+      this.buttonEnable.TabIndex = 2;
+      this.buttonEnable.Text = "=>";
+      this.buttonEnable.UseVisualStyleBackColor = true;
+      this.buttonEnable.Click += new System.EventHandler(this.buttonEnable_Click);
+      // 
+      // listBoxEnCodecs
+      // 
+      this.listBoxEnCodecs.FormattingEnabled = true;
+      this.listBoxEnCodecs.Location = new System.Drawing.Point(169, 31);
+      this.listBoxEnCodecs.Name = "listBoxEnCodecs";
+      this.listBoxEnCodecs.Size = new System.Drawing.Size(120, 277);
+      this.listBoxEnCodecs.TabIndex = 1;
       // 
       // listBoxDisCodecs
       // 
@@ -632,51 +683,34 @@ namespace Sipek
       this.buttonOK.UseVisualStyleBackColor = true;
       this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
       // 
-      // listBoxEnCodecs
+      // groupBox6
       // 
-      this.listBoxEnCodecs.FormattingEnabled = true;
-      this.listBoxEnCodecs.Location = new System.Drawing.Point(169, 31);
-      this.listBoxEnCodecs.Name = "listBoxEnCodecs";
-      this.listBoxEnCodecs.Size = new System.Drawing.Size(120, 277);
-      this.listBoxEnCodecs.TabIndex = 1;
+      this.groupBox6.Controls.Add(this.label12);
+      this.groupBox6.Controls.Add(this.textBoxListenPort);
+      this.groupBox6.Dock = System.Windows.Forms.DockStyle.Bottom;
+      this.groupBox6.Location = new System.Drawing.Point(3, 268);
+      this.groupBox6.Name = "groupBox6";
+      this.groupBox6.Size = new System.Drawing.Size(291, 53);
+      this.groupBox6.TabIndex = 12;
+      this.groupBox6.TabStop = false;
+      this.groupBox6.Text = "Phone";
       // 
-      // buttonEnable
+      // textBoxListenPort
       // 
-      this.buttonEnable.Location = new System.Drawing.Point(135, 44);
-      this.buttonEnable.Name = "buttonEnable";
-      this.buttonEnable.Size = new System.Drawing.Size(29, 23);
-      this.buttonEnable.TabIndex = 2;
-      this.buttonEnable.Text = "=>";
-      this.buttonEnable.UseVisualStyleBackColor = true;
-      this.buttonEnable.Click += new System.EventHandler(this.buttonEnable_Click);
+      this.textBoxListenPort.Location = new System.Drawing.Point(90, 19);
+      this.textBoxListenPort.Name = "textBoxListenPort";
+      this.textBoxListenPort.Size = new System.Drawing.Size(56, 20);
+      this.textBoxListenPort.TabIndex = 8;
+      this.textBoxListenPort.Text = "5060";
       // 
-      // buttonDisable
+      // label12
       // 
-      this.buttonDisable.Location = new System.Drawing.Point(135, 84);
-      this.buttonDisable.Name = "buttonDisable";
-      this.buttonDisable.Size = new System.Drawing.Size(29, 23);
-      this.buttonDisable.TabIndex = 3;
-      this.buttonDisable.Text = "<=";
-      this.buttonDisable.UseVisualStyleBackColor = true;
-      this.buttonDisable.Click += new System.EventHandler(this.buttonDisable_Click);
-      // 
-      // label10
-      // 
-      this.label10.AutoSize = true;
-      this.label10.Location = new System.Drawing.Point(9, 12);
-      this.label10.Name = "label10";
-      this.label10.Size = new System.Drawing.Size(89, 13);
-      this.label10.TabIndex = 4;
-      this.label10.Text = "Disabled codecs:";
-      // 
-      // label11
-      // 
-      this.label11.AutoSize = true;
-      this.label11.Location = new System.Drawing.Point(169, 11);
-      this.label11.Name = "label11";
-      this.label11.Size = new System.Drawing.Size(87, 13);
-      this.label11.TabIndex = 5;
-      this.label11.Text = "Enabled codecs:";
+      this.label12.AutoSize = true;
+      this.label12.Location = new System.Drawing.Point(5, 26);
+      this.label12.Name = "label12";
+      this.label12.Size = new System.Drawing.Size(70, 13);
+      this.label12.TabIndex = 9;
+      this.label12.Text = "Listening port";
       // 
       // SettingsForm
       // 
@@ -695,6 +729,11 @@ namespace Sipek
       this.groupBox2.PerformLayout();
       this.groupBox3.ResumeLayout(false);
       this.groupBox3.PerformLayout();
+      this.tabPageSettingsServices.ResumeLayout(false);
+      this.groupBox1.ResumeLayout(false);
+      this.groupBox1.PerformLayout();
+      this.groupBoxServices.ResumeLayout(false);
+      this.groupBoxServices.PerformLayout();
       this.tabPageSettingsAudio.ResumeLayout(false);
       this.groupBox5.ResumeLayout(false);
       this.groupBox5.PerformLayout();
@@ -703,14 +742,11 @@ namespace Sipek
       this.groupBox4.PerformLayout();
       ((System.ComponentModel.ISupportInitialize)(this.trackBarPlaybackBalance)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.trackBarPlaybackVolume)).EndInit();
-      this.tabPageSettingsServices.ResumeLayout(false);
-      this.groupBox1.ResumeLayout(false);
-      this.groupBox1.PerformLayout();
-      this.groupBoxServices.ResumeLayout(false);
-      this.groupBoxServices.PerformLayout();
       this.tabCodecsPage.ResumeLayout(false);
       this.tabCodecsPage.PerformLayout();
       this.panel2.ResumeLayout(false);
+      this.groupBox6.ResumeLayout(false);
+      this.groupBox6.PerformLayout();
       this.ResumeLayout(false);
 
     }
@@ -772,5 +808,8 @@ namespace Sipek
     private System.Windows.Forms.Button buttonEnable;
     private System.Windows.Forms.Label label11;
     private System.Windows.Forms.Label label10;
+    private System.Windows.Forms.GroupBox groupBox6;
+    private System.Windows.Forms.Label label12;
+    private System.Windows.Forms.TextBox textBoxListenPort;
   }
 }

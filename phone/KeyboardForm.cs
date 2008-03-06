@@ -5,7 +5,6 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using Telephony;
 
 namespace Sipek
 {
@@ -82,6 +81,33 @@ namespace Sipek
     private void keypadHASH_Click(object sender, EventArgs e)
     {
       _main.onUserDialDigit("#");
+    }
+
+    private void KeyboardForm_KeyPress(object sender, KeyPressEventArgs e)
+    {
+      switch (e.KeyChar)
+      {
+        case '0': this.keypad0_Click(sender, e); break;
+        case '1': this.keypad1_Click(sender, e); break;
+        case '2': this.keypad2_Click(sender, e); break;
+        case '3': this.keypad3_Click(sender, e); break;
+        case '4': this.keypad4_Click(sender, e); break;
+        case '5': this.keypad5_Click(sender, e); break;
+        case '6': this.keypad6_Click(sender, e); break;
+        case '7': this.keypad7_Click(sender, e); break;
+        case '8': this.keypad8_Click(sender, e); break;
+        case '9': this.keypad9_Click(sender, e); break;
+        case '*': this.keypadSTAR_Click(sender, e); break;
+        case '#': this.keypadHASH_Click(sender, e); break;
+      }
+    }
+
+    private void KeyboardForm_KeyDown(object sender, KeyEventArgs e)
+    {
+      if (e.KeyValue == 0x1B)
+      {
+        this.Close();
+      }
     }
 
   }

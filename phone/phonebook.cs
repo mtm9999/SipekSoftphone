@@ -20,6 +20,7 @@ using System.Xml;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System;
+using PjsipWrapper;
 
 namespace Sipek
 {
@@ -50,6 +51,8 @@ namespace Sipek
   /// </summary>
   public class CBuddyRecord
   {
+    #region Variables
+
     private int _id;
     private string _firstName;
     private string _lastName = "";
@@ -57,11 +60,15 @@ namespace Sipek
     private string _email;
     private int _accountId;
     private string _uri;
+    private bool _presenceEnabled;
 
     private int _status = 0;
     private string _statusText;
     private Stack<CBuddyMessage> _messageList;
 
+    #endregion
+
+    #region Properties
 
     public int Id
     {
@@ -94,12 +101,12 @@ namespace Sipek
       get { return _statusText; }
       set { _statusText = value; }
     }
-/*
-    public CBuddyMessage this[int index]
+
+    public bool PresenceEnabled
     {
-      get { return _messageList[index]; }
+      get { return _presenceEnabled; }
+      set { _presenceEnabled = value; }
     }
-    */
     /////////////////////////////////////////////////////
 
     public string FirstName
@@ -125,6 +132,8 @@ namespace Sipek
       get { return _accountId; }
       set { _accountId = value; }
     }
+    
+    #endregion 
 
     #region Constructor
 
@@ -167,8 +176,10 @@ namespace Sipek
     private const string LASTNAME = "LastName";
     private const string NUMBER = "phonenumber";
     private const string URI = "uri";
+    private const string PENABLED = "presence";
     private const string PHONE_URI = "Phone/uri";
     private const string PHONE_NUMBER = "Phone/phonenumber";
+    private const string PHONE_PRESENCE= "Phone/presence";
 
     #region Properties
     public CBuddyRecord this[int index]
@@ -196,16 +207,15 @@ namespace Sipek
       return _instance;
     }
 
-    public CBuddyList()
+    protected CBuddyList()
     {
-      initialize();
     }
 
     #endregion
 
     #region Private Methods
 
-    private void initialize()
+    public void initialize()
     {
       XmlDocument xmlDocument = new XmlDocument();
       try
@@ -243,8 +253,10 @@ namespace Sipek
 
         snode = item.SelectSingleNode(PHONE_URI);
         if ((snode != null) && (snode.FirstChild != null)) record.Uri = snode.FirstChild.Value;
- 
-        //_buddyList.Add(record.Id, record);
+
+        snode = item.SelectSingleNode(PHONE_PRESENCE);
+        if ((snode != null) && (snode.FirstChild != null)) record.PresenceEnabled = (snode.FirstChild.Value == "" ? false : true);
+
         this.addRecord(record);
       }
     }
@@ -310,7 +322,12 @@ namespace Sipek
             XmlElement elUri = xmldoc.CreateElement(URI);
             elUri.InnerText = kvp.Value.Uri;
             phelem.AppendChild(elUri);
+
+            XmlElement elEnabled = xmldoc.CreateElement(PENABLED);
+            elEnabled.InnerText = kvp.Value.PresenceEnabled == true ? "1" : "";
+            phelem.AppendChild(elEnabled);
           }
+
           nodeRecord.AppendChild(phelem);
 
           nodeRoot.AppendChild(nodeRecord);
@@ -325,24 +342,34 @@ namespace Sipek
 
     public void addRecord(CBuddyRecord record)
     {
-      // Call stack to add buddy and get buddy id
-      int buddyindex = Telephony.CCallManager.getInstance().Factory.getCommonProxy().addBuddy(record.Number);
-      if (buddyindex == -1)
+      int buddyindex = -1;
+      if (record.PresenceEnabled)
       {
-        // TODO:::check if ok
-        return;
-        Random rnd = new System.Random((int)DateTime.Now.Ticks);
-        buddyindex = rnd.Next(10000);
-        for (int i = 0; i < 30000; i++)
+        buddyindex = SubscribePresence(record);
+      }
+      else
+      {
+        for (int i = 0; i < _buddyList.Count + 1; i++ )
         {
-          rnd = new System.Random((int)DateTime.Now.Ticks);
-          buddyindex = rnd.Next(10000);
+          if (!_buddyList.ContainsKey(i))
+          {
+            buddyindex = i;
+            break;
+          }
         }
       }
+
       record.Id = buddyindex;
       // add record to buddylist
       _buddyList.Add(record.Id, record);
     }
+
+    private int SubscribePresence(CBuddyRecord record)
+    {
+      // Call proxy to add buddy and get buddy id
+      return CSipCommonProxy.GetInstance().addBuddy(record.Number);
+    }
+
 
     public void deleteRecord(int id)
     {
