@@ -26,9 +26,10 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Collections.ObjectModel;
-using Telephony;
+using CallControl;
 using System.Windows.Forms.Design;
 using WaveLib.AudioMixer; // see http://www.codeproject.com/KB/graphics/AudioLib.aspx
+using Common;
 using PjsipWrapper; 
 
 
@@ -40,6 +41,9 @@ namespace Sipek
  
     Timer tmr = new Timer();  // Refresh Call List
     EUserStatus _lastUserStatus = EUserStatus.AVAILABLE;
+    bool _initialized = false;
+
+    #region Properties
     private AbstractFactory _factory;
     private AbstractFactory SipekFactory
     {
@@ -51,6 +55,13 @@ namespace Sipek
       get { return _configurator; }
     }
 
+    private CCallManager CallManager
+    {
+      get { return CCallManager.getInstance(); }
+    }
+    
+    #endregion
+
     public MainForm()
     {
       InitializeComponent();
@@ -60,17 +71,20 @@ namespace Sipek
 
     private void RefreshForm()
     {
-      // Update Call Status
-      UpdateCallLines();
+      if (_initialized) 
+      {
+        // Update Call Status
+        UpdateCallLines();
 
-      // Update Account Status
-      UpdateAccountList();
+        // Update Call Register
+        UpdateCallRegister();
 
-      // Update Call Register
-      UpdateCallRegister();
+        // Update Buddy List
+        UpdateBuddyList();
 
-      // Update Buddy List
-      UpdateBuddyList();
+        // Update account list
+        UpdateAccountList();
+      }
 
       // Refresh toolstripbuttons
       toolStripButtonDND.Checked = SipekConfigurator.DNDFlag;
@@ -127,52 +141,60 @@ namespace Sipek
       }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     private void UpdateCallRegister()
     {
-      listViewCallRegister.Items.Clear();
-
-      Stack<CCallRecord> results = SipekFactory.getCallLogger().getList();
-      
-      foreach (CCallRecord item in results)
+      lock (this)
       {
-        string duration = item.Duration.ToString();
-        if (duration.IndexOf('.') > 0) duration = duration.Remove(duration.IndexOf('.')); // remove miliseconds
+        listViewCallRegister.Items.Clear();
 
-        string recorditem = item.Number;
-        CBuddyRecord rec = null;
-        int buddyId = CBuddyList.getInstance().getBuddyId(item.Number);
-        if (buddyId > -1)
+        Stack<CCallRecord> results = SipekFactory.getCallLogger().getList();
+
+        foreach (CCallRecord item in results)
         {
-          string name = "";
-          rec = CBuddyList.getInstance()[buddyId];
-          name = rec.FirstName + " " + rec.LastName;
-          name = name.Trim();
-          recorditem = name + ", " + item.Number;
-        }
-        else if (item.Name.Length > 0)
-        {
-          recorditem = item.Name + ", " + item.Number;
-        }
+          string duration = item.Duration.ToString();
+          if (duration.IndexOf('.') > 0) duration = duration.Remove(duration.IndexOf('.')); // remove miliseconds
 
-        ListViewItem lvi = new ListViewItem(new string[] {
-             item.Type.ToString(), recorditem.Trim(), item.Time.ToString(), duration});
+          string recorditem = item.Number;
+          CBuddyRecord rec = null;
+          int buddyId = CBuddyList.getInstance().getBuddyId(item.Number);
+          if (buddyId > -1)
+          {
+            string name = "";
+            rec = CBuddyList.getInstance()[buddyId];
+            name = rec.FirstName + " " + rec.LastName;
+            name = name.Trim();
+            recorditem = name + ", " + item.Number;
+          }
+          else if (item.Name.Length > 0)
+          {
+            recorditem = item.Name + ", " + item.Number;
+          }
 
-        lvi.Tag = item;
-        
-        listViewCallRegister.Items.Add(lvi);
+          ListViewItem lvi = new ListViewItem(new string[] {
+               item.Type.ToString(), recorditem.Trim(), item.Time.ToString(), duration});
+
+          lvi.Tag = item;
+
+          listViewCallRegister.Items.Add(lvi);
+        }
       }
     }
 
     //////////////////////////////////////////////////////////////////////////////////////
+    /// Register callbacks and synchronize threads
     /// 
-    delegate void StateChangedDelegate();
+    delegate void DRefreshForm();
     delegate void MessageReceivedDelegate(string from, string message);
     delegate void BuddyStateChangedDelegate(int buddyId, int status, string text);
+    delegate void DMessageWaiting(int mwi, string text);
 
-    public void onTelephonyRefresh()
+    public void onRefresh()
     {
       if (this.Created)
-        this.BeginInvoke(new StateChangedDelegate(this.RefreshForm));
+        this.BeginInvoke(new DRefreshForm(this.RefreshForm));
     }
 
     public void onMessageReceived(string from, string message)
@@ -187,6 +209,17 @@ namespace Sipek
         this.BeginInvoke(new BuddyStateChangedDelegate(this.BuddyStateChanged), new object[] { buddyId, status, text});
     }
 
+    public void onAccountStateChanged(int accId, int accState)
+    {
+      if (this.Created)
+        this.BeginInvoke(new DRefreshForm(this.RefreshForm));
+    }
+
+    public void onMessageWaitingIndication(int mwi, string text)
+    {
+      if (this.Created)
+        this.BeginInvoke(new DMessageWaiting(this.MessageWaiting), new object[] { mwi, text });
+    }
 
     /////////////////////////////////////////////////////////////////////////////////////
     /// Buddy List Methods
@@ -194,25 +227,26 @@ namespace Sipek
 
     private void UpdateBuddyList()
     {
+      if (!_initialized) return;
+
       Dictionary<int, CBuddyRecord> results = CBuddyList.getInstance().getList();
       listViewBuddies.Items.Clear();
       foreach (KeyValuePair<int, CBuddyRecord> kvp in results)
       {
-        string status;
-        switch (kvp.Value.Status)
-        {
-          case 0: status = "unknown"; break;
-          case 1: status = "online"; break;
-          case 2: status = "offline"; break;
-          default: status = "?"; break;
-        }
-        //if ((null != kvp.Value.StatusText) && (kvp.Value.StatusText.Length > 0))
-        //{
-        //  status += " (" + kvp.Value.StatusText + ")";
-        //}
-        status = kvp.Value.StatusText;
+        string status = "?";
 
-        ListViewItem item = new ListViewItem(new string[] { kvp.Value.FirstName + kvp.Value.LastName, status });
+        if (kvp.Value.PresenceEnabled)
+        {
+          switch (kvp.Value.Status)
+          {
+            case 0: status = "unknown"; break;
+            case 1: status = "online"; break;
+            case 2: status = "offline"; break;
+            default: status = kvp.Value.StatusText; break;
+          }
+        }
+
+        ListViewItem item = new ListViewItem(new string[] { kvp.Value.FirstName + kvp.Value.LastName, status, kvp.Value.StatusText });
         item.Tag = kvp.Value.Id;
         //item.BackColor = Color.Blue;
         listViewBuddies.Items.Add(item);
@@ -233,7 +267,7 @@ namespace Sipek
     {
       CBuddyList.getInstance()[buddyId].Status = status;
       CBuddyList.getInstance()[buddyId].StatusText = text;
-      this.RefreshForm();
+      UpdateBuddyList();
     }
 
     private void MessageReceived(string from, string message)
@@ -254,7 +288,7 @@ namespace Sipek
       }
 
       // if not, create new instance
-      ChatForm bf = new ChatForm();
+      ChatForm bf = new ChatForm(_factory);
       int id = CBuddyList.getInstance().getBuddyId(buddyId);
       if (id >= 0)
       {
@@ -303,12 +337,42 @@ namespace Sipek
       return number;
     }
 
+    private void MessageWaiting(int mwi, string info)
+    {
+      // "Messages-Waiting: yes\r\nMessage-Account: sip:*97@192.168.60.211\r\nVoice-Message: 5/2 (0/0)\r\n"
+      // extract values 
+      string[] parts = info.Split(new String [] {"\r\n"}, StringSplitOptions.RemoveEmptyEntries);
+      string vmaccount = "";
+      string noofvms = "";
+
+      if (parts.Length == 3)
+      {
+        int index = parts[1].IndexOf("Message-Account: ");
+        if (index == 0)
+        {
+          vmaccount = parts[1].Substring("Message-Account: ".Length);
+        }
+
+        if (parts[2].IndexOf("Voice-Message: ") >= 0)
+        {
+          noofvms = parts[2].Substring("Voice-Message: ".Length);
+        }
+
+      }
+
+      if (mwi > 0)
+        toolStripStatusLabelMessages.Text = "Message Waiting: " + noofvms + " - Account: " + vmaccount;
+      else
+        toolStripStatusLabelMessages.Text = "No Messages!";
+
+    }
+
     private void toolStripMenuItemIM_Click(object sender, EventArgs e)
     {
       if (listViewBuddies.SelectedItems.Count > 0)
       {
         ListViewItem lvi = listViewBuddies.SelectedItems[0];
-        ChatForm bf = new ChatForm();
+        ChatForm bf = new ChatForm(_factory);
         bf.BuddyId = (int)lvi.Tag;
         bf.ShowDialog();
       }
@@ -331,7 +395,7 @@ namespace Sipek
 
     private void exitToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      CCallManager.getInstance().shutdown();
+      CallManager.Shutdown();
       this.Close();
     }
 
@@ -362,13 +426,13 @@ namespace Sipek
       {
         ListViewItem lvi = listViewCallLines.SelectedItems[0];
 
-        if (CCallManager.getInstance().Count <= 0)
+        if (CallManager.Count <= 0)
         {
           return;
         }
         else
         {
-          EStateId stateId = CCallManager.getInstance().getCall((int)lvi.Tag).getStateId();
+          EStateId stateId = ((CStateMachine)lvi.Tag).getStateId();
           switch (stateId)
           {
             case EStateId.INCOMING:
@@ -393,18 +457,6 @@ namespace Sipek
       }
     }
 
-    private void tabPageAccounts_Enter(object sender, EventArgs e)
-    {
-      UpdateAccountList();
-    }
-
-    private void MainForm_Activated(object sender, EventArgs e)
-    {
-      // Refresh data
-      //RefreshForm();
-      //UpdateBuddyList();
-    }
-
     ///////////////////////////////////////////////////////////////////////////////////
     // Call Related Methods
     #region Call Related Methods
@@ -419,7 +471,7 @@ namespace Sipek
       try
       {
         // get entire call list
-        Dictionary<int, CStateMachine> callList = CCallManager.getInstance().CallList;
+        Dictionary<int, CStateMachine> callList = CallManager.CallList;
 
         foreach (KeyValuePair<int, CStateMachine> kvp in callList)
         {
@@ -431,11 +483,11 @@ namespace Sipek
           // show name & number or just number
           string display = name.Length > 0 ? name + " / " + number : number;
           string stateName = kvp.Value.getStateName();
-          if (CCallManager.getInstance().Is3Pty) stateName = "CONFERENCE";
+          if (CallManager.Is3Pty) stateName = "CONFERENCE";
           ListViewItem lvi = new ListViewItem(new string[] {
             stateName, display, duration});
 
-          lvi.Tag = kvp.Value.Session;
+          lvi.Tag = kvp.Value;
           listViewCallLines.Items.Add(lvi);
           lvi.Selected = true;
 
@@ -476,7 +528,7 @@ namespace Sipek
       for (int i = 0; i < listViewCallLines.Items.Count; i++ )
       {
         ListViewItem item = listViewCallLines.Items[i];
-        CStateMachine sm = CCallManager.getInstance().getCall((int)item.Tag);
+        CStateMachine sm = (CStateMachine)item.Tag;
         if (null == sm) continue;
 
         string duration = sm.RuntimeDuration.ToString();
@@ -501,7 +553,7 @@ namespace Sipek
         CBuddyRecord rec = CBuddyList.getInstance().getRecord((int)lvi.Tag);
         if (rec != null)
         {
-          CCallManager.getInstance().createOutboundCall(rec.Number);
+          CallManager.createOutboundCall(rec.Number);
         }
       }
     }
@@ -512,29 +564,26 @@ namespace Sipek
       {
         ListViewItem lvi = listViewCallLines.SelectedItems[0];
 
-        CCallManager.getInstance().onUserHoldRetrieve((int)lvi.Tag);
+        CallManager.onUserHoldRetrieve(((CStateMachine)lvi.Tag).Session);
       }
     }
 
     private void toolStripButtonCall_Click(object sender, EventArgs e)
     {
+      // TODO check if incoming call!!!
+      if (listViewCallLines.SelectedItems.Count > 0)
+      {
+        ListViewItem lvi = listViewCallLines.SelectedItems[0];
+        CStateMachine call = (CStateMachine)lvi.Tag;
+        if (call.Incoming) 
+        {
+          CallManager.onUserAnswer(call.Session);
+          return;
+        }
+      }
       if (toolStripComboDial.Text.Length > 0)
       {
-        CCallManager.getInstance().createOutboundCall(toolStripComboDial.Text);
-      }
-      else
-      {
-        // check selected line state
-        if (listViewCallLines.SelectedItems.Count > 0)
-        {
-          // if in incoming state, answer call
-          ListViewItem lvi = listViewCallLines.SelectedItems[0];
-          CStateMachine call = CCallManager.getInstance().getCall((int)lvi.Tag);
-          if (call.getStateId() == EStateId.INCOMING)
-          {
-            CCallManager.getInstance().onUserAnswer(call.Session);
-          }
-        }
+        CallManager.createOutboundCall(toolStripComboDial.Text);
       }
     }
 
@@ -543,8 +592,7 @@ namespace Sipek
       if (listViewCallLines.SelectedItems.Count > 0)
       {
         ListViewItem lvi = listViewCallLines.SelectedItems[0];
-        //telephoneObj.releaseCall((int)lvi.Tag);
-        CCallManager.getInstance().onUserRelease((int)lvi.Tag);
+        CallManager.onUserRelease(((CStateMachine)lvi.Tag).Session);
       }
     }
 
@@ -554,8 +602,7 @@ namespace Sipek
       {
         if (toolStripComboDial.Text.Length > 0)
         {
-          //makeCall(toolStripComboDial.Text);
-          CCallManager.getInstance().createOutboundCall(toolStripComboDial.Text);
+          CallManager.createOutboundCall(toolStripComboDial.Text);
         }
       }
     }
@@ -566,7 +613,7 @@ namespace Sipek
       {
         ListViewItem lvi = listViewCallRegister.SelectedItems[0];
         CCallRecord record = (CCallRecord)lvi.Tag;
-        CCallManager.getInstance().createOutboundCall(record.Number);
+        CallManager.createOutboundCall(record.Number);
       }
     }
 
@@ -575,7 +622,7 @@ namespace Sipek
       if (listViewCallLines.SelectedItems.Count > 0)
       {
         ListViewItem lvi = listViewCallLines.SelectedItems[0];
-        CCallManager.getInstance().onUserAnswer((int)lvi.Tag);
+        CallManager.onUserAnswer(((CStateMachine)lvi.Tag).Session);
       }
     }
 
@@ -595,8 +642,11 @@ namespace Sipek
 
     private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
     {
-      SipekFactory.getCallLogger().save();
-      CBuddyList.getInstance().save();
+      if (_initialized)
+      {
+        SipekFactory.getCallLogger().save();
+        CBuddyList.getInstance().save();
+      }
       SipekConfigurator.Save();
     }
 
@@ -609,7 +659,7 @@ namespace Sipek
           ListViewItem lvi = listViewCallLines.SelectedItems[0];
           if (toolStripTextBoxTransferTo.Text.Length > 0)
           {
-            CCallManager.getInstance().onUserTransfer((int)lvi.Tag, toolStripTextBoxTransferTo.Text);
+            CallManager.onUserTransfer(((CStateMachine)lvi.Tag).Session, toolStripTextBoxTransferTo.Text);
           }
         }
         contextMenuStripCalls.Close();
@@ -635,7 +685,7 @@ namespace Sipek
         int id = CBuddyList.getInstance().getBuddyId(record.Number);
         if (id > 0)
         {
-          ChatForm bf = new ChatForm();
+          ChatForm bf = new ChatForm(_factory);
           bf.BuddyId = id;
           bf.ShowDialog();
         }
@@ -663,7 +713,7 @@ namespace Sipek
 
     private void toolStripKeyboardButton_Click(object sender, EventArgs e)
     {
-      (new KeyboardForm(this)).Show();
+      (new KeyboardForm(this)).ShowDialog();
     }
 
     public void onUserDialDigit(string digits)
@@ -671,7 +721,7 @@ namespace Sipek
       if (listViewCallLines.SelectedItems.Count > 0)
       {
         ListViewItem lvi = listViewCallLines.SelectedItems[0];
-        CCallManager.getInstance().onUserDialDigit((int)lvi.Tag, digits, 0);
+        CallManager.onUserDialDigit(((CStateMachine)lvi.Tag).Session, digits, 0);
       }
     }
     
@@ -737,10 +787,31 @@ namespace Sipek
       _factory = new ConcreteFactory(this);
       _configurator = new SipekConfigurator();
 
-      // Set factory for CallManager
-      CCallManager.getInstance().Factory = _factory;
-      CCallManager.getInstance().initialize();
+      // Register callbacks from callcontrol
+      CallManager.CallStateRefresh += onRefresh;
+      // Register callbacks from pjsipWrapper
+      //SipekFactory.getCommonProxy().CallStateChanged += onTelephonyRefresh;
+      SipekFactory.getCommonProxy().MessageReceived += onMessageReceived;
+      SipekFactory.getCommonProxy().BuddyStatusChanged += onBuddyStateChanged;     
+      SipekFactory.getCommonProxy().AccountStateChanged += onAccountStateChanged;
+      SipekFactory.getCommonProxy().MessageWaitingIndication += onMessageWaitingIndication;
 
+      // Initialize and set factory for CallManager
+      CallManager.Factory = _factory;
+      
+      int status = CallManager.initialize();
+
+      if (status != 0)
+      {
+        (new ErrorDialog("Initialize Error", "Please, check configuration and start again! \r\nStatus code " + status)).ShowDialog();
+        return;
+      }
+      _initialized = true;
+
+      // Initialize BuddyList
+      CBuddyList.getInstance().initialize();
+
+      //////////////////////////////////////////////////////////////////////////
       // load settings
       unconditionalToolStripMenuItem.Checked = SipekConfigurator.CFUFlag;
       toolStripTextBoxCFUNumber.Text = SipekConfigurator.CFUNumber;
@@ -751,23 +822,28 @@ namespace Sipek
       busyToolStripMenuItem.Checked = SipekConfigurator.CFBFlag;
       toolStripTextBoxCFBNumber.Text = SipekConfigurator.CFBNumber;
 
-
-      // register callbacks
-      CCallManager.getInstance().CallStateChanged += onTelephonyRefresh;
-      CCallManager.getInstance().MessageReceived += onMessageReceived;
-      CCallManager.getInstance().BuddyStatusChanged += onBuddyStateChanged;
-
       // Initialize dial combo box
       toolStripComboDial.Items.Clear();
       Stack<CCallRecord> clist = SipekFactory.getCallLogger().getList(ECallType.EDialed);
+      List<string> tmpList = new List<string>();
+
       foreach (CCallRecord item in clist)
       {
-        toolStripComboDial.Items.Add(item.Number);
+        tmpList.Add(item.Number);
+        //toolStripComboDial.Items.Add(item.Number);
       }
+      if (tmpList.Count > 0)
+      {
+        tmpList.Reverse();
+        toolStripComboDial.Items.AddRange(tmpList.ToArray());
+      }
+
       this.UpdateCallRegister();
 
-      // Init Buddy list
+      // Buddy list
       this.UpdateBuddyList();
+
+      this.UpdateAccountList();
 
       // Set user status
       toolStripComboBoxUserStatus.SelectedIndex = (int)EUserStatus.AVAILABLE;
@@ -777,7 +853,7 @@ namespace Sipek
       int index = 0;
       foreach (string item in codeclist)
       {
-        ((CSipCommonProxy)SipekFactory.getCommonProxy()).setCodecPrioroty(item, index++);
+        SipekFactory.getCommonProxy().setCodecPrioroty(item, index++);
       }
 
       // timer 
@@ -935,7 +1011,16 @@ namespace Sipek
       {
         ListViewItem lvi = listViewCallLines.SelectedItems[0];
         // TODO implement 3Pty
-        CCallManager.getInstance().onUserConference((int)lvi.Tag);
+        CallManager.onUserConference(((CStateMachine)lvi.Tag).Session);
+      }
+    }
+
+    private void MainForm_Activated(object sender, EventArgs e)
+    {
+      if (_initialized)
+      {
+        UpdateAccountList();
+        UpdateBuddyList();
       }
     }
 

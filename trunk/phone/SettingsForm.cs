@@ -26,9 +26,10 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using Telephony;
+using CallControl;
 using WaveLib.AudioMixer; // see http://www.codeproject.com/KB/graphics/AudioLib.aspx
-using PjsipWrapper; 
+using PjsipWrapper;
+using Common; 
 
 namespace Sipek
 {
@@ -132,17 +133,11 @@ namespace Sipek
       textBoxUsername.Text = "";
       textBoxPassword.Text = "";
       textBoxProxyAddress.Text = "";
-      textBoxDomain.Text = "";
+      textBoxDomain.Text = "*";
     }
 
     private void buttonApply_Click(object sender, EventArgs e)
     {
-      // check if at least 1 codec selected
-      if (listBoxEnCodecs.Items.Count == 0)
-      {
-        (new SettingsWarning("No codec selected!")).ShowDialog();
-        return;
-      }
       int index = this.comboBoxAccounts.SelectedIndex;
       if (index >= 0)
       {
@@ -170,6 +165,16 @@ namespace Sipek
       SipekConfigurator.CFUNumber = textBoxCFU.Text;
       SipekConfigurator.CFNRNumber = textBoxCFNR.Text;
 
+      SipekConfigurator.SIPPort = Int16.Parse(textBoxListenPort.Text);
+
+      //////////////////////////////////////////////////////////////////////////
+      // check if at least 1 codec selected
+      if (listBoxEnCodecs.Items.Count == 0)
+      {
+        (new ErrorDialog("Settings Warning", "No codec selected!")).ShowDialog();
+        return;
+      }
+
       // save enabled codec list
       List<string> cl = new List<string>();
       foreach (string item in listBoxEnCodecs.Items)
@@ -193,7 +198,7 @@ namespace Sipek
       int index = 0;
       foreach (string item in codeclist)
       {
-        ((CSipCommonProxy)SipekFactory.getCommonProxy()).setCodecPrioroty(item, index++);
+        SipekFactory.getCommonProxy().setCodecPrioroty(item, index++);
       }
 
       Close();
@@ -214,13 +219,15 @@ namespace Sipek
       textBoxCFU.Text = SipekConfigurator.CFUNumber;
       textBoxCFNR.Text = SipekConfigurator.CFNRNumber;
 
+      textBoxListenPort.Text = SipekConfigurator.SIPPort.ToString();
+
       LoadDeviceCombos(mMixers);
 
       // load codecs from system
-      int noofcodecs = ((CSipCommonProxy)(SipekFactory.getCommonProxy())).getNoOfCodecs();
+      int noofcodecs = SipekFactory.getCommonProxy().getNoOfCodecs();
       for (int i = 0; i < noofcodecs; i++)
       {
-        string name = ((CSipCommonProxy)(SipekFactory.getCommonProxy())).getCodec(i);
+        string name = SipekFactory.getCommonProxy().getCodec(i);
         listBoxDisCodecs.Items.Add(name);
       }
       // load enabled codecs from settings
