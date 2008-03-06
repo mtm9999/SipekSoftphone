@@ -347,7 +347,7 @@ namespace Sipek
       {
         buddyindex = SubscribePresence(record);
       }
-      else
+      if (buddyindex == -1)
       {
         for (int i = 0; i < _buddyList.Count + 1; i++ )
         {
