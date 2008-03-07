@@ -348,16 +348,18 @@ namespace Sipek
         buddyindex = SubscribePresence(record);
       }
       if (buddyindex == -1)
-      {
-        for (int i = 0; i < _buddyList.Count + 1; i++ )
-        {
-          if (!_buddyList.ContainsKey(i))
+      {   
+          int tmp = -1;
+          // find max
+          foreach (KeyValuePair<int, CBuddyRecord> kvp in _buddyList)
           {
-            buddyindex = i;
-            break;
+            if (kvp.Key >= tmp) tmp = kvp.Key;
           }
-        }
+          buddyindex = tmp + 1000; // prevent overlap with presence id
       }
+
+      // shouldn't happen!!!!
+      if (buddyindex == -1) return; //System.Diagnostics.Debug.WriteLine("");
 
       record.Id = buddyindex;
       // add record to buddylist

@@ -247,7 +247,7 @@ namespace Sipek
         }
 
         ListViewItem item = new ListViewItem(new string[] { kvp.Value.FirstName + kvp.Value.LastName, status, kvp.Value.StatusText });
-        item.Tag = kvp.Value.Id;
+        item.Tag = kvp.Value;
         //item.BackColor = Color.Blue;
         listViewBuddies.Items.Add(item);
       }
@@ -265,8 +265,14 @@ namespace Sipek
 
     private void BuddyStateChanged(int buddyId, int status, string text)
     {
-      CBuddyList.getInstance()[buddyId].Status = status;
-      CBuddyList.getInstance()[buddyId].StatusText = text;
+      CBuddyRecord record = CBuddyList.getInstance()[buddyId];
+
+      if (null == record) return;
+
+      record.Status = status;
+      record.StatusText = text;
+
+      // update list...
       UpdateBuddyList();
     }
 
@@ -373,7 +379,7 @@ namespace Sipek
       {
         ListViewItem lvi = listViewBuddies.SelectedItems[0];
         ChatForm bf = new ChatForm(_factory);
-        bf.BuddyId = (int)lvi.Tag;
+        bf.BuddyId = ((CBuddyRecord)lvi.Tag).Id;
         bf.ShowDialog();
       }
 
@@ -386,7 +392,7 @@ namespace Sipek
         ListViewItem lvi = listViewBuddies.SelectedItems[0];
 
         BuddyForm bf = new BuddyForm();
-        bf.BuddyId = (int)lvi.Tag;
+        bf.BuddyId = ((CBuddyRecord)lvi.Tag).Id;
         bf.ShowDialog();
       }
     }
@@ -550,7 +556,7 @@ namespace Sipek
       {
         ListViewItem lvi = listViewBuddies.SelectedItems[0];
 
-        CBuddyRecord rec = CBuddyList.getInstance().getRecord((int)lvi.Tag);
+        CBuddyRecord rec = (CBuddyRecord)lvi.Tag;
         if (rec != null)
         {
           CallManager.createOutboundCall(rec.Number);
@@ -1020,6 +1026,17 @@ namespace Sipek
       if (_initialized)
       {
         UpdateAccountList();
+        UpdateBuddyList();
+      }
+    }
+
+    private void toolStripMenuItemRemove_Click(object sender, EventArgs e)
+    {
+      if (listViewBuddies.SelectedItems.Count > 0)
+      {
+        CBuddyRecord item = (CBuddyRecord)listViewBuddies.SelectedItems[0].Tag;
+
+        CBuddyList.getInstance().deleteRecord(item.Id);
         UpdateBuddyList();
       }
     }
