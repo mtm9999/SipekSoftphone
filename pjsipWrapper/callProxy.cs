@@ -301,11 +301,27 @@ namespace PjsipWrapper
       // set initialized flag
       IsInitialized = (status == 0) ? true : false;
 
+      // initialize/reset codecs - enable PCMU and PCMA only
+      int noOfCodecs = getNoOfCodecs();
+      for (int i=0; i < noOfCodecs; i++)
+      {
+        string codecname = getCodec(i);
+        if (codecname.Contains("PCMU") || codecname.Contains("PCMA"))
+        {
+          // leave default
+        }
+        else
+        {
+          // disable
+          setCodecPrioroty(codecname, 0); 
+        }
+      }
+
       return status;
     }
 
 
-    public int start()
+    private int start()
     {
       int status = -1;
       
@@ -399,6 +415,8 @@ namespace PjsipWrapper
     public override string getCodec(int index)
     {
       StringBuilder buf = dll_getCodec(index);
+      if (null == buf) return "";
+
       return buf.ToString();
     }
 
