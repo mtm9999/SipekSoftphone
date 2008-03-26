@@ -26,11 +26,11 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Collections.ObjectModel;
-using CallControl;
 using System.Windows.Forms.Design;
 using WaveLib.AudioMixer; // see http://www.codeproject.com/KB/graphics/AudioLib.aspx
-using Common;
-using PjsipWrapper; 
+using Sipek.Common;
+using Sipek.Common.CallControl;
+using Sipek.Sip;
 
 
 namespace Sipek
@@ -74,7 +74,7 @@ namespace Sipek
       if (_initialized) 
       {
         // Update Call Status
-        UpdateCallLines();
+        UpdateCallLines(-1);
 
         // Update Call Register
         UpdateCallRegister();
@@ -149,9 +149,12 @@ namespace Sipek
       lock (this)
       {
         listViewCallRegister.Items.Clear();
+        // Update Dial field
+        toolStripComboDial.Items.Clear();
 
         Stack<CCallRecord> results = SipekFactory.getCallLogger().getList();
 
+        int cnt = 0; int dialedcnt = 0;
         foreach (CCallRecord item in results)
         {
           string duration = item.Duration.ToString();
@@ -178,7 +181,15 @@ namespace Sipek
 
           lvi.Tag = item;
 
-          listViewCallRegister.Items.Add(lvi);
+          listViewCallRegister.Items.Insert(cnt, lvi);
+
+          // add item to dial combo (if dialed)
+          if (item.Type == ECallType.EDialed)
+          {
+            toolStripComboDial.Items.Insert(dialedcnt++, item.Number);
+          }
+          // increase counter
+          cnt++;
         }
       }
     }
@@ -187,11 +198,12 @@ namespace Sipek
     /// Register callbacks and synchronize threads
     /// 
     delegate void DRefreshForm();
+    delegate void DCallStateChanged(int sessionId);
     delegate void MessageReceivedDelegate(string from, string message);
     delegate void BuddyStateChangedDelegate(int buddyId, int status, string text);
     delegate void DMessageWaiting(int mwi, string text);
 
-    public void onRefresh()
+    public void onCallStateChanged(int sessionId)
     {
       if (this.Created)
         this.BeginInvoke(new DRefreshForm(this.RefreshForm));
@@ -470,7 +482,7 @@ namespace Sipek
     /// <summary>
     /// UpdateCallLines delegate
     /// </summary>
-    private void UpdateCallLines()
+    private void UpdateCallLines(int sessionId)
     {     
       listViewCallLines.Items.Clear();
 
@@ -794,7 +806,7 @@ namespace Sipek
       _configurator = new SipekConfigurator();
 
       // Register callbacks from callcontrol
-      CallManager.CallStateRefresh += onRefresh;
+      CallManager.CallStateRefresh += onCallStateChanged;
       // Register callbacks from pjsipWrapper
       //SipekFactory.getCommonProxy().CallStateChanged += onTelephonyRefresh;
       SipekFactory.getCommonProxy().MessageReceived += onMessageReceived;
@@ -805,7 +817,7 @@ namespace Sipek
       // Initialize and set factory for CallManager
       CallManager.Factory = _factory;
       
-      int status = CallManager.initialize();
+      int status = CallManager.Initialize();
 
       if (status != 0)
       {
@@ -817,6 +829,7 @@ namespace Sipek
       // Initialize BuddyList
       CBuddyList.getInstance().initialize();
 
+
       //////////////////////////////////////////////////////////////////////////
       // load settings
       unconditionalToolStripMenuItem.Checked = SipekConfigurator.CFUFlag;
@@ -827,22 +840,6 @@ namespace Sipek
 
       busyToolStripMenuItem.Checked = SipekConfigurator.CFBFlag;
       toolStripTextBoxCFBNumber.Text = SipekConfigurator.CFBNumber;
-
-      // Initialize dial combo box
-      toolStripComboDial.Items.Clear();
-      Stack<CCallRecord> clist = SipekFactory.getCallLogger().getList(ECallType.EDialed);
-      List<string> tmpList = new List<string>();
-
-      foreach (CCallRecord item in clist)
-      {
-        tmpList.Add(item.Number);
-        //toolStripComboDial.Items.Add(item.Number);
-      }
-      if (tmpList.Count > 0)
-      {
-        tmpList.Reverse();
-        toolStripComboDial.Items.AddRange(tmpList.ToArray());
-      }
 
       this.UpdateCallRegister();
 
@@ -1093,7 +1090,7 @@ namespace Sipek
     }
     
     [DefaultValue(0)]
-    public object Tag
+    public new object Tag
     {
       get { return TrackBar.Tag; }
       set { TrackBar.Tag = value; }

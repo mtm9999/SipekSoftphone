@@ -20,7 +20,7 @@ using System.Xml;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System;
-using PjsipWrapper;
+using Sipek.Common;
 
 namespace Sipek
 {
@@ -182,6 +182,13 @@ namespace Sipek
     private const string PHONE_PRESENCE= "Phone/presence";
 
     #region Properties
+    private IVoipProxy _proxy;
+    public IVoipProxy VoIPProxy
+    {
+      private get { return _proxy; }
+      set { _proxy = value; }
+    }
+
     public CBuddyRecord this[int index]
     {
       get {
@@ -369,7 +376,7 @@ namespace Sipek
     private int SubscribePresence(CBuddyRecord record)
     {
       // Call proxy to add buddy and get buddy id
-      return CSipCommonProxy.GetInstance().addBuddy(record.Number);
+      return VoIPProxy.addBuddy(record.Number);
     }
 
 
