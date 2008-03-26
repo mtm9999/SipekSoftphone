@@ -26,10 +26,9 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using CallControl;
 using WaveLib.AudioMixer; // see http://www.codeproject.com/KB/graphics/AudioLib.aspx
-using PjsipWrapper;
-using Common; 
+using Sipek.Common.CallControl;
+using Sipek.Common; 
 
 namespace Sipek
 {
@@ -86,7 +85,7 @@ namespace Sipek
     private void comboBoxAccounts_SelectedIndexChanged(object sender, EventArgs e)
     {
       string accname = comboBoxAccounts.Text;
-      if (SipekConfigurator.getAccount().AccountName == accname)
+      if (SipekConfigurator.getAccount(SipekConfigurator.DefaultAccountIndex).AccountName == accname)
         checkBoxDefault.Checked = true;
       else
         checkBoxDefault.Checked = false;
@@ -191,7 +190,7 @@ namespace Sipek
       SipekConfigurator.Save();
 
       // reinitialize stack
-      CCallManager.getInstance().initialize();
+      CCallManager.getInstance().Initialize();
 
       // set codecs priority...
       List<string> codeclist = SipekConfigurator.CodecList;

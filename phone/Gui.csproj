@@ -53,6 +53,10 @@
       <HintPath>..\lib\pjsipDll.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+    <Reference Include="SipekSdk, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\SipekSdk.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -155,16 +159,6 @@
       <DependentUpon>ErrorDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="SipekFactory.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\pjsipWrapper\pjsipWrapper.csproj">
-      <Project>{0780DDB5-AE6E-4F6A-BCA3-A768606A6F84}</Project>
-      <Name>pjsipWrapper</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\telephony\Telephony.csproj">
-      <Project>{7C60E672-0016-457E-9D23-445F88FB1640}</Project>
-      <Name>Telephony</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

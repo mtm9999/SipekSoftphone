@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Timers;
 using System.Runtime.InteropServices;
-using CallControl;
-using PjsipWrapper;
-using Common; // for CSipCommonProxy,...
+using Sipek.Common.CallControl;
+using Sipek.Sip;
+using Sipek.Common;
 
 namespace Sipek
 {
@@ -18,7 +18,7 @@ namespace Sipek
     MainForm _form; // reference to MainForm to provide timer context
     IMediaProxyInterface _mediaProxy = new CMediaPlayerProxy();
     ICallLogInterface _callLogger = new CCallLog();
-    ICommonProxyInterface _commonProxy = null;
+    IVoipProxy _commonProxy = null;
     IConfiguratorInterface _config = new SipekConfigurator();
 
     #region Constructor
@@ -36,7 +36,7 @@ namespace Sipek
       return new GUITimer(_form);
     }
 
-    public ICommonProxyInterface getCommonProxy()
+    public IVoipProxy getCommonProxy()
     {
       return _commonProxy;
     }
@@ -91,25 +91,25 @@ namespace Sipek
         _form.Invoke(_elapsed, new object[] { sender, e});
     }
 
-    public override void Start()
+    public void Start()
     {
       _guiTimer.Start();
     }
 
-    public override void Stop()
+    public void Stop()
     {
       _guiTimer.Stop();
     }
 
     private int _interval;
-    public override int Interval
+    public int Interval
     {
       get { return _interval; }
       set { _interval = value; _guiTimer.Interval = value; }
     }
 
     private TimerExpiredCallback _elapsed;
-    public override TimerExpiredCallback Elapsed
+    public TimerExpiredCallback Elapsed
     {
       set { 
         _elapsed = value;
@@ -130,7 +130,7 @@ namespace Sipek
 
     #region Properties
 
-    public override string AccountName
+    public string AccountName
     {
       get
       {
@@ -142,7 +142,7 @@ namespace Sipek
       }
     }
 
-    public override string HostName
+    public string HostName
     {
       get
       {
@@ -154,7 +154,7 @@ namespace Sipek
       }
     }
 
-    public override string Id
+    public string Id
     {
       get
       {
@@ -166,7 +166,7 @@ namespace Sipek
       }
     }
 
-    public override string UserName
+    public string UserName
     {
       get
       {
@@ -178,7 +178,7 @@ namespace Sipek
       }
     }
 
-    public override string Password
+    public string Password
     {
       get
       {
@@ -190,7 +190,7 @@ namespace Sipek
       }
     }
 
-    public override string DisplayName
+    public string DisplayName
     {
       get
       {
@@ -202,7 +202,7 @@ namespace Sipek
       }
     }
 
-    public override string DomainName
+    public string DomainName
     {
       get
       {
@@ -214,7 +214,7 @@ namespace Sipek
       }
     }
 
-    public override int Port
+    public int Port
     {
       get
       {
@@ -226,7 +226,7 @@ namespace Sipek
       }
     }
 
-    public override int RegState
+    public int RegState
     {
       get 
       {
@@ -243,6 +243,23 @@ namespace Sipek
       }
     }
 
+    public bool ImsEnabled
+    {
+      get
+      {
+        //short value;
+        //if (Int16.TryParse(Properties.Settings.Default.cfgSipAccountImsEnabled[_index], out value))
+        //{
+        //  return value == 1 ? true : false;
+        //}
+        return false;
+      }
+      set
+      {
+        //Properties.Settings.Default.cfgSipAccountImsEnabled[_index] = (value == true ? "1" : "0");
+      }
+    }
+
     #endregion
 
   }
@@ -252,53 +269,53 @@ namespace Sipek
   /// </summary>
   public class SipekConfigurator : IConfiguratorInterface
   {
-    public override bool CFUFlag {
+    public bool CFUFlag {
       get { return Properties.Settings.Default.cfgCFUFlag; }
       set { Properties.Settings.Default.cfgCFUFlag = value; }
     }
-    public override string CFUNumber 
+    public string CFUNumber 
     {
       get { return Properties.Settings.Default.cfgCFUNumber; }
       set { Properties.Settings.Default.cfgCFUNumber = value; }
     }
-    public override bool CFNRFlag 
+    public bool CFNRFlag 
     {
       get { return Properties.Settings.Default.cfgCFNRFlag; }
       set { Properties.Settings.Default.cfgCFNRFlag = value; }
     }
-    public override string CFNRNumber 
+    public string CFNRNumber 
     {
       get { return Properties.Settings.Default.cfgCFNRNumber; }
       set { Properties.Settings.Default.cfgCFNRNumber = value; }
     }
-    public override bool DNDFlag {
+    public bool DNDFlag {
       get { return Properties.Settings.Default.cfgDNDFlag; }
       set { Properties.Settings.Default.cfgDNDFlag = value; }
     }
-    public override bool AAFlag {
+    public bool AAFlag {
       get { return Properties.Settings.Default.cfgAAFlag; }
       set { Properties.Settings.Default.cfgAAFlag = value; }
     }
 
-    public override bool CFBFlag
+    public bool CFBFlag
     {
       get { return Properties.Settings.Default.cfgCFBFlag; }
       set { Properties.Settings.Default.cfgCFBFlag = value; }
     }
 
-    public override string CFBNumber
+    public string CFBNumber
     {
       get { return Properties.Settings.Default.cfgCFBNumber; }
       set { Properties.Settings.Default.cfgCFBNumber = value; }
     }
 
-    public override int SIPPort
+    public int SIPPort
     {
       get { return Properties.Settings.Default.cfgSipPort; }
       set { Properties.Settings.Default.cfgSipPort = value; }
     }
 
-    public override int DefaultAccountIndex
+    public int DefaultAccountIndex
     {
       get
       {
@@ -310,7 +327,7 @@ namespace Sipek
       }
     }
 
-    public override int NumOfAccounts
+    public int NumOfAccounts
     {
       get {
         return 5;
@@ -318,14 +335,19 @@ namespace Sipek
       set { }
     }
 
-    public override IAccount getAccount(int index)
+    public IAccount getAccount(int index)
     {
       return new SipekAccount(index);
     }
 
-    public override void Save()
-    {
 
+    public IAccount getAccount()
+    {
+      return this.getAccount(DefaultAccountIndex);
+    }
+
+    public void Save()
+    {
       // save properties
       // do not save account state
       for (int i=0; i<5; i++)
@@ -336,7 +358,7 @@ namespace Sipek
       Properties.Settings.Default.Save();
     }
 
-    public override List<string> CodecList
+    public List<string> CodecList
     {
       get 
       {
