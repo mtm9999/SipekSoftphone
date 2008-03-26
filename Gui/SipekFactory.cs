@@ -247,16 +247,16 @@ namespace Sipek
     {
       get
       {
-        //short value;
-        //if (Int16.TryParse(Properties.Settings.Default.cfgSipAccountImsEnabled[_index], out value))
-        //{
-        //  return value == 1 ? true : false;
-        //}
+        short value;
+        if (Int16.TryParse(Properties.Settings.Default.cfgSipAccountImsEnabled[_index], out value))
+        {
+          return value == 1 ? true : false;
+        }
         return false;
       }
       set
       {
-        //Properties.Settings.Default.cfgSipAccountImsEnabled[_index] = (value == true ? "1" : "0");
+        Properties.Settings.Default.cfgSipAccountImsEnabled[_index] = (value == true ? "1" : "0");
       }
     }
 

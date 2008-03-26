@@ -106,6 +106,7 @@ namespace Sipek
       textBoxPassword.Text = acc.Password;
       textBoxProxyAddress.Text = acc.HostName;
       textBoxDomain.Text = acc.DomainName;
+      checkBoxIMS.Checked = acc.ImsEnabled;
     }
 
     private IAccount getAccount(string accname)
@@ -150,6 +151,7 @@ namespace Sipek
         account.UserName = textBoxUsername.Text;
         account.Password = textBoxPassword.Text;
         account.DomainName = textBoxDomain.Text;
+        account.ImsEnabled = checkBoxIMS.Checked;
 
         updateAccountList();
 

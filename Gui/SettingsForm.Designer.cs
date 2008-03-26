@@ -83,6 +83,7 @@ namespace Sipek
       this.buttonApply = new System.Windows.Forms.Button();
       this.buttonCancel = new System.Windows.Forms.Button();
       this.buttonOK = new System.Windows.Forms.Button();
+      this.checkBoxIMS = new System.Windows.Forms.CheckBox();
       this.groupBox6 = new System.Windows.Forms.GroupBox();
       this.textBoxListenPort = new System.Windows.Forms.TextBox();
       this.label12 = new System.Windows.Forms.Label();
@@ -234,6 +235,7 @@ namespace Sipek
       // 
       // groupBox3
       // 
+      this.groupBox3.Controls.Add(this.checkBoxIMS);
       this.groupBox3.Controls.Add(this.label7);
       this.groupBox3.Controls.Add(this.textBoxAccountName);
       this.groupBox3.Controls.Add(this.checkBoxDefault);
@@ -266,7 +268,7 @@ namespace Sipek
       // checkBoxDefault
       // 
       this.checkBoxDefault.AutoSize = true;
-      this.checkBoxDefault.Location = new System.Drawing.Point(90, 46);
+      this.checkBoxDefault.Location = new System.Drawing.Point(90, 47);
       this.checkBoxDefault.Name = "checkBoxDefault";
       this.checkBoxDefault.Size = new System.Drawing.Size(91, 17);
       this.checkBoxDefault.TabIndex = 2;
@@ -683,6 +685,16 @@ namespace Sipek
       this.buttonOK.UseVisualStyleBackColor = true;
       this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
       // 
+      // checkBoxIMS
+      // 
+      this.checkBoxIMS.AutoSize = true;
+      this.checkBoxIMS.Location = new System.Drawing.Point(200, 47);
+      this.checkBoxIMS.Name = "checkBoxIMS";
+      this.checkBoxIMS.Size = new System.Drawing.Size(45, 17);
+      this.checkBoxIMS.TabIndex = 8;
+      this.checkBoxIMS.Text = "IMS";
+      this.checkBoxIMS.UseVisualStyleBackColor = true;
+      //
       // groupBox6
       // 
       this.groupBox6.Controls.Add(this.label12);
@@ -811,5 +823,6 @@ namespace Sipek
     private System.Windows.Forms.GroupBox groupBox6;
     private System.Windows.Forms.Label label12;
     private System.Windows.Forms.TextBox textBoxListenPort;
+    private System.Windows.Forms.CheckBox checkBoxIMS;
   }
 }
