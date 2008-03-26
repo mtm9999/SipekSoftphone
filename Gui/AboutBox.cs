@@ -19,7 +19,8 @@ namespace Sipek
       //  - AssemblyInfo.cs
       this.Text = String.Format("About {0}", AssemblyTitle);
       this.labelProductName.Text = AssemblyProduct;
-      this.labelVersion.Text = String.Format("Version {0}", AssemblyVersion);
+      //this.labelVersion.Text = String.Format("Version {0}", AssemblyVersion);
+      this.labelVersion.Text = "Version 0.2.000";
       this.labelCopyright.Text = AssemblyCopyright;
       this.labelCompanyName.Text = AssemblyCompany;
       this.textBoxDescription.Text = AssemblyDescription;
