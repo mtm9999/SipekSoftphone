@@ -57,7 +57,7 @@ namespace Sipek
     private string _firstName;
     private string _lastName = "";
     private string _number;
-    private string _email;
+    //private string _email;
     private int _accountId;
     private string _uri;
     private bool _presenceEnabled;
@@ -182,13 +182,6 @@ namespace Sipek
     private const string PHONE_PRESENCE= "Phone/presence";
 
     #region Properties
-    private IVoipProxy _proxy;
-    public IVoipProxy VoIPProxy
-    {
-      private get { return _proxy; }
-      set { _proxy = value; }
-    }
-
     public CBuddyRecord this[int index]
     {
       get {
@@ -200,6 +193,13 @@ namespace Sipek
     public int BuddyCount
     {
       get { return _buddyList.Count; }
+    }
+
+    private IVoipProxy _voipproxy = new NullVoipProxy();
+    public IVoipProxy VoIPProxy
+    {
+      get { return _voipproxy; }
+      set { _voipproxy = value; }
     }
     #endregion
 

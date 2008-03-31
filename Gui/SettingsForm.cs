@@ -40,7 +40,7 @@ namespace Sipek
     AbstractFactory _factory;
     public IConfiguratorInterface SipekConfigurator
     {
-      get { return _factory.getConfigurator(); }
+      get { return _factory.Configurator; }
     }
     public AbstractFactory SipekFactory
     {
@@ -199,7 +199,7 @@ namespace Sipek
       int index = 0;
       foreach (string item in codeclist)
       {
-        SipekFactory.getCommonProxy().setCodecPrioroty(item, index++);
+        SipekFactory.CommonProxy.setCodecPrioroty(item, index++);
       }
 
       Close();
@@ -225,10 +225,10 @@ namespace Sipek
       LoadDeviceCombos(mMixers);
 
       // load codecs from system
-      int noofcodecs = SipekFactory.getCommonProxy().getNoOfCodecs();
+      int noofcodecs = SipekFactory.CommonProxy.getNoOfCodecs();
       for (int i = 0; i < noofcodecs; i++)
       {
-        string name = SipekFactory.getCommonProxy().getCodec(i);
+        string name = SipekFactory.CommonProxy.getCodec(i);
         listBoxDisCodecs.Items.Add(name);
       }
       // load enabled codecs from settings

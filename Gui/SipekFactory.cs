@@ -26,7 +26,7 @@ namespace Sipek
     {
       _form = mf;
       _commonProxy = CSipCommonProxy.GetInstance();
-      CSipCommonProxy.GetInstance().Factory = this;
+      _commonProxy.Config = this._config;
     }
     #endregion Constructor
 
@@ -36,31 +36,31 @@ namespace Sipek
       return new GUITimer(_form);
     }
 
-    public IVoipProxy getCommonProxy()
+    public IVoipProxy CommonProxy
     {
-      return _commonProxy;
+      get { return _commonProxy; }
+      set { _commonProxy = value; }
     }
 
-    public ICallProxyInterface createCallProxy()
+    public IConfiguratorInterface Configurator
     {
-      return new CSipCallProxy(this);
-    }
-
-    public IConfiguratorInterface getConfigurator()
-    {
-      return _config;
+      get { return _config; }
+      set {}
     }
 
     // getters
-    public IMediaProxyInterface getMediaProxy()
+    public IMediaProxyInterface MediaProxy
     {
-      return _mediaProxy;
+      get { return _mediaProxy; }
+      set { }
     }
 
-    public ICallLogInterface getCallLogger()
+    public ICallLogInterface CallLogger
     {
-      return _callLogger;
+      get { return _callLogger; }
+      set { }
     }
+
     #endregion
   }
 

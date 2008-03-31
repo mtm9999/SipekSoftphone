@@ -67,7 +67,7 @@ namespace Sipek
       if (buddy != null)
       {
         // Invoke SIP stack wrapper function to send message
-        Factory.getCommonProxy().sendMessage(buddy.Number, textBoxChatInput.Text);
+        Factory.CommonProxy.sendMessage(buddy.Number, textBoxChatInput.Text);
 
         richTextBoxChatHistory.Text += "(me) " + DateTime.Now;
         
