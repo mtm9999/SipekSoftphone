@@ -214,24 +214,12 @@ namespace Sipek
       }
     }
 
-    public int Port
-    {
-      get
-      {
-        return 5060;
-      }
-      set
-      {
-        
-      }
-    }
-
     public int RegState
     {
       get 
       {
-        short value;
-        if (Int16.TryParse(Properties.Settings.Default.cfgSipAccountState[_index], out value))
+        int value;
+        if (Int32.TryParse(Properties.Settings.Default.cfgSipAccountState[_index], out value))
         {
           return value;
         }

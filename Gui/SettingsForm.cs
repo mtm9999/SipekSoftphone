@@ -144,7 +144,6 @@ namespace Sipek
         IAccount account = SipekConfigurator.getAccount(index);
 
         account.HostName = textBoxProxyAddress.Text;
-        account.Port = 5060; //int.Parse(_editProxyPort.Caption);
         account.AccountName = textBoxAccountName.Text;
         account.DisplayName = textBoxDisplayName.Text;
         account.Id = textBoxUsername.Text;
