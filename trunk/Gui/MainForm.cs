@@ -152,7 +152,7 @@ namespace Sipek
         // Update Dial field
         toolStripComboDial.Items.Clear();
 
-        Stack<CCallRecord> results = SipekFactory.getCallLogger().getList();
+        Stack<CCallRecord> results = SipekFactory.CallLogger.getList();
 
         int cnt = 0; int dialedcnt = 0;
         foreach (CCallRecord item in results)
@@ -652,7 +652,7 @@ namespace Sipek
       {
         ListViewItem lvi = listViewCallRegister.SelectedItems[0];
         CCallRecord record = (CCallRecord) lvi.Tag;
-        SipekFactory.getCallLogger().deleteRecord(record);
+        SipekFactory.CallLogger.deleteRecord(record);
       }
       this.UpdateCallRegister();
 
@@ -662,7 +662,7 @@ namespace Sipek
     {
       if (_initialized)
       {
-        SipekFactory.getCallLogger().save();
+        SipekFactory.CallLogger.save();
         CBuddyList.getInstance().save();
       }
       SipekConfigurator.Save();
@@ -726,7 +726,7 @@ namespace Sipek
 
       EUserStatus status = (EUserStatus)toolStripComboBoxUserStatus.SelectedIndex;
 
-      SipekFactory.getCommonProxy().setStatus(SipekConfigurator.DefaultAccountIndex, status);
+      SipekFactory.CommonProxy.setStatus(SipekConfigurator.DefaultAccountIndex, status);
     }
 
     private void toolStripKeyboardButton_Click(object sender, EventArgs e)
@@ -809,10 +809,10 @@ namespace Sipek
       CallManager.CallStateRefresh += onCallStateChanged;
       // Register callbacks from pjsipWrapper
       //SipekFactory.getCommonProxy().CallStateChanged += onTelephonyRefresh;
-      SipekFactory.getCommonProxy().MessageReceived += onMessageReceived;
-      SipekFactory.getCommonProxy().BuddyStatusChanged += onBuddyStateChanged;     
-      SipekFactory.getCommonProxy().AccountStateChanged += onAccountStateChanged;
-      SipekFactory.getCommonProxy().MessageWaitingIndication += onMessageWaitingIndication;
+      SipekFactory.CommonProxy.MessageReceived += onMessageReceived;
+      SipekFactory.CommonProxy.BuddyStatusChanged += onBuddyStateChanged;     
+      SipekFactory.CommonProxy.AccountStateChanged += onAccountStateChanged;
+      SipekFactory.CommonProxy.MessageWaitingIndication += onMessageWaitingIndication;
 
       // Initialize and set factory for CallManager
       CallManager.Factory = _factory;
@@ -828,7 +828,7 @@ namespace Sipek
 
       // Initialize BuddyList
       CBuddyList.getInstance().initialize();
-
+      CBuddyList.getInstance().VoIPProxy = SipekFactory.CommonProxy;
 
       //////////////////////////////////////////////////////////////////////////
       // load settings
@@ -856,7 +856,7 @@ namespace Sipek
       int index = 0;
       foreach (string item in codeclist)
       {
-        SipekFactory.getCommonProxy().setCodecPrioroty(item, index++);
+        SipekFactory.CommonProxy.setCodecPrioroty(item, index++);
       }
 
       // timer 
