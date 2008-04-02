@@ -247,7 +247,17 @@ namespace Sipek
         Properties.Settings.Default.cfgSipAccountImsEnabled[_index] = (value == true ? "1" : "0");
       }
     }
-
+    public string ProxyAddress
+    {
+      get
+      {
+        return Properties.Settings.Default.cfgSipAccountProxyAddresses[_index];
+      }
+      set
+      {
+        Properties.Settings.Default.cfgSipAccountProxyAddresses[_index] = value;
+      }
+    }
     #endregion
 
   }

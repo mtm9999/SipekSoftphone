@@ -104,7 +104,8 @@ namespace Sipek
       textBoxDisplayName.Text = acc.DisplayName;
       textBoxUsername.Text = acc.UserName;
       textBoxPassword.Text = acc.Password;
-      textBoxProxyAddress.Text = acc.HostName;
+      textBoxRegistrarAddress.Text = acc.HostName;
+      textBoxProxyAddress.Text = acc.ProxyAddress; 
       textBoxDomain.Text = acc.DomainName;
       checkBoxIMS.Checked = acc.ImsEnabled;
     }
@@ -132,6 +133,7 @@ namespace Sipek
       textBoxDisplayName.Text = "";
       textBoxUsername.Text = "";
       textBoxPassword.Text = "";
+      textBoxRegistrarAddress.Text = "";
       textBoxProxyAddress.Text = "";
       textBoxDomain.Text = "*";
     }
@@ -143,7 +145,8 @@ namespace Sipek
       {
         IAccount account = SipekConfigurator.getAccount(index);
 
-        account.HostName = textBoxProxyAddress.Text;
+        account.HostName = textBoxRegistrarAddress.Text;
+        account.ProxyAddress = textBoxProxyAddress.Text; 
         account.AccountName = textBoxAccountName.Text;
         account.DisplayName = textBoxDisplayName.Text;
         account.Id = textBoxUsername.Text;
