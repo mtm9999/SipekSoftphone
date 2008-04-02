@@ -31,10 +31,12 @@ namespace Sipek
       this.tabControlSettings = new System.Windows.Forms.TabControl();
       this.tabPageSettingsSIP = new System.Windows.Forms.TabPage();
       this.groupBox2 = new System.Windows.Forms.GroupBox();
+      this.label13 = new System.Windows.Forms.Label();
+      this.textBoxProxyAddress = new System.Windows.Forms.TextBox();
       this.label2 = new System.Windows.Forms.Label();
       this.label1 = new System.Windows.Forms.Label();
       this.textBoxDomain = new System.Windows.Forms.TextBox();
-      this.textBoxProxyAddress = new System.Windows.Forms.TextBox();
+      this.textBoxRegistrarAddress = new System.Windows.Forms.TextBox();
       this.label5 = new System.Windows.Forms.Label();
       this.textBoxPassword = new System.Windows.Forms.TextBox();
       this.label4 = new System.Windows.Forms.Label();
@@ -42,11 +44,15 @@ namespace Sipek
       this.label3 = new System.Windows.Forms.Label();
       this.textBoxDisplayName = new System.Windows.Forms.TextBox();
       this.groupBox3 = new System.Windows.Forms.GroupBox();
+      this.checkBoxIMS = new System.Windows.Forms.CheckBox();
       this.label7 = new System.Windows.Forms.Label();
       this.textBoxAccountName = new System.Windows.Forms.TextBox();
       this.checkBoxDefault = new System.Windows.Forms.CheckBox();
       this.label6 = new System.Windows.Forms.Label();
       this.comboBoxAccounts = new System.Windows.Forms.ComboBox();
+      this.groupBox6 = new System.Windows.Forms.GroupBox();
+      this.label12 = new System.Windows.Forms.Label();
+      this.textBoxListenPort = new System.Windows.Forms.TextBox();
       this.tabPageSettingsServices = new System.Windows.Forms.TabPage();
       this.groupBox1 = new System.Windows.Forms.GroupBox();
       this.comboBox1 = new System.Windows.Forms.ComboBox();
@@ -83,14 +89,12 @@ namespace Sipek
       this.buttonApply = new System.Windows.Forms.Button();
       this.buttonCancel = new System.Windows.Forms.Button();
       this.buttonOK = new System.Windows.Forms.Button();
-      this.checkBoxIMS = new System.Windows.Forms.CheckBox();
-      this.groupBox6 = new System.Windows.Forms.GroupBox();
-      this.textBoxListenPort = new System.Windows.Forms.TextBox();
-      this.label12 = new System.Windows.Forms.Label();
+      this.label14 = new System.Windows.Forms.Label();
       this.tabControlSettings.SuspendLayout();
       this.tabPageSettingsSIP.SuspendLayout();
       this.groupBox2.SuspendLayout();
       this.groupBox3.SuspendLayout();
+      this.groupBox6.SuspendLayout();
       this.tabPageSettingsServices.SuspendLayout();
       this.groupBox1.SuspendLayout();
       this.groupBoxServices.SuspendLayout();
@@ -102,7 +106,6 @@ namespace Sipek
       ((System.ComponentModel.ISupportInitialize)(this.trackBarPlaybackVolume)).BeginInit();
       this.tabCodecsPage.SuspendLayout();
       this.panel2.SuspendLayout();
-      this.groupBox6.SuspendLayout();
       this.SuspendLayout();
       // 
       // tabControlSettings
@@ -115,7 +118,7 @@ namespace Sipek
       this.tabControlSettings.Location = new System.Drawing.Point(0, 0);
       this.tabControlSettings.Name = "tabControlSettings";
       this.tabControlSettings.SelectedIndex = 0;
-      this.tabControlSettings.Size = new System.Drawing.Size(305, 350);
+      this.tabControlSettings.Size = new System.Drawing.Size(304, 397);
       this.tabControlSettings.TabIndex = 0;
       // 
       // tabPageSettingsSIP
@@ -126,17 +129,20 @@ namespace Sipek
       this.tabPageSettingsSIP.Location = new System.Drawing.Point(4, 22);
       this.tabPageSettingsSIP.Name = "tabPageSettingsSIP";
       this.tabPageSettingsSIP.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPageSettingsSIP.Size = new System.Drawing.Size(297, 324);
+      this.tabPageSettingsSIP.Size = new System.Drawing.Size(296, 371);
       this.tabPageSettingsSIP.TabIndex = 1;
       this.tabPageSettingsSIP.Text = "SIP";
       this.tabPageSettingsSIP.UseVisualStyleBackColor = true;
       // 
       // groupBox2
       // 
+      this.groupBox2.Controls.Add(this.label14);
+      this.groupBox2.Controls.Add(this.label13);
+      this.groupBox2.Controls.Add(this.textBoxProxyAddress);
       this.groupBox2.Controls.Add(this.label2);
       this.groupBox2.Controls.Add(this.label1);
       this.groupBox2.Controls.Add(this.textBoxDomain);
-      this.groupBox2.Controls.Add(this.textBoxProxyAddress);
+      this.groupBox2.Controls.Add(this.textBoxRegistrarAddress);
       this.groupBox2.Controls.Add(this.label5);
       this.groupBox2.Controls.Add(this.textBoxPassword);
       this.groupBox2.Controls.Add(this.label4);
@@ -146,15 +152,31 @@ namespace Sipek
       this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
       this.groupBox2.Location = new System.Drawing.Point(3, 98);
       this.groupBox2.Name = "groupBox2";
-      this.groupBox2.Size = new System.Drawing.Size(291, 170);
+      this.groupBox2.Size = new System.Drawing.Size(290, 217);
       this.groupBox2.TabIndex = 10;
       this.groupBox2.TabStop = false;
       this.groupBox2.Text = "User";
       // 
+      // label13
+      // 
+      this.label13.AutoSize = true;
+      this.label13.Location = new System.Drawing.Point(7, 184);
+      this.label13.Name = "label13";
+      this.label13.Size = new System.Drawing.Size(53, 13);
+      this.label13.TabIndex = 13;
+      this.label13.Text = "SIP Proxy";
+      // 
+      // textBoxProxyAddress
+      // 
+      this.textBoxProxyAddress.Location = new System.Drawing.Point(90, 181);
+      this.textBoxProxyAddress.Name = "textBoxProxyAddress";
+      this.textBoxProxyAddress.Size = new System.Drawing.Size(155, 20);
+      this.textBoxProxyAddress.TabIndex = 12;
+      // 
       // label2
       // 
       this.label2.AutoSize = true;
-      this.label2.Location = new System.Drawing.Point(7, 144);
+      this.label2.Location = new System.Drawing.Point(7, 123);
       this.label2.Name = "label2";
       this.label2.Size = new System.Drawing.Size(43, 13);
       this.label2.TabIndex = 3;
@@ -163,26 +185,26 @@ namespace Sipek
       // label1
       // 
       this.label1.AutoSize = true;
-      this.label1.Location = new System.Drawing.Point(7, 118);
+      this.label1.Location = new System.Drawing.Point(7, 158);
       this.label1.Name = "label1";
-      this.label1.Size = new System.Drawing.Size(95, 13);
+      this.label1.Size = new System.Drawing.Size(69, 13);
       this.label1.TabIndex = 11;
-      this.label1.Text = "SIP Proxy/registrar";
+      this.label1.Text = "SIP Registrar";
       // 
       // textBoxDomain
       // 
-      this.textBoxDomain.Location = new System.Drawing.Point(108, 138);
+      this.textBoxDomain.Location = new System.Drawing.Point(90, 116);
       this.textBoxDomain.Name = "textBoxDomain";
-      this.textBoxDomain.Size = new System.Drawing.Size(137, 20);
+      this.textBoxDomain.Size = new System.Drawing.Size(155, 20);
       this.textBoxDomain.TabIndex = 8;
       this.textBoxDomain.Text = "*";
       // 
-      // textBoxProxyAddress
+      // textBoxRegistrarAddress
       // 
-      this.textBoxProxyAddress.Location = new System.Drawing.Point(108, 112);
-      this.textBoxProxyAddress.Name = "textBoxProxyAddress";
-      this.textBoxProxyAddress.Size = new System.Drawing.Size(137, 20);
-      this.textBoxProxyAddress.TabIndex = 7;
+      this.textBoxRegistrarAddress.Location = new System.Drawing.Point(90, 155);
+      this.textBoxRegistrarAddress.Name = "textBoxRegistrarAddress";
+      this.textBoxRegistrarAddress.Size = new System.Drawing.Size(155, 20);
+      this.textBoxRegistrarAddress.TabIndex = 7;
       // 
       // label5
       // 
@@ -244,10 +266,20 @@ namespace Sipek
       this.groupBox3.Dock = System.Windows.Forms.DockStyle.Top;
       this.groupBox3.Location = new System.Drawing.Point(3, 3);
       this.groupBox3.Name = "groupBox3";
-      this.groupBox3.Size = new System.Drawing.Size(291, 95);
+      this.groupBox3.Size = new System.Drawing.Size(290, 95);
       this.groupBox3.TabIndex = 3;
       this.groupBox3.TabStop = false;
       this.groupBox3.Text = "Accounts";
+      // 
+      // checkBoxIMS
+      // 
+      this.checkBoxIMS.AutoSize = true;
+      this.checkBoxIMS.Location = new System.Drawing.Point(200, 47);
+      this.checkBoxIMS.Name = "checkBoxIMS";
+      this.checkBoxIMS.Size = new System.Drawing.Size(45, 17);
+      this.checkBoxIMS.TabIndex = 8;
+      this.checkBoxIMS.Text = "IMS";
+      this.checkBoxIMS.UseVisualStyleBackColor = true;
       // 
       // label7
       // 
@@ -293,6 +325,35 @@ namespace Sipek
       this.comboBoxAccounts.TabIndex = 0;
       this.comboBoxAccounts.SelectedIndexChanged += new System.EventHandler(this.comboBoxAccounts_SelectedIndexChanged);
       // 
+      // groupBox6
+      // 
+      this.groupBox6.Controls.Add(this.label12);
+      this.groupBox6.Controls.Add(this.textBoxListenPort);
+      this.groupBox6.Dock = System.Windows.Forms.DockStyle.Bottom;
+      this.groupBox6.Location = new System.Drawing.Point(3, 315);
+      this.groupBox6.Name = "groupBox6";
+      this.groupBox6.Size = new System.Drawing.Size(290, 53);
+      this.groupBox6.TabIndex = 12;
+      this.groupBox6.TabStop = false;
+      this.groupBox6.Text = "Phone";
+      // 
+      // label12
+      // 
+      this.label12.AutoSize = true;
+      this.label12.Location = new System.Drawing.Point(5, 26);
+      this.label12.Name = "label12";
+      this.label12.Size = new System.Drawing.Size(70, 13);
+      this.label12.TabIndex = 9;
+      this.label12.Text = "Listening port";
+      // 
+      // textBoxListenPort
+      // 
+      this.textBoxListenPort.Location = new System.Drawing.Point(90, 19);
+      this.textBoxListenPort.Name = "textBoxListenPort";
+      this.textBoxListenPort.Size = new System.Drawing.Size(56, 20);
+      this.textBoxListenPort.TabIndex = 8;
+      this.textBoxListenPort.Text = "5060";
+      // 
       // tabPageSettingsServices
       // 
       this.tabPageSettingsServices.Controls.Add(this.groupBox1);
@@ -300,7 +361,7 @@ namespace Sipek
       this.tabPageSettingsServices.Location = new System.Drawing.Point(4, 22);
       this.tabPageSettingsServices.Name = "tabPageSettingsServices";
       this.tabPageSettingsServices.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPageSettingsServices.Size = new System.Drawing.Size(297, 324);
+      this.tabPageSettingsServices.Size = new System.Drawing.Size(296, 371);
       this.tabPageSettingsServices.TabIndex = 2;
       this.tabPageSettingsServices.Text = "Services";
       this.tabPageSettingsServices.UseVisualStyleBackColor = true;
@@ -313,7 +374,7 @@ namespace Sipek
       this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.groupBox1.Location = new System.Drawing.Point(3, 3);
       this.groupBox1.Name = "groupBox1";
-      this.groupBox1.Size = new System.Drawing.Size(291, 133);
+      this.groupBox1.Size = new System.Drawing.Size(290, 128);
       this.groupBox1.TabIndex = 1;
       this.groupBox1.TabStop = false;
       // 
@@ -361,9 +422,9 @@ namespace Sipek
       this.groupBoxServices.Controls.Add(this.checkBoxCFU);
       this.groupBoxServices.Controls.Add(this.textBoxCFU);
       this.groupBoxServices.Dock = System.Windows.Forms.DockStyle.Bottom;
-      this.groupBoxServices.Location = new System.Drawing.Point(3, 136);
+      this.groupBoxServices.Location = new System.Drawing.Point(3, 131);
       this.groupBoxServices.Name = "groupBoxServices";
-      this.groupBoxServices.Size = new System.Drawing.Size(291, 185);
+      this.groupBoxServices.Size = new System.Drawing.Size(290, 237);
       this.groupBoxServices.TabIndex = 0;
       this.groupBoxServices.TabStop = false;
       this.groupBoxServices.Text = "Forwardings....";
@@ -426,7 +487,7 @@ namespace Sipek
       this.tabPageSettingsAudio.Location = new System.Drawing.Point(4, 22);
       this.tabPageSettingsAudio.Name = "tabPageSettingsAudio";
       this.tabPageSettingsAudio.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPageSettingsAudio.Size = new System.Drawing.Size(297, 324);
+      this.tabPageSettingsAudio.Size = new System.Drawing.Size(296, 371);
       this.tabPageSettingsAudio.TabIndex = 0;
       this.tabPageSettingsAudio.Text = "Audio";
       this.tabPageSettingsAudio.UseVisualStyleBackColor = true;
@@ -439,9 +500,9 @@ namespace Sipek
       this.groupBox5.Controls.Add(this.trackBarRecordingVolume);
       this.groupBox5.Controls.Add(this.comboBoxRecordingDevices);
       this.groupBox5.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.groupBox5.Location = new System.Drawing.Point(3, 163);
+      this.groupBox5.Location = new System.Drawing.Point(3, 171);
       this.groupBox5.Name = "groupBox5";
-      this.groupBox5.Size = new System.Drawing.Size(291, 158);
+      this.groupBox5.Size = new System.Drawing.Size(290, 197);
       this.groupBox5.TabIndex = 1;
       this.groupBox5.TabStop = false;
       this.groupBox5.Text = "Recording";
@@ -449,7 +510,7 @@ namespace Sipek
       // checkBoxRecordingMute
       // 
       this.checkBoxRecordingMute.AutoSize = true;
-      this.checkBoxRecordingMute.Location = new System.Drawing.Point(185, 59);
+      this.checkBoxRecordingMute.Location = new System.Drawing.Point(185, 92);
       this.checkBoxRecordingMute.Name = "checkBoxRecordingMute";
       this.checkBoxRecordingMute.Size = new System.Drawing.Size(50, 17);
       this.checkBoxRecordingMute.TabIndex = 4;
@@ -460,7 +521,7 @@ namespace Sipek
       // label9
       // 
       this.label9.AutoSize = true;
-      this.label9.Location = new System.Drawing.Point(7, 60);
+      this.label9.Location = new System.Drawing.Point(7, 93);
       this.label9.Name = "label9";
       this.label9.Size = new System.Drawing.Size(94, 13);
       this.label9.TabIndex = 3;
@@ -469,7 +530,7 @@ namespace Sipek
       // checkBoxSelectMic
       // 
       this.checkBoxSelectMic.AutoSize = true;
-      this.checkBoxSelectMic.Location = new System.Drawing.Point(117, 59);
+      this.checkBoxSelectMic.Location = new System.Drawing.Point(117, 92);
       this.checkBoxSelectMic.Name = "checkBoxSelectMic";
       this.checkBoxSelectMic.Size = new System.Drawing.Size(56, 17);
       this.checkBoxSelectMic.TabIndex = 2;
@@ -480,10 +541,10 @@ namespace Sipek
       // trackBarRecordingVolume
       // 
       this.trackBarRecordingVolume.LargeChange = 10000;
-      this.trackBarRecordingVolume.Location = new System.Drawing.Point(6, 97);
+      this.trackBarRecordingVolume.Location = new System.Drawing.Point(6, 130);
       this.trackBarRecordingVolume.Maximum = 65535;
       this.trackBarRecordingVolume.Name = "trackBarRecordingVolume";
-      this.trackBarRecordingVolume.Size = new System.Drawing.Size(165, 45);
+      this.trackBarRecordingVolume.Size = new System.Drawing.Size(165, 42);
       this.trackBarRecordingVolume.SmallChange = 6553;
       this.trackBarRecordingVolume.TabIndex = 1;
       this.trackBarRecordingVolume.TickFrequency = 6553;
@@ -493,7 +554,7 @@ namespace Sipek
       // comboBoxRecordingDevices
       // 
       this.comboBoxRecordingDevices.FormattingEnabled = true;
-      this.comboBoxRecordingDevices.Location = new System.Drawing.Point(7, 19);
+      this.comboBoxRecordingDevices.Location = new System.Drawing.Point(7, 34);
       this.comboBoxRecordingDevices.Name = "comboBoxRecordingDevices";
       this.comboBoxRecordingDevices.Size = new System.Drawing.Size(165, 21);
       this.comboBoxRecordingDevices.TabIndex = 0;
@@ -510,7 +571,7 @@ namespace Sipek
       this.groupBox4.Dock = System.Windows.Forms.DockStyle.Top;
       this.groupBox4.Location = new System.Drawing.Point(3, 3);
       this.groupBox4.Name = "groupBox4";
-      this.groupBox4.Size = new System.Drawing.Size(291, 160);
+      this.groupBox4.Size = new System.Drawing.Size(290, 168);
       this.groupBox4.TabIndex = 0;
       this.groupBox4.TabStop = false;
       this.groupBox4.Text = "Playback";
@@ -527,12 +588,12 @@ namespace Sipek
       // trackBarPlaybackBalance
       // 
       this.trackBarPlaybackBalance.LargeChange = 50;
-      this.trackBarPlaybackBalance.Location = new System.Drawing.Point(190, 85);
+      this.trackBarPlaybackBalance.Location = new System.Drawing.Point(216, 81);
       this.trackBarPlaybackBalance.Maximum = 320;
       this.trackBarPlaybackBalance.Minimum = -320;
       this.trackBarPlaybackBalance.Name = "trackBarPlaybackBalance";
       this.trackBarPlaybackBalance.Orientation = System.Windows.Forms.Orientation.Vertical;
-      this.trackBarPlaybackBalance.Size = new System.Drawing.Size(45, 65);
+      this.trackBarPlaybackBalance.Size = new System.Drawing.Size(42, 65);
       this.trackBarPlaybackBalance.SmallChange = 10;
       this.trackBarPlaybackBalance.TabIndex = 1;
       this.trackBarPlaybackBalance.TickFrequency = 320;
@@ -555,7 +616,7 @@ namespace Sipek
       this.trackBarPlaybackVolume.Location = new System.Drawing.Point(7, 92);
       this.trackBarPlaybackVolume.Maximum = 65535;
       this.trackBarPlaybackVolume.Name = "trackBarPlaybackVolume";
-      this.trackBarPlaybackVolume.Size = new System.Drawing.Size(167, 45);
+      this.trackBarPlaybackVolume.Size = new System.Drawing.Size(167, 42);
       this.trackBarPlaybackVolume.SmallChange = 6553;
       this.trackBarPlaybackVolume.TabIndex = 2;
       this.trackBarPlaybackVolume.TickFrequency = 6553;
@@ -565,7 +626,7 @@ namespace Sipek
       // checkBoxPlaybackMute
       // 
       this.checkBoxPlaybackMute.AutoSize = true;
-      this.checkBoxPlaybackMute.Location = new System.Drawing.Point(123, 59);
+      this.checkBoxPlaybackMute.Location = new System.Drawing.Point(122, 55);
       this.checkBoxPlaybackMute.Name = "checkBoxPlaybackMute";
       this.checkBoxPlaybackMute.Size = new System.Drawing.Size(50, 17);
       this.checkBoxPlaybackMute.TabIndex = 0;
@@ -584,7 +645,7 @@ namespace Sipek
       this.tabCodecsPage.Location = new System.Drawing.Point(4, 22);
       this.tabCodecsPage.Name = "tabCodecsPage";
       this.tabCodecsPage.Padding = new System.Windows.Forms.Padding(3);
-      this.tabCodecsPage.Size = new System.Drawing.Size(297, 324);
+      this.tabCodecsPage.Size = new System.Drawing.Size(296, 371);
       this.tabCodecsPage.TabIndex = 3;
       this.tabCodecsPage.Text = "Codecs";
       this.tabCodecsPage.UseVisualStyleBackColor = true;
@@ -632,7 +693,7 @@ namespace Sipek
       this.listBoxEnCodecs.FormattingEnabled = true;
       this.listBoxEnCodecs.Location = new System.Drawing.Point(169, 31);
       this.listBoxEnCodecs.Name = "listBoxEnCodecs";
-      this.listBoxEnCodecs.Size = new System.Drawing.Size(120, 277);
+      this.listBoxEnCodecs.Size = new System.Drawing.Size(120, 303);
       this.listBoxEnCodecs.TabIndex = 1;
       // 
       // listBoxDisCodecs
@@ -640,7 +701,7 @@ namespace Sipek
       this.listBoxDisCodecs.FormattingEnabled = true;
       this.listBoxDisCodecs.Location = new System.Drawing.Point(8, 31);
       this.listBoxDisCodecs.Name = "listBoxDisCodecs";
-      this.listBoxDisCodecs.Size = new System.Drawing.Size(120, 277);
+      this.listBoxDisCodecs.Size = new System.Drawing.Size(120, 303);
       this.listBoxDisCodecs.TabIndex = 0;
       // 
       // panel2
@@ -648,15 +709,15 @@ namespace Sipek
       this.panel2.Controls.Add(this.buttonApply);
       this.panel2.Controls.Add(this.buttonCancel);
       this.panel2.Controls.Add(this.buttonOK);
-      this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.panel2.Location = new System.Drawing.Point(0, 350);
+      this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
+      this.panel2.Location = new System.Drawing.Point(0, 403);
       this.panel2.Name = "panel2";
-      this.panel2.Size = new System.Drawing.Size(305, 55);
+      this.panel2.Size = new System.Drawing.Size(304, 49);
       this.panel2.TabIndex = 12;
       // 
       // buttonApply
       // 
-      this.buttonApply.Location = new System.Drawing.Point(93, 16);
+      this.buttonApply.Location = new System.Drawing.Point(103, 16);
       this.buttonApply.Name = "buttonApply";
       this.buttonApply.Size = new System.Drawing.Size(75, 23);
       this.buttonApply.TabIndex = 2;
@@ -667,7 +728,7 @@ namespace Sipek
       // buttonCancel
       // 
       this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-      this.buttonCancel.Location = new System.Drawing.Point(7, 16);
+      this.buttonCancel.Location = new System.Drawing.Point(17, 16);
       this.buttonCancel.Name = "buttonCancel";
       this.buttonCancel.Size = new System.Drawing.Size(75, 23);
       this.buttonCancel.TabIndex = 1;
@@ -677,7 +738,7 @@ namespace Sipek
       // 
       // buttonOK
       // 
-      this.buttonOK.Location = new System.Drawing.Point(180, 16);
+      this.buttonOK.Location = new System.Drawing.Point(190, 16);
       this.buttonOK.Name = "buttonOK";
       this.buttonOK.Size = new System.Drawing.Size(75, 23);
       this.buttonOK.TabIndex = 0;
@@ -685,51 +746,21 @@ namespace Sipek
       this.buttonOK.UseVisualStyleBackColor = true;
       this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
       // 
-      // checkBoxIMS
+      // label14
       // 
-      this.checkBoxIMS.AutoSize = true;
-      this.checkBoxIMS.Location = new System.Drawing.Point(200, 47);
-      this.checkBoxIMS.Name = "checkBoxIMS";
-      this.checkBoxIMS.Size = new System.Drawing.Size(45, 17);
-      this.checkBoxIMS.TabIndex = 8;
-      this.checkBoxIMS.Text = "IMS";
-      this.checkBoxIMS.UseVisualStyleBackColor = true;
-      //
-      // groupBox6
-      // 
-      this.groupBox6.Controls.Add(this.label12);
-      this.groupBox6.Controls.Add(this.textBoxListenPort);
-      this.groupBox6.Dock = System.Windows.Forms.DockStyle.Bottom;
-      this.groupBox6.Location = new System.Drawing.Point(3, 268);
-      this.groupBox6.Name = "groupBox6";
-      this.groupBox6.Size = new System.Drawing.Size(291, 53);
-      this.groupBox6.TabIndex = 12;
-      this.groupBox6.TabStop = false;
-      this.groupBox6.Text = "Phone";
-      // 
-      // textBoxListenPort
-      // 
-      this.textBoxListenPort.Location = new System.Drawing.Point(90, 19);
-      this.textBoxListenPort.Name = "textBoxListenPort";
-      this.textBoxListenPort.Size = new System.Drawing.Size(56, 20);
-      this.textBoxListenPort.TabIndex = 8;
-      this.textBoxListenPort.Text = "5060";
-      // 
-      // label12
-      // 
-      this.label12.AutoSize = true;
-      this.label12.Location = new System.Drawing.Point(5, 26);
-      this.label12.Name = "label12";
-      this.label12.Size = new System.Drawing.Size(70, 13);
-      this.label12.TabIndex = 9;
-      this.label12.Text = "Listening port";
+      this.label14.AutoSize = true;
+      this.label14.Location = new System.Drawing.Point(252, 184);
+      this.label14.Name = "label14";
+      this.label14.Size = new System.Drawing.Size(31, 13);
+      this.label14.TabIndex = 14;
+      this.label14.Text = "(opt.)";
       // 
       // SettingsForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.CancelButton = this.buttonCancel;
-      this.ClientSize = new System.Drawing.Size(305, 405);
+      this.ClientSize = new System.Drawing.Size(304, 452);
       this.Controls.Add(this.panel2);
       this.Controls.Add(this.tabControlSettings);
       this.Name = "SettingsForm";
@@ -741,6 +772,8 @@ namespace Sipek
       this.groupBox2.PerformLayout();
       this.groupBox3.ResumeLayout(false);
       this.groupBox3.PerformLayout();
+      this.groupBox6.ResumeLayout(false);
+      this.groupBox6.PerformLayout();
       this.tabPageSettingsServices.ResumeLayout(false);
       this.groupBox1.ResumeLayout(false);
       this.groupBox1.PerformLayout();
@@ -757,8 +790,6 @@ namespace Sipek
       this.tabCodecsPage.ResumeLayout(false);
       this.tabCodecsPage.PerformLayout();
       this.panel2.ResumeLayout(false);
-      this.groupBox6.ResumeLayout(false);
-      this.groupBox6.PerformLayout();
       this.ResumeLayout(false);
 
     }
@@ -779,7 +810,7 @@ namespace Sipek
     private System.Windows.Forms.Label label2;
     private System.Windows.Forms.Label label1;
     private System.Windows.Forms.TextBox textBoxDomain;
-    private System.Windows.Forms.TextBox textBoxProxyAddress;
+    private System.Windows.Forms.TextBox textBoxRegistrarAddress;
     private System.Windows.Forms.Label label5;
     private System.Windows.Forms.TextBox textBoxPassword;
     private System.Windows.Forms.Label label4;
@@ -824,5 +855,8 @@ namespace Sipek
     private System.Windows.Forms.Label label12;
     private System.Windows.Forms.TextBox textBoxListenPort;
     private System.Windows.Forms.CheckBox checkBoxIMS;
+    private System.Windows.Forms.Label label13;
+    private System.Windows.Forms.TextBox textBoxProxyAddress;
+    private System.Windows.Forms.Label label14;
   }
 }
