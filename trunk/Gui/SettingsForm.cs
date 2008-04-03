@@ -84,15 +84,14 @@ namespace Sipek
 
     private void comboBoxAccounts_SelectedIndexChanged(object sender, EventArgs e)
     {
-      string accname = comboBoxAccounts.Text;
-      if (SipekConfigurator.getAccount(SipekConfigurator.DefaultAccountIndex).AccountName == accname)
+      int index = comboBoxAccounts.SelectedIndex;
+
+      if (SipekConfigurator.DefaultAccountIndex == index)
         checkBoxDefault.Checked = true;
       else
         checkBoxDefault.Checked = false;
 
-      textBoxAccountName.Text = accname;
-
-      IAccount acc = getAccount(accname);
+      IAccount acc = SipekConfigurator.getAccount(index);
 
       if (acc == null) 
       {
@@ -100,6 +99,7 @@ namespace Sipek
         // error!!!
         return;
       }
+      textBoxAccountName.Text = acc.AccountName;
      
       textBoxDisplayName.Text = acc.DisplayName;
       textBoxUsername.Text = acc.UserName;
@@ -108,23 +108,6 @@ namespace Sipek
       textBoxProxyAddress.Text = acc.ProxyAddress; 
       textBoxDomain.Text = acc.DomainName;
       checkBoxIMS.Checked = acc.ImsEnabled;
-    }
-
-    private IAccount getAccount(string accname)
-    {
-      IAccount acc = null;
-      // get account
-      int size = SipekConfigurator.NumOfAccounts;
-      for (int i=0; i<size; i++)
-      {
-        string tempName = SipekConfigurator.getAccount(i).AccountName;
-        if (tempName == accname)
-        {
-          acc = SipekConfigurator.getAccount(i);
-          break;
-        }
-      }
-      return acc;
     }
   
     private void clearAll()
@@ -197,11 +180,13 @@ namespace Sipek
       CCallManager.getInstance().Initialize();
 
       // set codecs priority...
-      List<string> codeclist = SipekConfigurator.CodecList;
-      int index = 0;
-      foreach (string item in codeclist)
+      foreach (string item in listBoxDisCodecs.Items)
       {
-        SipekFactory.CommonProxy.setCodecPrioroty(item, index++);
+        SipekFactory.CommonProxy.setCodecPriority(item, 0);
+      }
+      foreach (string item in listBoxEnCodecs.Items)
+      {
+        SipekFactory.CommonProxy.setCodecPriority(item, 128);
       }
 
       Close();
@@ -238,7 +223,7 @@ namespace Sipek
       foreach (string item in codeclist)
       {
         // item match with disabled list (all supported codec)
-        if (listBoxDisCodecs.FindString(item) >= 0)
+        if (listBoxDisCodecs.Items.Contains(item))
         {
           // move item from disabled list to enabled
           listBoxDisCodecs.Items.Remove(item);
