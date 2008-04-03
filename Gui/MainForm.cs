@@ -851,12 +851,23 @@ namespace Sipek
       // Set user status
       toolStripComboBoxUserStatus.SelectedIndex = (int)EUserStatus.AVAILABLE;
 
+      // scoh::::03.04.2008:::pjsip ISSUE??? At startup codeclist is different as later 
       // set codecs priority...
-      List<string> codeclist = SipekConfigurator.CodecList;
-      int index = 0;
-      foreach (string item in codeclist)
+      // initialize/reset codecs - enable PCMU and PCMA only
+      int noOfCodecs = SipekFactory.CommonProxy.getNoOfCodecs();
+      for (int i = 0; i < noOfCodecs; i++)
       {
-        SipekFactory.CommonProxy.setCodecPrioroty(item, index++);
+        string codecname = SipekFactory.CommonProxy.getCodec(i);
+        if (SipekConfigurator.CodecList.Contains(codecname))
+        {
+          // leave default
+          SipekFactory.CommonProxy.setCodecPriority(codecname, 128);
+        }
+        else
+        {
+          // disable
+          SipekFactory.CommonProxy.setCodecPriority(codecname, 0);
+        }
       }
 
       // timer 
