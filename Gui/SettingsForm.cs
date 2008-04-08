@@ -107,7 +107,6 @@ namespace Sipek
       textBoxRegistrarAddress.Text = acc.HostName;
       textBoxProxyAddress.Text = acc.ProxyAddress; 
       textBoxDomain.Text = acc.DomainName;
-      checkBoxIMS.Checked = acc.ImsEnabled;
     }
   
     private void clearAll()
@@ -136,7 +135,6 @@ namespace Sipek
         account.UserName = textBoxUsername.Text;
         account.Password = textBoxPassword.Text;
         account.DomainName = textBoxDomain.Text;
-        account.ImsEnabled = checkBoxIMS.Checked;
 
         updateAccountList();
 
@@ -257,9 +255,11 @@ namespace Sipek
         mMixers.Recording.DeviceId = ((MixerDetail)comboBoxRecordingDevices.SelectedItem).DeviceId;
         line = mMixers.Recording.UserLines.GetMixerFirstLineByComponentType(MIXERLINE_COMPONENTTYPE.SRC_MICROPHONE);
         trackBarRecordingVolume.Tag = line;
-        checkBoxSelectMic.Tag = line;
+        trackBarRecordingBalance.Tag = line;
+        //checkBoxSelectMic.Tag = line;
         checkBoxRecordingMute.Tag = line;
         _lastMicVolume = line.Volume;
+        line.Selected = true;
         this.checkBoxRecordingMute.Checked = line.Volume == 0 ? true : false;
       }
       else
@@ -300,6 +300,12 @@ namespace Sipek
             this.trackBarRecordingVolume.Value = volume;
           else
             this.trackBarRecordingVolume.Enabled = false;
+          
+        //MONO OR MORE THAN 2 CHANNELS, then let disable balance
+        if (line.Channels != 2)
+          this.trackBarRecordingBalance.Enabled = false;
+        else
+          this.trackBarRecordingBalance.Value = (int)(trackBarRecordingBalance.Maximum * balance);
       }
       else
       {
@@ -317,7 +323,7 @@ namespace Sipek
       
       // checkbox
       this.checkBoxPlaybackMute.Checked = line.Mute;
-      this.checkBoxSelectMic.Checked = line.Selected;
+      //this.checkBoxSelectMic.Checked = line.Selected;
     }
 
     private void LoadDeviceCombos(Mixers mixers)
@@ -353,34 +359,38 @@ namespace Sipek
 
       try
       {
-        float balance = adjustValues(line, trackBarPlaybackVolume);
-
-        //Set the balance
-        if (balance != -1)
+        if (line.Direction == MixerType.Playback)
         {
-          if ((MixerLine)trackBarPlaybackBalance.Tag == line)
+          float balance = adjustValues(line, trackBarPlaybackVolume);
+
+          //Set the balance
+          if (balance != -1)
           {
-            trackBarPlaybackBalance.Value = (int)(trackBarPlaybackBalance.Maximum * balance);
+            if ((MixerLine)trackBarPlaybackBalance.Tag == line)
+            {
+              trackBarPlaybackBalance.Value = (int)(trackBarPlaybackBalance.Maximum * balance);
+            }
           }
-        }
 
-        // adjust recording 
-        adjustValues(line, trackBarRecordingVolume);
-
-        // adjust checkboxes
-        if ((MixerLine)checkBoxPlaybackMute.Tag == line)
-        {
-          if (line.Direction == MixerType.Recording)
-            checkBoxPlaybackMute.Checked = line.Selected;
-          else
-            checkBoxPlaybackMute.Checked = line.Mute;
+          // adjust checkboxes
+          checkBoxPlaybackMute.Checked = line.Mute;
         }
-        else if ((MixerLine)checkBoxSelectMic.Tag == line)
+        else if (line.Direction == MixerType.Recording)
         {
-          if (line.Direction == MixerType.Recording)
-          {
-            checkBoxSelectMic.Checked = line.Selected;
-          }
+          line.Channel = Channel.Uniform;
+          // adjust recording 
+          float balance = adjustValues(line, trackBarRecordingVolume);
+          //Set the balance
+          //if (balance != -1)
+          //{
+          //  if ((MixerLine)trackBarRecordingBalance.Tag == line)
+          //  {
+          //    trackBarRecordingBalance.Value = (int)(trackBarRecordingBalance.Maximum * balance);
+          //  }
+          //}
+          // adjust checkboxes
+          checkBoxRecordingMute.Checked = (line.Volume == 0 ? true : false);
+
         }
       }
       finally
@@ -529,46 +539,12 @@ namespace Sipek
 
       TrackBar tBar = (TrackBar)sender;
       MixerLine line = (MixerLine)tBar.Tag;
-      if (line.Channels != 2)
-      {
-        // One channel or more than two let set the volume uniform
-        line.Channel = Channel.Uniform;
-        line.Volume = tBar.Value;
-      }
-      else
-      {
-        TrackBar tBarBalance = trackBarRecordingVolume;
-        //Set independent volume
-        //foreach (TrackBar tBarBalance in tBarBalanceArray[(int)line.Mixer.MixerType])
-        {
-          MixerLine frontEndLine = (MixerLine)tBarBalance.Tag;
-          if (frontEndLine == line)
-          {
-            if (tBarBalance.Value == 0)
-            {
-              line.Channel = Channel.Uniform;
-              line.Volume = tBar.Value;
-            }
-            if (tBarBalance.Value <= 0)
-            {
-              // Left channel is bigger
-              line.Channel = Channel.Left;
-              line.Volume = tBar.Value;
-              line.Channel = Channel.Right;
-              line.Volume = (int)(tBar.Value * (1 + (tBarBalance.Value / (float)tBarBalance.Maximum)));
-            }
-            else
-            {
-              // Right channel is bigger
-              line.Channel = Channel.Right;
-              line.Volume = tBar.Value;
-              line.Channel = Channel.Left;
-              line.Volume = (int)(tBar.Value * (1 - (tBarBalance.Value / (float)tBarBalance.Maximum)));
-            }
-          }
-        }
-      }
+      // One channel or more than two let set the volume uniform
+      line.Channel = Channel.Uniform;
+      line.Volume = tBar.Value;
+
       _lastMicVolume = line.Volume;
+
       this.checkBoxRecordingMute.Checked = line.Volume == 0 ? true : false;
     }
 
@@ -578,7 +554,8 @@ namespace Sipek
       MixerLine line = (MixerLine)chkBox.Tag;
       if (line.Direction == MixerType.Recording)
       {
-        line.Selected = chkBox.Checked;
+        line.Channel = Channel.Uniform; 
+        //line.Selected = chkBox.Checked;
         if (checkBoxRecordingMute.Checked == true)
         {
           _lastMicVolume = line.Volume;
@@ -589,10 +566,8 @@ namespace Sipek
           line.Volume = _lastMicVolume;
         }
       }
-      else
-      {
-        line.Mute = chkBox.Checked;
-      }
+      // set mute if possible
+      if (line.ContainsMute)  line.Mute = chkBox.Checked;
     }
 
 

@@ -827,8 +827,8 @@ namespace Sipek
       _initialized = true;
 
       // Initialize BuddyList
-      CBuddyList.getInstance().initialize();
       CBuddyList.getInstance().VoIPProxy = SipekFactory.CommonProxy;
+      CBuddyList.getInstance().initialize();
 
       //////////////////////////////////////////////////////////////////////////
       // load settings

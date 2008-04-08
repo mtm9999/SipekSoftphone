@@ -45,7 +45,6 @@ namespace Sipek
       this.label3 = new System.Windows.Forms.Label();
       this.textBoxDisplayName = new System.Windows.Forms.TextBox();
       this.groupBox3 = new System.Windows.Forms.GroupBox();
-      this.checkBoxIMS = new System.Windows.Forms.CheckBox();
       this.label7 = new System.Windows.Forms.Label();
       this.textBoxAccountName = new System.Windows.Forms.TextBox();
       this.checkBoxDefault = new System.Windows.Forms.CheckBox();
@@ -70,7 +69,6 @@ namespace Sipek
       this.groupBox5 = new System.Windows.Forms.GroupBox();
       this.checkBoxRecordingMute = new System.Windows.Forms.CheckBox();
       this.label9 = new System.Windows.Forms.Label();
-      this.checkBoxSelectMic = new System.Windows.Forms.CheckBox();
       this.trackBarRecordingVolume = new System.Windows.Forms.TrackBar();
       this.comboBoxRecordingDevices = new System.Windows.Forms.ComboBox();
       this.groupBox4 = new System.Windows.Forms.GroupBox();
@@ -90,6 +88,7 @@ namespace Sipek
       this.buttonApply = new System.Windows.Forms.Button();
       this.buttonCancel = new System.Windows.Forms.Button();
       this.buttonOK = new System.Windows.Forms.Button();
+      this.trackBarRecordingBalance = new System.Windows.Forms.TrackBar();
       this.tabControlSettings.SuspendLayout();
       this.tabPageSettingsSIP.SuspendLayout();
       this.groupBox2.SuspendLayout();
@@ -106,6 +105,7 @@ namespace Sipek
       ((System.ComponentModel.ISupportInitialize)(this.trackBarPlaybackVolume)).BeginInit();
       this.tabCodecsPage.SuspendLayout();
       this.panel2.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.trackBarRecordingBalance)).BeginInit();
       this.SuspendLayout();
       // 
       // tabControlSettings
@@ -150,7 +150,7 @@ namespace Sipek
       this.groupBox2.Controls.Add(this.label3);
       this.groupBox2.Controls.Add(this.textBoxDisplayName);
       this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.groupBox2.Location = new System.Drawing.Point(3, 98);
+      this.groupBox2.Location = new System.Drawing.Point(3, 104);
       this.groupBox2.Name = "groupBox2";
       this.groupBox2.Size = new System.Drawing.Size(290, 200);
       this.groupBox2.TabIndex = 10;
@@ -266,7 +266,6 @@ namespace Sipek
       // 
       // groupBox3
       // 
-      this.groupBox3.Controls.Add(this.checkBoxIMS);
       this.groupBox3.Controls.Add(this.label7);
       this.groupBox3.Controls.Add(this.textBoxAccountName);
       this.groupBox3.Controls.Add(this.checkBoxDefault);
@@ -275,20 +274,10 @@ namespace Sipek
       this.groupBox3.Dock = System.Windows.Forms.DockStyle.Top;
       this.groupBox3.Location = new System.Drawing.Point(3, 3);
       this.groupBox3.Name = "groupBox3";
-      this.groupBox3.Size = new System.Drawing.Size(290, 95);
+      this.groupBox3.Size = new System.Drawing.Size(290, 101);
       this.groupBox3.TabIndex = 3;
       this.groupBox3.TabStop = false;
       this.groupBox3.Text = "Accounts";
-      // 
-      // checkBoxIMS
-      // 
-      this.checkBoxIMS.AutoSize = true;
-      this.checkBoxIMS.Location = new System.Drawing.Point(200, 47);
-      this.checkBoxIMS.Name = "checkBoxIMS";
-      this.checkBoxIMS.Size = new System.Drawing.Size(45, 17);
-      this.checkBoxIMS.TabIndex = 8;
-      this.checkBoxIMS.Text = "IMS";
-      this.checkBoxIMS.UseVisualStyleBackColor = true;
       // 
       // label7
       // 
@@ -339,9 +328,9 @@ namespace Sipek
       this.groupBox6.Controls.Add(this.label12);
       this.groupBox6.Controls.Add(this.textBoxListenPort);
       this.groupBox6.Dock = System.Windows.Forms.DockStyle.Bottom;
-      this.groupBox6.Location = new System.Drawing.Point(3, 298);
+      this.groupBox6.Location = new System.Drawing.Point(3, 304);
       this.groupBox6.Name = "groupBox6";
-      this.groupBox6.Size = new System.Drawing.Size(290, 70);
+      this.groupBox6.Size = new System.Drawing.Size(290, 64);
       this.groupBox6.TabIndex = 12;
       this.groupBox6.TabStop = false;
       this.groupBox6.Text = "Phone";
@@ -503,9 +492,9 @@ namespace Sipek
       // 
       // groupBox5
       // 
+      this.groupBox5.Controls.Add(this.trackBarRecordingBalance);
       this.groupBox5.Controls.Add(this.checkBoxRecordingMute);
       this.groupBox5.Controls.Add(this.label9);
-      this.groupBox5.Controls.Add(this.checkBoxSelectMic);
       this.groupBox5.Controls.Add(this.trackBarRecordingVolume);
       this.groupBox5.Controls.Add(this.comboBoxRecordingDevices);
       this.groupBox5.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -519,7 +508,7 @@ namespace Sipek
       // checkBoxRecordingMute
       // 
       this.checkBoxRecordingMute.AutoSize = true;
-      this.checkBoxRecordingMute.Location = new System.Drawing.Point(216, 89);
+      this.checkBoxRecordingMute.Location = new System.Drawing.Point(130, 73);
       this.checkBoxRecordingMute.Name = "checkBoxRecordingMute";
       this.checkBoxRecordingMute.Size = new System.Drawing.Size(50, 17);
       this.checkBoxRecordingMute.TabIndex = 4;
@@ -530,27 +519,16 @@ namespace Sipek
       // label9
       // 
       this.label9.AutoSize = true;
-      this.label9.Location = new System.Drawing.Point(7, 93);
+      this.label9.Location = new System.Drawing.Point(8, 77);
       this.label9.Name = "label9";
       this.label9.Size = new System.Drawing.Size(94, 13);
       this.label9.TabIndex = 3;
       this.label9.Text = "Recording Volume";
       // 
-      // checkBoxSelectMic
-      // 
-      this.checkBoxSelectMic.AutoSize = true;
-      this.checkBoxSelectMic.Location = new System.Drawing.Point(216, 31);
-      this.checkBoxSelectMic.Name = "checkBoxSelectMic";
-      this.checkBoxSelectMic.Size = new System.Drawing.Size(56, 17);
-      this.checkBoxSelectMic.TabIndex = 2;
-      this.checkBoxSelectMic.Text = "Select";
-      this.checkBoxSelectMic.UseVisualStyleBackColor = true;
-      this.checkBoxSelectMic.CheckedChanged += new System.EventHandler(this.checkBoxPlaybackMute_CheckedChanged);
-      // 
       // trackBarRecordingVolume
       // 
       this.trackBarRecordingVolume.LargeChange = 10000;
-      this.trackBarRecordingVolume.Location = new System.Drawing.Point(6, 130);
+      this.trackBarRecordingVolume.Location = new System.Drawing.Point(10, 115);
       this.trackBarRecordingVolume.Maximum = 65535;
       this.trackBarRecordingVolume.Name = "trackBarRecordingVolume";
       this.trackBarRecordingVolume.Size = new System.Drawing.Size(170, 42);
@@ -565,7 +543,7 @@ namespace Sipek
       this.comboBoxRecordingDevices.FormattingEnabled = true;
       this.comboBoxRecordingDevices.Location = new System.Drawing.Point(11, 29);
       this.comboBoxRecordingDevices.Name = "comboBoxRecordingDevices";
-      this.comboBoxRecordingDevices.Size = new System.Drawing.Size(165, 21);
+      this.comboBoxRecordingDevices.Size = new System.Drawing.Size(199, 21);
       this.comboBoxRecordingDevices.TabIndex = 0;
       this.comboBoxRecordingDevices.SelectedIndexChanged += new System.EventHandler(this.comboBoxRecordingDevices_SelectedIndexChanged);
       // 
@@ -597,7 +575,7 @@ namespace Sipek
       // trackBarPlaybackBalance
       // 
       this.trackBarPlaybackBalance.LargeChange = 50;
-      this.trackBarPlaybackBalance.Location = new System.Drawing.Point(224, 19);
+      this.trackBarPlaybackBalance.Location = new System.Drawing.Point(216, 67);
       this.trackBarPlaybackBalance.Maximum = 320;
       this.trackBarPlaybackBalance.Minimum = -320;
       this.trackBarPlaybackBalance.Name = "trackBarPlaybackBalance";
@@ -614,7 +592,7 @@ namespace Sipek
       this.comboBoxPlaybackDevices.FormattingEnabled = true;
       this.comboBoxPlaybackDevices.Location = new System.Drawing.Point(10, 19);
       this.comboBoxPlaybackDevices.Name = "comboBoxPlaybackDevices";
-      this.comboBoxPlaybackDevices.Size = new System.Drawing.Size(166, 21);
+      this.comboBoxPlaybackDevices.Size = new System.Drawing.Size(200, 21);
       this.comboBoxPlaybackDevices.TabIndex = 3;
       this.comboBoxPlaybackDevices.SelectedIndexChanged += new System.EventHandler(this.comboBoxPlaybackDevices_SelectedIndexChanged);
       // 
@@ -635,7 +613,7 @@ namespace Sipek
       // checkBoxPlaybackMute
       // 
       this.checkBoxPlaybackMute.AutoSize = true;
-      this.checkBoxPlaybackMute.Location = new System.Drawing.Point(122, 55);
+      this.checkBoxPlaybackMute.Location = new System.Drawing.Point(121, 51);
       this.checkBoxPlaybackMute.Name = "checkBoxPlaybackMute";
       this.checkBoxPlaybackMute.Size = new System.Drawing.Size(50, 17);
       this.checkBoxPlaybackMute.TabIndex = 0;
@@ -755,6 +733,20 @@ namespace Sipek
       this.buttonOK.UseVisualStyleBackColor = true;
       this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
       // 
+      // trackBarRecordingBalance
+      // 
+      this.trackBarRecordingBalance.LargeChange = 50;
+      this.trackBarRecordingBalance.Location = new System.Drawing.Point(216, 104);
+      this.trackBarRecordingBalance.Maximum = 320;
+      this.trackBarRecordingBalance.Minimum = -320;
+      this.trackBarRecordingBalance.Name = "trackBarRecordingBalance";
+      this.trackBarRecordingBalance.Orientation = System.Windows.Forms.Orientation.Vertical;
+      this.trackBarRecordingBalance.Size = new System.Drawing.Size(42, 65);
+      this.trackBarRecordingBalance.SmallChange = 10;
+      this.trackBarRecordingBalance.TabIndex = 5;
+      this.trackBarRecordingBalance.TickFrequency = 320;
+      this.trackBarRecordingBalance.TickStyle = System.Windows.Forms.TickStyle.Both;
+      // 
       // SettingsForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -790,6 +782,7 @@ namespace Sipek
       this.tabCodecsPage.ResumeLayout(false);
       this.tabCodecsPage.PerformLayout();
       this.panel2.ResumeLayout(false);
+      ((System.ComponentModel.ISupportInitialize)(this.trackBarRecordingBalance)).EndInit();
       this.ResumeLayout(false);
 
     }
@@ -839,7 +832,6 @@ namespace Sipek
     private System.Windows.Forms.TrackBar trackBarPlaybackVolume;
     private System.Windows.Forms.ComboBox comboBoxPlaybackDevices;
     private System.Windows.Forms.ComboBox comboBoxRecordingDevices;
-    private System.Windows.Forms.CheckBox checkBoxSelectMic;
     private System.Windows.Forms.TrackBar trackBarRecordingVolume;
     private System.Windows.Forms.Label label8;
     private System.Windows.Forms.Label label9;
@@ -854,9 +846,9 @@ namespace Sipek
     private System.Windows.Forms.GroupBox groupBox6;
     private System.Windows.Forms.Label label12;
     private System.Windows.Forms.TextBox textBoxListenPort;
-    private System.Windows.Forms.CheckBox checkBoxIMS;
     private System.Windows.Forms.Label label13;
     private System.Windows.Forms.TextBox textBoxProxyAddress;
     private System.Windows.Forms.Label label14;
+    private System.Windows.Forms.TrackBar trackBarRecordingBalance;
   }
 }
