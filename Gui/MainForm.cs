@@ -450,7 +450,7 @@ namespace Sipek
         }
         else
         {
-          EStateId stateId = ((CStateMachine)lvi.Tag).getStateId();
+          EStateId stateId = ((CStateMachine)lvi.Tag).State.Id;
           switch (stateId)
           {
             case EStateId.INCOMING:
@@ -489,18 +489,18 @@ namespace Sipek
       try
       {
         // get entire call list
-        Dictionary<int, CStateMachine> callList = CallManager.CallList;
+        Dictionary<int, IStateMachine> callList = CallManager.CallList;
 
-        foreach (KeyValuePair<int, CStateMachine> kvp in callList)
+        foreach (KeyValuePair<int, IStateMachine> kvp in callList)
         {
-          string number = kvp.Value.CallingNo;
+          string number = kvp.Value.CallingNumber;
           string name = kvp.Value.CallingName; 
 
           string duration = kvp.Value.Duration.ToString();
           if (duration.IndexOf('.') > 0) duration = duration.Remove(duration.IndexOf('.')); // remove miliseconds
           // show name & number or just number
           string display = name.Length > 0 ? name + " / " + number : number;
-          string stateName = kvp.Value.getStateName();
+          string stateName = kvp.Value.State.ToString();
           if (CallManager.Is3Pty) stateName = "CONFERENCE";
           ListViewItem lvi = new ListViewItem(new string[] {
             stateName, display, duration});
@@ -546,8 +546,8 @@ namespace Sipek
       for (int i = 0; i < listViewCallLines.Items.Count; i++ )
       {
         ListViewItem item = listViewCallLines.Items[i];
-        CStateMachine sm = (CStateMachine)item.Tag;
-        if (null == sm) continue;
+        IStateMachine sm = (IStateMachine)item.Tag;
+        if (sm.IsNull) continue;
 
         string duration = sm.RuntimeDuration.ToString();
         if (duration.IndexOf('.') > 0) duration = duration.Remove(duration.IndexOf('.')); // remove miliseconds

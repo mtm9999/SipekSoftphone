@@ -35,7 +35,10 @@ namespace Sipek
     {
       return new GUITimer(_form);
     }
-
+    public IStateMachine createStateMachine(CCallManager mng)
+    {
+      return new CStateMachine(mng);
+    }
     public IVoipProxy CommonProxy
     {
       get { return _commonProxy; }
