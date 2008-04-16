@@ -21,13 +21,13 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_7965A300F80CA4D162F2B74095EF8D86"
+        "MsmKey" = "8:_A01A9042399D2866D34C3F3D194BF069"
         "OwnerKey" = "8:_D838E0E03A3C4F059563D9D1C0A30DEB"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_8BD538F124289BEF248F48C74BBDAED4"
+        "MsmKey" = "8:_A1030206502DE3C5E8F744DCA7BA8171"
         "OwnerKey" = "8:_D838E0E03A3C4F059563D9D1C0A30DEB"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -57,7 +57,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_E698396974204CF0370CBB5C29824B74"
+        "MsmKey" = "8:_EC1505CF42EB40436A86A59338C51743"
         "OwnerKey" = "8:_D838E0E03A3C4F059563D9D1C0A30DEB"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -70,19 +70,19 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_7965A300F80CA4D162F2B74095EF8D86"
+        "OwnerKey" = "8:_EC1505CF42EB40436A86A59338C51743"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_E698396974204CF0370CBB5C29824B74"
+        "OwnerKey" = "8:_A1030206502DE3C5E8F744DCA7BA8171"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_8BD538F124289BEF248F48C74BBDAED4"
+        "OwnerKey" = "8:_A01A9042399D2866D34C3F3D194BF069"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -200,20 +200,20 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_7965A300F80CA4D162F2B74095EF8D86"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_A01A9042399D2866D34C3F3D194BF069"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:WaveLibMixer, Version=1.0.2927.30170, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:pjsipDll, Version=0.0.0.0, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
-                    "_7965A300F80CA4D162F2B74095EF8D86"
+                    "_A01A9042399D2866D34C3F3D194BF069"
                     {
-                    "Name" = "8:WaveLibMixer.dll"
+                    "Name" = "8:pjsipDll.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:WaveLibMixer.dll"
+            "SourcePath" = "8:pjsipDll.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_B82B0425AC644711B0488FF150DF422C"
@@ -231,20 +231,20 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_8BD538F124289BEF248F48C74BBDAED4"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_A1030206502DE3C5E8F744DCA7BA8171"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:pjsipDll, Version=0.0.0.0, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:SipekSdk, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_8BD538F124289BEF248F48C74BBDAED4"
+                    "_A1030206502DE3C5E8F744DCA7BA8171"
                     {
-                    "Name" = "8:pjsipDll.dll"
+                    "Name" = "8:SipekSdk.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:pjsipDll.dll"
+            "SourcePath" = "8:SipekSdk.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_B82B0425AC644711B0488FF150DF422C"
@@ -322,20 +322,20 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E698396974204CF0370CBB5C29824B74"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_EC1505CF42EB40436A86A59338C51743"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:SipekSdk, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:WaveLibMixer, Version=1.0.2927.30170, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_E698396974204CF0370CBB5C29824B74"
+                    "_EC1505CF42EB40436A86A59338C51743"
                     {
-                    "Name" = "8:SipekSdk.dll"
+                    "Name" = "8:WaveLibMixer.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:SipekSdk.dll"
+            "SourcePath" = "8:WaveLibMixer.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_B82B0425AC644711B0488FF150DF422C"
@@ -393,7 +393,7 @@
                 {
                     "{9EF0B969-E518-4E46-987F-47570745A589}:_981EBDCC2E8D4BA79F99EB200FF12F03"
                     {
-                    "Name" = "8:Sipek2"
+                    "Name" = "8:Sipek"
                     "AlwaysCreate" = "11:FALSE"
                     "Condition" = "8:"
                     "Transitive" = "11:FALSE"
@@ -431,7 +431,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Sipek2"
         "ProductCode" = "8:{607B51A4-08C7-421C-8B05-E200D5F2B2E0}"
-        "PackageCode" = "8:{4248EF9D-81EE-422D-9D43-7E75779AE3D5}"
+        "PackageCode" = "8:{961CB66D-0514-4E06-BD03-98381E61812C}"
         "UpgradeCode" = "8:{06F8AC95-6BCA-407E-A06E-6A26BE8A4014}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
@@ -550,6 +550,20 @@
         }
         "Shortcut"
         {
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_447313A6FFF244D39C9BC1985BF8B6EF"
+            {
+            "Name" = "8:Softphone"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_D838E0E03A3C4F059563D9D1C0A30DEB"
+            "Folder" = "8:_981EBDCC2E8D4BA79F99EB200FF12F03"
+            "WorkingFolder" = "8:_B82B0425AC644711B0488FF150DF422C"
+            "Icon" = "8:"
+            "Feature" = "8:"
+            }
         }
         "UserInterface"
         {
@@ -951,7 +965,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_D838E0E03A3C4F059563D9D1C0A30DEB"
             {
-            "SourcePath" = "8:..\\Gui\\obj\\Debug\\sipek2.exe"
+            "SourcePath" = "8:..\\Gui\\obj\\Release\\sipek2.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_B82B0425AC644711B0488FF150DF422C"
