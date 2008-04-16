@@ -350,20 +350,8 @@ namespace Sipek
     public void addRecord(CBuddyRecord record)
     {
       int buddyindex = -1;
-      if (record.PresenceEnabled)
-      {
-        buddyindex = SubscribePresence(record);
-      }
-      if (buddyindex == -1)
-      {   
-          int tmp = -1;
-          // find max
-          foreach (KeyValuePair<int, CBuddyRecord> kvp in _buddyList)
-          {
-            if (kvp.Key >= tmp) tmp = kvp.Key;
-          }
-          buddyindex = tmp + 1000; // prevent overlap with presence id
-      }
+
+      buddyindex = VoIPProxy.addBuddy(record.Number, record.PresenceEnabled);
 
       // shouldn't happen!!!!
       if (buddyindex == -1) return; //System.Diagnostics.Debug.WriteLine("");
@@ -371,12 +359,6 @@ namespace Sipek
       record.Id = buddyindex;
       // add record to buddylist
       _buddyList.Add(record.Id, record);
-    }
-
-    private int SubscribePresence(CBuddyRecord record)
-    {
-      // Call proxy to add buddy and get buddy id
-      return VoIPProxy.addBuddy(record.Number);
     }
 
 

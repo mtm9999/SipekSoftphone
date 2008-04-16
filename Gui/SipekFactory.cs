@@ -254,6 +254,8 @@ namespace Sipek
   /// </summary>
   public class SipekConfigurator : IConfiguratorInterface
   {
+    public bool IsNull { get { return false; } }
+
     public bool CFUFlag {
       get { return Properties.Settings.Default.cfgCFUFlag; }
       set { Properties.Settings.Default.cfgCFUFlag = value; }
