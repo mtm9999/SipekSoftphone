@@ -1,3 +1,25 @@
+/* 
+ * Copyright (C) 2008 Sasa Coh <sasacoh@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
+ * 
+ * @see http://sipekphone.googlepages.com/pjsipwrapper
+ * @see http://voipengine.googlepages.com/
+ *  
+ */
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,6 +34,12 @@ namespace Sipek
 {
   public partial class ChatForm : Form
   {
+    private SipekResources _resources = null;
+    private SipekResources SipekResources
+    {
+      get { return _resources; }
+    }
+
     private int _buddyId = -1;
     public int BuddyId
     {
@@ -41,17 +69,10 @@ namespace Sipek
       }
     }
 
-    private AbstractFactory _factory = new NullFactory();
-    private AbstractFactory Factory
-    {
-      get { return _factory;  }
-    }
-
-    public ChatForm(AbstractFactory factory)
+    public ChatForm(SipekResources resources)
     {
       InitializeComponent();
-
-      _factory = factory;
+      _resources = resources;
     }
 
     private void ChatForm_Activated(object sender, EventArgs e)
@@ -67,7 +88,7 @@ namespace Sipek
       if (buddy != null)
       {
         // Invoke SIP stack wrapper function to send message
-        Factory.CommonProxy.sendMessage(buddy.Number, textBoxChatInput.Text);
+        SipekResources.Messenger.sendMessage(buddy.Number, textBoxChatInput.Text);
 
         richTextBoxChatHistory.Text += "(me) " + DateTime.Now;
         

@@ -51,6 +51,7 @@ namespace Sipek
       this.label6 = new System.Windows.Forms.Label();
       this.comboBoxAccounts = new System.Windows.Forms.ComboBox();
       this.groupBox6 = new System.Windows.Forms.GroupBox();
+      this.checkBoxSecure = new System.Windows.Forms.CheckBox();
       this.label12 = new System.Windows.Forms.Label();
       this.textBoxListenPort = new System.Windows.Forms.TextBox();
       this.tabPageSettingsServices = new System.Windows.Forms.TabPage();
@@ -67,6 +68,7 @@ namespace Sipek
       this.textBoxCFU = new System.Windows.Forms.TextBox();
       this.tabPageSettingsAudio = new System.Windows.Forms.TabPage();
       this.groupBox5 = new System.Windows.Forms.GroupBox();
+      this.trackBarRecordingBalance = new System.Windows.Forms.TrackBar();
       this.checkBoxRecordingMute = new System.Windows.Forms.CheckBox();
       this.label9 = new System.Windows.Forms.Label();
       this.trackBarRecordingVolume = new System.Windows.Forms.TrackBar();
@@ -88,7 +90,6 @@ namespace Sipek
       this.buttonApply = new System.Windows.Forms.Button();
       this.buttonCancel = new System.Windows.Forms.Button();
       this.buttonOK = new System.Windows.Forms.Button();
-      this.trackBarRecordingBalance = new System.Windows.Forms.TrackBar();
       this.tabControlSettings.SuspendLayout();
       this.tabPageSettingsSIP.SuspendLayout();
       this.groupBox2.SuspendLayout();
@@ -99,13 +100,13 @@ namespace Sipek
       this.groupBoxServices.SuspendLayout();
       this.tabPageSettingsAudio.SuspendLayout();
       this.groupBox5.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.trackBarRecordingBalance)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.trackBarRecordingVolume)).BeginInit();
       this.groupBox4.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.trackBarPlaybackBalance)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.trackBarPlaybackVolume)).BeginInit();
       this.tabCodecsPage.SuspendLayout();
       this.panel2.SuspendLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.trackBarRecordingBalance)).BeginInit();
       this.SuspendLayout();
       // 
       // tabControlSettings
@@ -152,7 +153,7 @@ namespace Sipek
       this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
       this.groupBox2.Location = new System.Drawing.Point(3, 104);
       this.groupBox2.Name = "groupBox2";
-      this.groupBox2.Size = new System.Drawing.Size(290, 200);
+      this.groupBox2.Size = new System.Drawing.Size(290, 184);
       this.groupBox2.TabIndex = 10;
       this.groupBox2.TabStop = false;
       this.groupBox2.Text = "User";
@@ -181,6 +182,7 @@ namespace Sipek
       this.textBoxProxyAddress.Name = "textBoxProxyAddress";
       this.textBoxProxyAddress.Size = new System.Drawing.Size(155, 20);
       this.textBoxProxyAddress.TabIndex = 9;
+      this.textBoxProxyAddress.ModifiedChanged += new System.EventHandler(this.reregistrationRequired_TextChanged);
       // 
       // label2
       // 
@@ -207,6 +209,7 @@ namespace Sipek
       this.textBoxDomain.Size = new System.Drawing.Size(155, 20);
       this.textBoxDomain.TabIndex = 7;
       this.textBoxDomain.Text = "*";
+      this.textBoxDomain.ModifiedChanged += new System.EventHandler(this.reregistrationRequired_TextChanged);
       // 
       // textBoxRegistrarAddress
       // 
@@ -214,6 +217,7 @@ namespace Sipek
       this.textBoxRegistrarAddress.Name = "textBoxRegistrarAddress";
       this.textBoxRegistrarAddress.Size = new System.Drawing.Size(155, 20);
       this.textBoxRegistrarAddress.TabIndex = 8;
+      this.textBoxRegistrarAddress.ModifiedChanged += new System.EventHandler(this.reregistrationRequired_TextChanged);
       // 
       // label5
       // 
@@ -231,6 +235,7 @@ namespace Sipek
       this.textBoxPassword.PasswordChar = '*';
       this.textBoxPassword.Size = new System.Drawing.Size(155, 20);
       this.textBoxPassword.TabIndex = 6;
+      this.textBoxPassword.ModifiedChanged += new System.EventHandler(this.reregistrationRequired_TextChanged);
       // 
       // label4
       // 
@@ -247,6 +252,7 @@ namespace Sipek
       this.textBoxUsername.Name = "textBoxUsername";
       this.textBoxUsername.Size = new System.Drawing.Size(155, 20);
       this.textBoxUsername.TabIndex = 5;
+      this.textBoxUsername.ModifiedChanged += new System.EventHandler(this.reregistrationRequired_TextChanged);
       // 
       // label3
       // 
@@ -263,6 +269,7 @@ namespace Sipek
       this.textBoxDisplayName.Name = "textBoxDisplayName";
       this.textBoxDisplayName.Size = new System.Drawing.Size(155, 20);
       this.textBoxDisplayName.TabIndex = 4;
+      this.textBoxDisplayName.ModifiedChanged += new System.EventHandler(this.reregistrationRequired_TextChanged);
       // 
       // groupBox3
       // 
@@ -325,15 +332,27 @@ namespace Sipek
       // 
       // groupBox6
       // 
+      this.groupBox6.Controls.Add(this.checkBoxSecure);
       this.groupBox6.Controls.Add(this.label12);
       this.groupBox6.Controls.Add(this.textBoxListenPort);
       this.groupBox6.Dock = System.Windows.Forms.DockStyle.Bottom;
-      this.groupBox6.Location = new System.Drawing.Point(3, 304);
+      this.groupBox6.Location = new System.Drawing.Point(3, 288);
       this.groupBox6.Name = "groupBox6";
-      this.groupBox6.Size = new System.Drawing.Size(290, 64);
+      this.groupBox6.Size = new System.Drawing.Size(290, 80);
       this.groupBox6.TabIndex = 12;
       this.groupBox6.TabStop = false;
       this.groupBox6.Text = "Phone";
+      // 
+      // checkBoxSecure
+      // 
+      this.checkBoxSecure.AutoSize = true;
+      this.checkBoxSecure.Location = new System.Drawing.Point(90, 45);
+      this.checkBoxSecure.Name = "checkBoxSecure";
+      this.checkBoxSecure.Size = new System.Drawing.Size(89, 17);
+      this.checkBoxSecure.TabIndex = 11;
+      this.checkBoxSecure.Text = "Secure (TLS)";
+      this.checkBoxSecure.UseVisualStyleBackColor = true;
+      this.checkBoxSecure.Click += new System.EventHandler(this.restartRequired_TextChanged);
       // 
       // label12
       // 
@@ -351,6 +370,7 @@ namespace Sipek
       this.textBoxListenPort.Size = new System.Drawing.Size(56, 20);
       this.textBoxListenPort.TabIndex = 10;
       this.textBoxListenPort.Text = "5060";
+      this.textBoxListenPort.ModifiedChanged += new System.EventHandler(this.restartRequired_TextChanged);
       // 
       // tabPageSettingsServices
       // 
@@ -504,6 +524,20 @@ namespace Sipek
       this.groupBox5.TabIndex = 1;
       this.groupBox5.TabStop = false;
       this.groupBox5.Text = "Recording";
+      // 
+      // trackBarRecordingBalance
+      // 
+      this.trackBarRecordingBalance.LargeChange = 50;
+      this.trackBarRecordingBalance.Location = new System.Drawing.Point(216, 104);
+      this.trackBarRecordingBalance.Maximum = 320;
+      this.trackBarRecordingBalance.Minimum = -320;
+      this.trackBarRecordingBalance.Name = "trackBarRecordingBalance";
+      this.trackBarRecordingBalance.Orientation = System.Windows.Forms.Orientation.Vertical;
+      this.trackBarRecordingBalance.Size = new System.Drawing.Size(42, 65);
+      this.trackBarRecordingBalance.SmallChange = 10;
+      this.trackBarRecordingBalance.TabIndex = 5;
+      this.trackBarRecordingBalance.TickFrequency = 320;
+      this.trackBarRecordingBalance.TickStyle = System.Windows.Forms.TickStyle.Both;
       // 
       // checkBoxRecordingMute
       // 
@@ -733,20 +767,6 @@ namespace Sipek
       this.buttonOK.UseVisualStyleBackColor = true;
       this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
       // 
-      // trackBarRecordingBalance
-      // 
-      this.trackBarRecordingBalance.LargeChange = 50;
-      this.trackBarRecordingBalance.Location = new System.Drawing.Point(216, 104);
-      this.trackBarRecordingBalance.Maximum = 320;
-      this.trackBarRecordingBalance.Minimum = -320;
-      this.trackBarRecordingBalance.Name = "trackBarRecordingBalance";
-      this.trackBarRecordingBalance.Orientation = System.Windows.Forms.Orientation.Vertical;
-      this.trackBarRecordingBalance.Size = new System.Drawing.Size(42, 65);
-      this.trackBarRecordingBalance.SmallChange = 10;
-      this.trackBarRecordingBalance.TabIndex = 5;
-      this.trackBarRecordingBalance.TickFrequency = 320;
-      this.trackBarRecordingBalance.TickStyle = System.Windows.Forms.TickStyle.Both;
-      // 
       // SettingsForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -774,6 +794,7 @@ namespace Sipek
       this.tabPageSettingsAudio.ResumeLayout(false);
       this.groupBox5.ResumeLayout(false);
       this.groupBox5.PerformLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.trackBarRecordingBalance)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.trackBarRecordingVolume)).EndInit();
       this.groupBox4.ResumeLayout(false);
       this.groupBox4.PerformLayout();
@@ -782,7 +803,6 @@ namespace Sipek
       this.tabCodecsPage.ResumeLayout(false);
       this.tabCodecsPage.PerformLayout();
       this.panel2.ResumeLayout(false);
-      ((System.ComponentModel.ISupportInitialize)(this.trackBarRecordingBalance)).EndInit();
       this.ResumeLayout(false);
 
     }
@@ -850,5 +870,6 @@ namespace Sipek
     private System.Windows.Forms.TextBox textBoxProxyAddress;
     private System.Windows.Forms.Label label14;
     private System.Windows.Forms.TrackBar trackBarRecordingBalance;
+    private System.Windows.Forms.CheckBox checkBoxSecure;
   }
 }

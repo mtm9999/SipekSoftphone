@@ -16,6 +16,11 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
  * 
  * WaveLib library sources http://www.codeproject.com/KB/graphics/AudioLib.aspx
+ * 
+ * Visit SipekSDK page at http://voipengine.googlepages.com/
+ * 
+ * Visit SIPek's home page at http://sipekphone.googlepages.com/ 
+ * 
  */
 
 using System;
@@ -30,7 +35,6 @@ using System.Windows.Forms.Design;
 using WaveLib.AudioMixer; // see http://www.codeproject.com/KB/graphics/AudioLib.aspx
 using Sipek.Common;
 using Sipek.Common.CallControl;
-using Sipek.Sip;
 
 
 namespace Sipek
@@ -44,20 +48,11 @@ namespace Sipek
     bool _initialized = false;
 
     #region Properties
-    private AbstractFactory _factory;
-    private AbstractFactory SipekFactory
-    {
-      get { return _factory; }
-    }
-    private IConfiguratorInterface _configurator;
-    public IConfiguratorInterface SipekConfigurator
-    {
-      get { return _configurator; }
-    }
 
-    private CCallManager CallManager
+    private SipekResources _resources = null;
+    private SipekResources SipekResources
     {
-      get { return CCallManager.getInstance(); }
+      get { return _resources; }
     }
     
     #endregion
@@ -65,6 +60,8 @@ namespace Sipek
     public MainForm()
     {
       InitializeComponent();
+
+      _resources = new SipekResources(this);
     }
 
     /////////////////////////////////////////////////////////////////////////////////
@@ -87,17 +84,17 @@ namespace Sipek
       }
 
       // Refresh toolstripbuttons
-      toolStripButtonDND.Checked = SipekConfigurator.DNDFlag;
-      toolStripButtonAA.Checked = SipekConfigurator.AAFlag;
+      toolStripButtonDND.Checked = SipekResources.Configurator.DNDFlag;
+      toolStripButtonAA.Checked = SipekResources.Configurator.AAFlag;
     }
 
     private void UpdateAccountList()
     {
       listViewAccounts.Items.Clear();
 
-      for (int i = 0; i < SipekConfigurator.NumOfAccounts; i++)
+      for (int i = 0; i < SipekResources.Configurator.Accounts.Count; i++)
       {
-        IAccount acc = SipekConfigurator.getAccount(i);
+        IAccount acc = SipekResources.Configurator.Accounts[i];
         string name;
 
         if (acc.AccountName.Length == 0)
@@ -111,7 +108,7 @@ namespace Sipek
         // create listviewitem
         ListViewItem item = new ListViewItem(new string[] { name, acc.RegState.ToString() });
         // mark default account
-        if (i == SipekConfigurator.DefaultAccountIndex)
+        if (i == SipekResources.Configurator.DefaultAccountIndex)
         {
           // Mark default account; todo!!! Coloring!
           item.BackColor = Color.LightGray;
@@ -152,7 +149,7 @@ namespace Sipek
         // Update Dial field
         toolStripComboDial.Items.Clear();
 
-        Stack<CCallRecord> results = SipekFactory.CallLogger.getList();
+        Stack<CCallRecord> results = SipekResources.CallLogger.getList();
 
         int cnt = 0; int dialedcnt = 0;
         foreach (CCallRecord item in results)
@@ -205,32 +202,42 @@ namespace Sipek
 
     public void onCallStateChanged(int sessionId)
     {
-      if (this.Created)
+      if (InvokeRequired)
         this.BeginInvoke(new DRefreshForm(this.RefreshForm));
+      else
+        RefreshForm();
     }
 
     public void onMessageReceived(string from, string message)
     {
-      if (this.Created)
+      if (InvokeRequired)
         this.BeginInvoke(new MessageReceivedDelegate(this.MessageReceived), new object[] { from, message });
+      else
+        MessageReceived(from, message);
     }
 
     public void onBuddyStateChanged(int buddyId, int status, string text)
     {
-      if (this.Created)
+      if (InvokeRequired)
         this.BeginInvoke(new BuddyStateChangedDelegate(this.BuddyStateChanged), new object[] { buddyId, status, text});
+      else
+        BuddyStateChanged(buddyId, status, text);
     }
 
     public void onAccountStateChanged(int accId, int accState)
     {
-      if (this.Created)
+      if (InvokeRequired)
         this.BeginInvoke(new DRefreshForm(this.RefreshForm));
+      else
+        RefreshForm();
     }
 
     public void onMessageWaitingIndication(int mwi, string text)
     {
-      if (this.Created)
+      if (InvokeRequired)
         this.BeginInvoke(new DMessageWaiting(this.MessageWaiting), new object[] { mwi, text });
+      else
+        MessageWaiting(mwi, text);
     }
 
     /////////////////////////////////////////////////////////////////////////////////////
@@ -306,7 +313,7 @@ namespace Sipek
       }
 
       // if not, create new instance
-      ChatForm bf = new ChatForm(_factory);
+      ChatForm bf = new ChatForm(SipekResources);
       int id = CBuddyList.getInstance().getBuddyId(buddyId);
       if (id >= 0)
       {
@@ -390,7 +397,7 @@ namespace Sipek
       if (listViewBuddies.SelectedItems.Count > 0)
       {
         ListViewItem lvi = listViewBuddies.SelectedItems[0];
-        ChatForm bf = new ChatForm(_factory);
+        ChatForm bf = new ChatForm(SipekResources);
         bf.BuddyId = ((CBuddyRecord)lvi.Tag).Id;
         bf.ShowDialog();
       }
@@ -413,7 +420,7 @@ namespace Sipek
 
     private void exitToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      CallManager.Shutdown();
+      SipekResources.CallManager.Shutdown();
       this.Close();
     }
 
@@ -424,7 +431,7 @@ namespace Sipek
 
     private void toolStripMenuItem1_Click(object sender, EventArgs e)
     {
-      (new SettingsForm(this.SipekFactory)).ShowDialog();
+      (new SettingsForm(this.SipekResources)).ShowDialog();
     }
 
     /// <summary>
@@ -444,13 +451,13 @@ namespace Sipek
       {
         ListViewItem lvi = listViewCallLines.SelectedItems[0];
 
-        if (CallManager.Count <= 0)
+        if (SipekResources.CallManager.Count <= 0)
         {
           return;
         }
         else
         {
-          EStateId stateId = ((CStateMachine)lvi.Tag).State.Id;
+          EStateId stateId = ((CStateMachine)lvi.Tag).StateId;
           switch (stateId)
           {
             case EStateId.INCOMING:
@@ -489,7 +496,7 @@ namespace Sipek
       try
       {
         // get entire call list
-        Dictionary<int, IStateMachine> callList = CallManager.CallList;
+        Dictionary<int, IStateMachine> callList = SipekResources.CallManager.CallList;
 
         foreach (KeyValuePair<int, IStateMachine> kvp in callList)
         {
@@ -500,8 +507,8 @@ namespace Sipek
           if (duration.IndexOf('.') > 0) duration = duration.Remove(duration.IndexOf('.')); // remove miliseconds
           // show name & number or just number
           string display = name.Length > 0 ? name + " / " + number : number;
-          string stateName = kvp.Value.State.ToString();
-          if (CallManager.Is3Pty) stateName = "CONFERENCE";
+          string stateName = kvp.Value.StateId.ToString();
+          if (SipekResources.CallManager.Is3Pty) stateName = "CONFERENCE";
           ListViewItem lvi = new ListViewItem(new string[] {
             stateName, display, duration});
 
@@ -571,7 +578,7 @@ namespace Sipek
         CBuddyRecord rec = (CBuddyRecord)lvi.Tag;
         if (rec != null)
         {
-          CallManager.createOutboundCall(rec.Number);
+          SipekResources.CallManager.createOutboundCall(rec.Number);
         }
       }
     }
@@ -582,7 +589,7 @@ namespace Sipek
       {
         ListViewItem lvi = listViewCallLines.SelectedItems[0];
 
-        CallManager.onUserHoldRetrieve(((CStateMachine)lvi.Tag).Session);
+        SipekResources.CallManager.onUserHoldRetrieve(((CStateMachine)lvi.Tag).Session);
       }
     }
 
@@ -595,13 +602,13 @@ namespace Sipek
         CStateMachine call = (CStateMachine)lvi.Tag;
         if (call.Incoming) 
         {
-          CallManager.onUserAnswer(call.Session);
+          SipekResources.CallManager.onUserAnswer(call.Session);
           return;
         }
       }
       if (toolStripComboDial.Text.Length > 0)
       {
-        CallManager.createOutboundCall(toolStripComboDial.Text);
+        SipekResources.CallManager.createOutboundCall(toolStripComboDial.Text);
       }
     }
 
@@ -610,7 +617,7 @@ namespace Sipek
       if (listViewCallLines.SelectedItems.Count > 0)
       {
         ListViewItem lvi = listViewCallLines.SelectedItems[0];
-        CallManager.onUserRelease(((CStateMachine)lvi.Tag).Session);
+        SipekResources.CallManager.onUserRelease(((CStateMachine)lvi.Tag).Session);
       }
     }
 
@@ -620,7 +627,7 @@ namespace Sipek
       {
         if (toolStripComboDial.Text.Length > 0)
         {
-          CallManager.createOutboundCall(toolStripComboDial.Text);
+          SipekResources.CallManager.createOutboundCall(toolStripComboDial.Text);
         }
       }
     }
@@ -631,7 +638,7 @@ namespace Sipek
       {
         ListViewItem lvi = listViewCallRegister.SelectedItems[0];
         CCallRecord record = (CCallRecord)lvi.Tag;
-        CallManager.createOutboundCall(record.Number);
+        SipekResources.CallManager.createOutboundCall(record.Number);
       }
     }
 
@@ -640,7 +647,7 @@ namespace Sipek
       if (listViewCallLines.SelectedItems.Count > 0)
       {
         ListViewItem lvi = listViewCallLines.SelectedItems[0];
-        CallManager.onUserAnswer(((CStateMachine)lvi.Tag).Session);
+        SipekResources.CallManager.onUserAnswer(((CStateMachine)lvi.Tag).Session);
       }
     }
 
@@ -652,7 +659,7 @@ namespace Sipek
       {
         ListViewItem lvi = listViewCallRegister.SelectedItems[0];
         CCallRecord record = (CCallRecord) lvi.Tag;
-        SipekFactory.CallLogger.deleteRecord(record);
+        SipekResources.CallLogger.deleteRecord(record);
       }
       this.UpdateCallRegister();
 
@@ -662,10 +669,10 @@ namespace Sipek
     {
       if (_initialized)
       {
-        SipekFactory.CallLogger.save();
+        SipekResources.CallLogger.save();
         CBuddyList.getInstance().save();
       }
-      SipekConfigurator.Save();
+      SipekResources.Configurator.Save();
     }
 
     private void toolStripTextBoxTransferTo_KeyDown(object sender, KeyEventArgs e)
@@ -677,7 +684,7 @@ namespace Sipek
           ListViewItem lvi = listViewCallLines.SelectedItems[0];
           if (toolStripTextBoxTransferTo.Text.Length > 0)
           {
-            CallManager.onUserTransfer(((CStateMachine)lvi.Tag).Session, toolStripTextBoxTransferTo.Text);
+            SipekResources.CallManager.onUserTransfer(((CStateMachine)lvi.Tag).Session, toolStripTextBoxTransferTo.Text);
           }
         }
         contextMenuStripCalls.Close();
@@ -686,12 +693,12 @@ namespace Sipek
 
     private void toolStripButtonDND_Click(object sender, EventArgs e)
     {
-      SipekConfigurator.DNDFlag = toolStripButtonDND.Checked;
+      SipekResources.Configurator.DNDFlag = toolStripButtonDND.Checked;
     }
 
     private void toolStripButtonAA_Click(object sender, EventArgs e)
     {
-      SipekConfigurator.AAFlag = toolStripButtonAA.Checked;
+      SipekResources.Configurator.AAFlag = toolStripButtonAA.Checked;
     }
 
     private void sendInstantMessageToolStripMenuItem_Click(object sender, EventArgs e)
@@ -703,7 +710,7 @@ namespace Sipek
         int id = CBuddyList.getInstance().getBuddyId(record.Number);
         if (id > 0)
         {
-          ChatForm bf = new ChatForm(_factory);
+          ChatForm bf = new ChatForm(SipekResources);
           bf.BuddyId = id;
           bf.ShowDialog();
         }
@@ -726,7 +733,7 @@ namespace Sipek
 
       EUserStatus status = (EUserStatus)toolStripComboBoxUserStatus.SelectedIndex;
 
-      SipekFactory.CommonProxy.setStatus(SipekConfigurator.DefaultAccountIndex, status);
+      SipekResources.Messenger.setStatus(SipekResources.Configurator.DefaultAccountIndex, status);
     }
 
     private void toolStripKeyboardButton_Click(object sender, EventArgs e)
@@ -739,7 +746,7 @@ namespace Sipek
       if (listViewCallLines.SelectedItems.Count > 0)
       {
         ListViewItem lvi = listViewCallLines.SelectedItems[0];
-        CallManager.onUserDialDigit(((CStateMachine)lvi.Tag).Session, digits, 0);
+        SipekResources.CallManager.onUserDialDigit(((CStateMachine)lvi.Tag).Session, digits, 0);
       }
     }
     
@@ -801,23 +808,19 @@ namespace Sipek
     {
       LoadAudioValues();
       
-      // create factory
-      _factory = new ConcreteFactory(this);
-      _configurator = new SipekConfigurator();
-
       // Register callbacks from callcontrol
-      CallManager.CallStateRefresh += onCallStateChanged;
+      SipekResources.CallManager.CallStateRefresh += onCallStateChanged;
       // Register callbacks from pjsipWrapper
       //SipekFactory.getCommonProxy().CallStateChanged += onTelephonyRefresh;
-      SipekFactory.CommonProxy.MessageReceived += onMessageReceived;
-      SipekFactory.CommonProxy.BuddyStatusChanged += onBuddyStateChanged;     
-      SipekFactory.CommonProxy.AccountStateChanged += onAccountStateChanged;
-      SipekFactory.CommonProxy.MessageWaitingIndication += onMessageWaitingIndication;
+      SipekResources.Messenger.MessageReceived += onMessageReceived;
+      SipekResources.Messenger.BuddyStatusChanged += onBuddyStateChanged;
+      SipekResources.Registrar.AccountStateChanged += onAccountStateChanged;
+      SipekResources.StackProxy.MessageWaitingIndication += onMessageWaitingIndication;
 
       // Initialize and set factory for CallManager
-      CallManager.Factory = _factory;
       
-      int status = CallManager.Initialize();
+      int status = SipekResources.CallManager.Initialize();
+      SipekResources.CallManager.CallLogger = SipekResources.CallLogger;
 
       if (status != 0)
       {
@@ -826,20 +829,24 @@ namespace Sipek
       }
       _initialized = true;
 
+
+      // initialize Stack
+      SipekResources.Registrar.registerAccounts();
+
       // Initialize BuddyList
-      CBuddyList.getInstance().VoIPProxy = SipekFactory.CommonProxy;
+      CBuddyList.getInstance().Messenger = SipekResources.Messenger;
       CBuddyList.getInstance().initialize();
 
       //////////////////////////////////////////////////////////////////////////
       // load settings
-      unconditionalToolStripMenuItem.Checked = SipekConfigurator.CFUFlag;
-      toolStripTextBoxCFUNumber.Text = SipekConfigurator.CFUNumber;
+      unconditionalToolStripMenuItem.Checked = SipekResources.Configurator.CFUFlag;
+      toolStripTextBoxCFUNumber.Text = SipekResources.Configurator.CFUNumber;
 
-      noReplyToolStripMenuItem.Checked = SipekConfigurator.CFNRFlag;
-      toolStripTextBoxCFNRNumber.Text = SipekConfigurator.CFNRNumber;
+      noReplyToolStripMenuItem.Checked = SipekResources.Configurator.CFNRFlag;
+      toolStripTextBoxCFNRNumber.Text = SipekResources.Configurator.CFNRNumber;
 
-      busyToolStripMenuItem.Checked = SipekConfigurator.CFBFlag;
-      toolStripTextBoxCFBNumber.Text = SipekConfigurator.CFBNumber;
+      busyToolStripMenuItem.Checked = SipekResources.Configurator.CFBFlag;
+      toolStripTextBoxCFBNumber.Text = SipekResources.Configurator.CFBNumber;
 
       this.UpdateCallRegister();
 
@@ -854,19 +861,19 @@ namespace Sipek
       // scoh::::03.04.2008:::pjsip ISSUE??? At startup codeclist is different as later 
       // set codecs priority...
       // initialize/reset codecs - enable PCMU and PCMA only
-      int noOfCodecs = SipekFactory.CommonProxy.getNoOfCodecs();
+      int noOfCodecs = SipekResources.StackProxy.getNoOfCodecs();
       for (int i = 0; i < noOfCodecs; i++)
       {
-        string codecname = SipekFactory.CommonProxy.getCodec(i);
-        if (SipekConfigurator.CodecList.Contains(codecname))
+        string codecname = SipekResources.StackProxy.getCodec(i);
+        if (SipekResources.Configurator.CodecList.Contains(codecname))
         {
           // leave default
-          SipekFactory.CommonProxy.setCodecPriority(codecname, 128);
+          SipekResources.StackProxy.setCodecPriority(codecname, 128);
         }
         else
         {
           // disable
-          SipekFactory.CommonProxy.setCodecPriority(codecname, 0);
+          SipekResources.StackProxy.setCodecPriority(codecname, 0);
         }
       }
 
@@ -984,39 +991,39 @@ namespace Sipek
 
     private void listViewAccounts_DoubleClick(object sender, EventArgs e)
     {
-      SettingsForm sf = new SettingsForm(this.SipekFactory);
+      SettingsForm sf = new SettingsForm(this.SipekResources);
       //sf.activateTab("");
       sf.ShowDialog();
     }
 
     private void unconditionalToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      SipekConfigurator.CFUFlag = unconditionalToolStripMenuItem.Checked;
+      SipekResources.Configurator.CFUFlag = unconditionalToolStripMenuItem.Checked;
     }
 
     private void noReplyToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      SipekConfigurator.CFNRFlag = noReplyToolStripMenuItem.Checked;
+      SipekResources.Configurator.CFNRFlag = noReplyToolStripMenuItem.Checked;
     }
 
     private void busyToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      SipekConfigurator.CFBFlag = busyToolStripMenuItem.Checked;
+      SipekResources.Configurator.CFBFlag = busyToolStripMenuItem.Checked;
     }
 
     private void toolStripTextBoxCFUNumber_TextChanged(object sender, EventArgs e)
     {
-      SipekConfigurator.CFUNumber = toolStripTextBoxCFUNumber.Text;
+      SipekResources.Configurator.CFUNumber = toolStripTextBoxCFUNumber.Text;
     }
 
     private void toolStripTextBoxCFNRNumber_TextChanged(object sender, EventArgs e)
     {
-      SipekConfigurator.CFNRNumber = toolStripTextBoxCFNRNumber.Text;
+      SipekResources.Configurator.CFNRNumber = toolStripTextBoxCFNRNumber.Text;
     }
 
     private void toolStripTextBoxCFBNumber_TextChanged(object sender, EventArgs e)
     {
-      SipekConfigurator.CFBNumber = toolStripTextBoxCFBNumber.Text;
+      SipekResources.Configurator.CFBNumber = toolStripTextBoxCFBNumber.Text;
     }
 
     private void toolStrip3PtyButton_Click(object sender, EventArgs e)
@@ -1025,7 +1032,7 @@ namespace Sipek
       {
         ListViewItem lvi = listViewCallLines.SelectedItems[0];
         // TODO implement 3Pty
-        CallManager.onUserConference(((CStateMachine)lvi.Tag).Session);
+        SipekResources.CallManager.onUserConference(((CStateMachine)lvi.Tag).Session);
       }
     }
 

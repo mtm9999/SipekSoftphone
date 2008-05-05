@@ -37,21 +37,32 @@ namespace Sipek
     private Mixers mMixers;
     private bool mAvoidEvents;
     private int _lastMicVolume = 0;
-    AbstractFactory _factory;
-    public IConfiguratorInterface SipekConfigurator
+
+    private SipekResources _resources = null;
+    public SipekResources SipekResources
     {
-      get { return _factory.Configurator; }
-    }
-    public AbstractFactory SipekFactory
-    {
-      get { return _factory; }
+      get { return _resources; }
     }
 
-    public SettingsForm(AbstractFactory factory)
+    private bool _restart = false;
+    private bool RestartRequired
+    {
+      get { return _restart; }
+      set { _restart = value;}
+    }
+
+    private bool _reregister = false;
+    private bool ReregisterRequired
+    {
+      get { return _reregister; }
+      set { _reregister = value; }
+    }
+
+    public SettingsForm(SipekResources resources)
     {
       InitializeComponent();
 
-      _factory = factory;
+      _resources = resources;
       // Initialization   TODO try catch
       mMixers = new Mixers();
       mMixers.Playback.MixerLineChanged += new WaveLib.AudioMixer.Mixer.MixerLineChangeHandler(mMixer_MixerLineChanged);
@@ -60,11 +71,11 @@ namespace Sipek
 
     private void updateAccountList()
     {
-      int size = SipekConfigurator.NumOfAccounts;
+      int size = SipekResources.Configurator.Accounts.Count;
       comboBoxAccounts.Items.Clear();
       for (int i = 0; i < size; i++)
       {
-        IAccount acc = SipekConfigurator.getAccount(i);
+        IAccount acc = SipekResources.Configurator.Accounts[i];
 
         if (acc.AccountName.Length == 0)
         {
@@ -86,12 +97,12 @@ namespace Sipek
     {
       int index = comboBoxAccounts.SelectedIndex;
 
-      if (SipekConfigurator.DefaultAccountIndex == index)
+      if (SipekResources.Configurator.DefaultAccountIndex == index)
         checkBoxDefault.Checked = true;
       else
         checkBoxDefault.Checked = false;
 
-      IAccount acc = SipekConfigurator.getAccount(index);
+      IAccount acc = SipekResources.Configurator.Accounts[index];
 
       if (acc == null) 
       {
@@ -125,7 +136,7 @@ namespace Sipek
       int index = this.comboBoxAccounts.SelectedIndex;
       if (index >= 0)
       {
-        IAccount account = SipekConfigurator.getAccount(index);
+        IAccount account = SipekResources.Configurator.Accounts[index];
 
         account.HostName = textBoxRegistrarAddress.Text;
         account.ProxyAddress = textBoxProxyAddress.Text; 
@@ -138,19 +149,21 @@ namespace Sipek
 
         updateAccountList();
 
-        if (checkBoxDefault.Checked) SipekConfigurator.DefaultAccountIndex = index;
+        if (checkBoxDefault.Checked) SipekResources.Configurator.DefaultAccountIndex = index;
       }
       // Settings
-      SipekConfigurator.DNDFlag = checkBoxDND.Checked ;
-      SipekConfigurator.AAFlag = checkBoxAA.Checked;
-      SipekConfigurator.CFUFlag = checkBoxCFU.Checked;
-      SipekConfigurator.CFNRFlag = checkBoxCFNR.Checked;
+      SipekResources.Configurator.DNDFlag = checkBoxDND.Checked;
+      SipekResources.Configurator.AAFlag = checkBoxAA.Checked;
+      SipekResources.Configurator.CFUFlag = checkBoxCFU.Checked;
+      SipekResources.Configurator.CFNRFlag = checkBoxCFNR.Checked;
 
-      SipekConfigurator.CFUNumber = textBoxCFU.Text;
-      SipekConfigurator.CFNRNumber = textBoxCFNR.Text;
+      SipekResources.Configurator.CFUNumber = textBoxCFU.Text;
+      SipekResources.Configurator.CFNRNumber = textBoxCFNR.Text;
 
-      SipekConfigurator.SIPPort = Int16.Parse(textBoxListenPort.Text);
+      SipekResources.Configurator.SIPPort = Int16.Parse(textBoxListenPort.Text);
 
+      SipekResources.Configurator.SecurityFlag = checkBoxSecure.Checked;
+ 
       //////////////////////////////////////////////////////////////////////////
       // check if at least 1 codec selected
       if (listBoxEnCodecs.Items.Count == 0)
@@ -165,27 +178,29 @@ namespace Sipek
       {
         cl.Add(item);
       }
-      SipekConfigurator.CodecList = cl;
+      SipekResources.Configurator.CodecList = cl;
     }
 
     private void buttonOK_Click(object sender, EventArgs e)
     {
       buttonApply_Click(sender, e);
 
-      SipekConfigurator.Save();
-
-      // reinitialize stack
-      CCallManager.getInstance().Initialize();
+      SipekResources.Configurator.Save();
 
       // set codecs priority...
       foreach (string item in listBoxDisCodecs.Items)
       {
-        SipekFactory.CommonProxy.setCodecPriority(item, 0);
+        SipekResources.StackProxy.setCodecPriority(item, 0);
       }
       foreach (string item in listBoxEnCodecs.Items)
       {
-        SipekFactory.CommonProxy.setCodecPriority(item, 128);
+        SipekResources.StackProxy.setCodecPriority(item, 128);
       }
+      
+      // reinitialize stack
+      if (RestartRequired) SipekResources.StackProxy.initialize();
+        
+      if (ReregisterRequired) SipekResources.Registrar.registerAccounts();
 
       Close();
     }
@@ -194,30 +209,32 @@ namespace Sipek
     {
       // Continued
       updateAccountList();
-      comboBoxAccounts.SelectedIndex = SipekConfigurator.DefaultAccountIndex;
+      comboBoxAccounts.SelectedIndex = SipekResources.Configurator.DefaultAccountIndex;
 
       /////
-      checkBoxDND.Checked = SipekConfigurator.DNDFlag;
-      checkBoxAA.Checked = SipekConfigurator.AAFlag;
-      checkBoxCFU.Checked = SipekConfigurator.CFUFlag;
-      checkBoxCFNR.Checked = SipekConfigurator.CFNRFlag;
+      checkBoxDND.Checked = SipekResources.Configurator.DNDFlag;
+      checkBoxAA.Checked = SipekResources.Configurator.AAFlag;
+      checkBoxCFU.Checked = SipekResources.Configurator.CFUFlag;
+      checkBoxCFNR.Checked = SipekResources.Configurator.CFNRFlag;
 
-      textBoxCFU.Text = SipekConfigurator.CFUNumber;
-      textBoxCFNR.Text = SipekConfigurator.CFNRNumber;
+      textBoxCFU.Text = SipekResources.Configurator.CFUNumber;
+      textBoxCFNR.Text = SipekResources.Configurator.CFNRNumber;
 
-      textBoxListenPort.Text = SipekConfigurator.SIPPort.ToString();
+      textBoxListenPort.Text = SipekResources.Configurator.SIPPort.ToString();
+
+      checkBoxSecure.Checked = SipekResources.Configurator.SecurityFlag;
 
       LoadDeviceCombos(mMixers);
 
       // load codecs from system
-      int noofcodecs = SipekFactory.CommonProxy.getNoOfCodecs();
+      int noofcodecs = SipekResources.StackProxy.getNoOfCodecs();
       for (int i = 0; i < noofcodecs; i++)
       {
-        string name = SipekFactory.CommonProxy.getCodec(i);
+        string name = SipekResources.StackProxy.getCodec(i);
         listBoxDisCodecs.Items.Add(name);
       }
       // load enabled codecs from settings
-      List<string> codeclist = SipekConfigurator.CodecList;
+      List<string> codeclist = SipekResources.Configurator.CodecList;
       foreach (string item in codeclist)
       {
         // item match with disabled list (all supported codec)
@@ -235,6 +252,7 @@ namespace Sipek
     /// Audio controls
     /// 
     /// 
+    #region Audio
     private void comboBoxPlaybackDevices_SelectedIndexChanged(object sender, EventArgs e)
     {
       LoadValues(MixerType.Playback);
@@ -569,7 +587,8 @@ namespace Sipek
       // set mute if possible
       if (line.ContainsMute)  line.Mute = chkBox.Checked;
     }
-
+    
+    #endregion Audio
 
     public void activateTab(int index)
     {
@@ -596,6 +615,17 @@ namespace Sipek
         // remove from enabled list
         listBoxEnCodecs.Items.Remove(listBoxEnCodecs.SelectedItem);
       }
+    }
+
+    private void reregistrationRequired_TextChanged(object sender, EventArgs e)
+    {
+      ReregisterRequired = true;
+    }
+
+    private void restartRequired_TextChanged(object sender, EventArgs e)
+    {
+      RestartRequired = true;
+      ReregisterRequired = true;
     }
   }
 }

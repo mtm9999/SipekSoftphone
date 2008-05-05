@@ -168,7 +168,7 @@ namespace Sipek
   {
     private static CBuddyList _instance = null;
 
-    private Dictionary<int, CBuddyRecord> _buddyList;
+    private Dictionary<int, CBuddyRecord> _buddyList = new Dictionary<int, CBuddyRecord>();
 
     private string XMLPhonebookFile = "phonebook.xml";
 
@@ -195,11 +195,11 @@ namespace Sipek
       get { return _buddyList.Count; }
     }
 
-    private IVoipProxy _voipproxy = new NullVoipProxy();
-    public IVoipProxy VoIPProxy
+    private IPresenceAndMessaging _messenger = null;
+    public IPresenceAndMessaging Messenger
     {
-      get { return _voipproxy; }
-      set { _voipproxy = value; }
+      get { return _messenger; }
+      set { _messenger = value; }
     }
     #endregion
 
@@ -239,9 +239,6 @@ namespace Sipek
       }
       catch (System.Xml.XmlException e) { System.Console.WriteLine(e.Message); }
 
-
-      // initialize internal list
-      _buddyList = new Dictionary<int, CBuddyRecord>();
 
       XmlNodeList list = xmlDocument.SelectNodes("/Phonebook/Record");
 
@@ -351,7 +348,7 @@ namespace Sipek
     {
       int buddyindex = -1;
 
-      buddyindex = VoIPProxy.addBuddy(record.Number, record.PresenceEnabled);
+      buddyindex = Messenger.addBuddy(record.Number, record.PresenceEnabled);
 
       // shouldn't happen!!!!
       if (buddyindex == -1) return; //System.Diagnostics.Debug.WriteLine("");
