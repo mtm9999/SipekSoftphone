@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Text;
 using System.Timers;
 using System.Runtime.InteropServices;
+using Sipek.Common;
 using Sipek.Common.CallControl;
 using Sipek.Sip;
-using Sipek.Common;
+
 
 namespace Sipek
 {
@@ -13,20 +14,27 @@ namespace Sipek
   /// ConcreteFactory 
   /// Implementation of AbstractFactory. 
   /// </summary>
-  public class ConcreteFactory : AbstractFactory
+  public class SipekResources : AbstractFactory
   {
     MainForm _form; // reference to MainForm to provide timer context
     IMediaProxyInterface _mediaProxy = new CMediaPlayerProxy();
     ICallLogInterface _callLogger = new CCallLog();
-    IVoipProxy _commonProxy = null;
-    IConfiguratorInterface _config = new SipekConfigurator();
+    pjsipStackProxy _stackProxy = pjsipStackProxy.Instance;
+    SipekConfigurator _config = new SipekConfigurator();
 
     #region Constructor
-    public ConcreteFactory(MainForm mf)
+    public SipekResources(MainForm mf)
     {
       _form = mf;
-      _commonProxy = CSipCommonProxy.GetInstance();
-      _commonProxy.Config = this._config;
+
+      SipConfigStruct.Instance.useTLS = Properties.Settings.Default.cfgSecurityFlag;
+
+      // initialize modules
+      _callManager.StackProxy = _stackProxy;
+      _callManager.Config = _config;
+      _stackProxy.Config = _config;
+      _registrar.Config = _config;
+      _messenger.Config = _config;
     }
     #endregion Constructor
 
@@ -35,17 +43,22 @@ namespace Sipek
     {
       return new GUITimer(_form);
     }
+
     public IStateMachine createStateMachine(CCallManager mng)
     {
       return new CStateMachine(mng);
     }
-    public IVoipProxy CommonProxy
+
+    #endregion
+
+    #region Other Resources
+    public pjsipStackProxy StackProxy
     {
-      get { return _commonProxy; }
-      set { _commonProxy = value; }
+      get { return _stackProxy; }
+      set { _stackProxy = value; }
     }
 
-    public IConfiguratorInterface Configurator
+    public SipekConfigurator Configurator
     {
       get { return _config; }
       set {}
@@ -64,6 +77,23 @@ namespace Sipek
       set { }
     }
 
+    private IRegistrar _registrar = pjsipRegistrar.Instance;
+    public IRegistrar Registrar
+    {
+      get { return _registrar; }
+    }
+
+    private IPresenceAndMessaging _messenger = pjsipPresenceAndMessaging.Instance;
+    public IPresenceAndMessaging Messenger
+    {
+      get { return _messenger; }
+    }
+
+    private CCallManager _callManager = CCallManager.Instance;
+    public CCallManager CallManager
+    {
+      get { return CCallManager.Instance; }
+    }
     #endregion
   }
 
@@ -302,6 +332,18 @@ namespace Sipek
       set { Properties.Settings.Default.cfgSipPort = value; }
     }
 
+    public bool SecurityFlag
+    {
+      get {
+        SipConfigStruct.Instance.useTLS = Properties.Settings.Default.cfgSecurityFlag;
+        return Properties.Settings.Default.cfgSecurityFlag; 
+      }
+      set { 
+        Properties.Settings.Default.cfgSecurityFlag = value;
+        SipConfigStruct.Instance.useTLS = value;
+      }
+    }
+
     public int DefaultAccountIndex
     {
       get
@@ -314,23 +356,19 @@ namespace Sipek
       }
     }
 
-    public int NumOfAccounts
+    public List<IAccount> Accounts
     {
-      get {
-        return 5;
-      }
-      set { }
+      get 
+      {
+        List<IAccount> accList = new List<IAccount>();
+        for (int i=0; i<5; i++)
+        {
+          IAccount item = new SipekAccount(i);
+          accList.Add(item);
     }
+        return accList; 
 
-    public IAccount getAccount(int index)
-    {
-      return new SipekAccount(index);
     }
-
-
-    public IAccount getAccount()
-    {
-      return this.getAccount(DefaultAccountIndex);
     }
 
     public void Save()

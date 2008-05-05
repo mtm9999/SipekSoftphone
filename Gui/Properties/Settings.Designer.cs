@@ -373,5 +373,17 @@ namespace Sipek.Properties {
                 this["cfgSipAccountProxyAddresses"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool cfgSecurityFlag {
+            get {
+                return ((bool)(this["cfgSecurityFlag"]));
+            }
+            set {
+                this["cfgSecurityFlag"] = value;
+            }
+        }
     }
 }
