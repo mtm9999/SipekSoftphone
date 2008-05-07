@@ -344,6 +344,32 @@ namespace Sipek
       }
     }
 
+    public string StunServerAddress
+    {
+      get
+      {
+        SipConfigStruct.Instance.stunServer = Properties.Settings.Default.cfgStunServerAddress;
+        return Properties.Settings.Default.cfgStunServerAddress;
+      }
+      set
+      {
+        Properties.Settings.Default.cfgStunServerAddress = value;
+        SipConfigStruct.Instance.stunServer = value;
+      }
+    }
+
+    public EDtmfMode DtmfMode
+    {
+      get
+      {
+        return (EDtmfMode)Properties.Settings.Default.cfgDtmfMode;
+      }
+      set
+      {
+        Properties.Settings.Default.cfgDtmfMode = (int)value;
+      }
+    }
+
     public int DefaultAccountIndex
     {
       get

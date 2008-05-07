@@ -746,7 +746,7 @@ namespace Sipek
       if (listViewCallLines.SelectedItems.Count > 0)
       {
         ListViewItem lvi = listViewCallLines.SelectedItems[0];
-        SipekResources.CallManager.onUserDialDigit(((CStateMachine)lvi.Tag).Session, digits, 0);
+        SipekResources.CallManager.onUserDialDigit(((CStateMachine)lvi.Tag).Session, digits, SipekResources.Configurator.DtmfMode);
       }
     }
     

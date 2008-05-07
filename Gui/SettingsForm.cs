@@ -159,10 +159,11 @@ namespace Sipek
 
       SipekResources.Configurator.CFUNumber = textBoxCFU.Text;
       SipekResources.Configurator.CFNRNumber = textBoxCFNR.Text;
-
+      
+      // additional settings
       SipekResources.Configurator.SIPPort = Int16.Parse(textBoxListenPort.Text);
-
       SipekResources.Configurator.SecurityFlag = checkBoxSecure.Checked;
+      SipekResources.Configurator.StunServerAddress = textBoxStunServerAddress.Text;
  
       //////////////////////////////////////////////////////////////////////////
       // check if at least 1 codec selected
@@ -223,6 +224,8 @@ namespace Sipek
       textBoxListenPort.Text = SipekResources.Configurator.SIPPort.ToString();
 
       checkBoxSecure.Checked = SipekResources.Configurator.SecurityFlag;
+      textBoxStunServerAddress.Text = SipekResources.Configurator.StunServerAddress;
+      comboBoxDtmfMode.SelectedIndex = (int)SipekResources.Configurator.DtmfMode;
 
       LoadDeviceCombos(mMixers);
 
@@ -626,6 +629,11 @@ namespace Sipek
     {
       RestartRequired = true;
       ReregisterRequired = true;
+    }
+
+    private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+    {
+      SipekResources.Configurator.DtmfMode = (EDtmfMode)comboBoxDtmfMode.SelectedIndex;
     }
   }
 }
