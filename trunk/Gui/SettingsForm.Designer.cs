@@ -90,6 +90,13 @@ namespace Sipek
       this.buttonApply = new System.Windows.Forms.Button();
       this.buttonCancel = new System.Windows.Forms.Button();
       this.buttonOK = new System.Windows.Forms.Button();
+      this.tabPageAdvanced = new System.Windows.Forms.TabPage();
+      this.groupBoxStun = new System.Windows.Forms.GroupBox();
+      this.label15 = new System.Windows.Forms.Label();
+      this.textBoxStunServerAddress = new System.Windows.Forms.TextBox();
+      this.groupBoxSignaling = new System.Windows.Forms.GroupBox();
+      this.comboBoxDtmfMode = new System.Windows.Forms.ComboBox();
+      this.label16 = new System.Windows.Forms.Label();
       this.tabControlSettings.SuspendLayout();
       this.tabPageSettingsSIP.SuspendLayout();
       this.groupBox2.SuspendLayout();
@@ -107,6 +114,9 @@ namespace Sipek
       ((System.ComponentModel.ISupportInitialize)(this.trackBarPlaybackVolume)).BeginInit();
       this.tabCodecsPage.SuspendLayout();
       this.panel2.SuspendLayout();
+      this.tabPageAdvanced.SuspendLayout();
+      this.groupBoxStun.SuspendLayout();
+      this.groupBoxSignaling.SuspendLayout();
       this.SuspendLayout();
       // 
       // tabControlSettings
@@ -115,6 +125,7 @@ namespace Sipek
       this.tabControlSettings.Controls.Add(this.tabPageSettingsServices);
       this.tabControlSettings.Controls.Add(this.tabPageSettingsAudio);
       this.tabControlSettings.Controls.Add(this.tabCodecsPage);
+      this.tabControlSettings.Controls.Add(this.tabPageAdvanced);
       this.tabControlSettings.Dock = System.Windows.Forms.DockStyle.Top;
       this.tabControlSettings.Location = new System.Drawing.Point(0, 0);
       this.tabControlSettings.Name = "tabControlSettings";
@@ -767,6 +778,80 @@ namespace Sipek
       this.buttonOK.UseVisualStyleBackColor = true;
       this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
       // 
+      // tabPageAdvanced
+      // 
+      this.tabPageAdvanced.Controls.Add(this.groupBoxSignaling);
+      this.tabPageAdvanced.Controls.Add(this.groupBoxStun);
+      this.tabPageAdvanced.Location = new System.Drawing.Point(4, 22);
+      this.tabPageAdvanced.Name = "tabPageAdvanced";
+      this.tabPageAdvanced.Padding = new System.Windows.Forms.Padding(3);
+      this.tabPageAdvanced.Size = new System.Drawing.Size(296, 371);
+      this.tabPageAdvanced.TabIndex = 4;
+      this.tabPageAdvanced.Text = "Advanced";
+      this.tabPageAdvanced.UseVisualStyleBackColor = true;
+      // 
+      // groupBoxStun
+      // 
+      this.groupBoxStun.Controls.Add(this.textBoxStunServerAddress);
+      this.groupBoxStun.Controls.Add(this.label15);
+      this.groupBoxStun.Dock = System.Windows.Forms.DockStyle.Top;
+      this.groupBoxStun.Location = new System.Drawing.Point(3, 3);
+      this.groupBoxStun.Name = "groupBoxStun";
+      this.groupBoxStun.Size = new System.Drawing.Size(290, 74);
+      this.groupBoxStun.TabIndex = 0;
+      this.groupBoxStun.TabStop = false;
+      this.groupBoxStun.Text = "Stun";
+      // 
+      // label15
+      // 
+      this.label15.AutoSize = true;
+      this.label15.Location = new System.Drawing.Point(7, 30);
+      this.label15.Name = "label15";
+      this.label15.Size = new System.Drawing.Size(61, 13);
+      this.label15.TabIndex = 0;
+      this.label15.Text = "Stun server";
+      // 
+      // textBoxStunServerAddress
+      // 
+      this.textBoxStunServerAddress.Location = new System.Drawing.Point(84, 27);
+      this.textBoxStunServerAddress.Name = "textBoxStunServerAddress";
+      this.textBoxStunServerAddress.Size = new System.Drawing.Size(174, 20);
+      this.textBoxStunServerAddress.TabIndex = 1;
+      // 
+      // groupBoxSignaling
+      // 
+      this.groupBoxSignaling.Controls.Add(this.label16);
+      this.groupBoxSignaling.Controls.Add(this.comboBoxDtmfMode);
+      this.groupBoxSignaling.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.groupBoxSignaling.Location = new System.Drawing.Point(3, 77);
+      this.groupBoxSignaling.Name = "groupBoxSignaling";
+      this.groupBoxSignaling.Size = new System.Drawing.Size(290, 291);
+      this.groupBoxSignaling.TabIndex = 1;
+      this.groupBoxSignaling.TabStop = false;
+      this.groupBoxSignaling.Text = "Signalling";
+      // 
+      // comboBoxDtmfMode
+      // 
+      this.comboBoxDtmfMode.FormattingEnabled = true;
+      this.comboBoxDtmfMode.Items.AddRange(new object[] {
+            "Out-of-band (INFO)",
+            "Inband (rfc2833)",
+            "Transparent"});
+      this.comboBoxDtmfMode.Location = new System.Drawing.Point(84, 30);
+      this.comboBoxDtmfMode.Name = "comboBoxDtmfMode";
+      this.comboBoxDtmfMode.Size = new System.Drawing.Size(174, 21);
+      this.comboBoxDtmfMode.TabIndex = 0;
+      this.comboBoxDtmfMode.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
+      // 
+      // label16
+      // 
+      this.label16.AutoSize = true;
+      this.label16.Location = new System.Drawing.Point(7, 33);
+      this.label16.Name = "label16";
+      this.label16.Size = new System.Drawing.Size(59, 13);
+      this.label16.TabIndex = 1;
+      this.label16.Text = "Dtmf Mode";
+      // 
       // SettingsForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -803,6 +888,11 @@ namespace Sipek
       this.tabCodecsPage.ResumeLayout(false);
       this.tabCodecsPage.PerformLayout();
       this.panel2.ResumeLayout(false);
+      this.tabPageAdvanced.ResumeLayout(false);
+      this.groupBoxStun.ResumeLayout(false);
+      this.groupBoxStun.PerformLayout();
+      this.groupBoxSignaling.ResumeLayout(false);
+      this.groupBoxSignaling.PerformLayout();
       this.ResumeLayout(false);
 
     }
@@ -871,5 +961,12 @@ namespace Sipek
     private System.Windows.Forms.Label label14;
     private System.Windows.Forms.TrackBar trackBarRecordingBalance;
     private System.Windows.Forms.CheckBox checkBoxSecure;
+    private System.Windows.Forms.TabPage tabPageAdvanced;
+    private System.Windows.Forms.GroupBox groupBoxStun;
+    private System.Windows.Forms.TextBox textBoxStunServerAddress;
+    private System.Windows.Forms.Label label15;
+    private System.Windows.Forms.GroupBox groupBoxSignaling;
+    private System.Windows.Forms.Label label16;
+    private System.Windows.Forms.ComboBox comboBoxDtmfMode;
   }
 }

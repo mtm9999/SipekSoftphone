@@ -385,5 +385,29 @@ namespace Sipek.Properties {
                 this["cfgSecurityFlag"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string cfgStunServerAddress {
+            get {
+                return ((string)(this["cfgStunServerAddress"]));
+            }
+            set {
+                this["cfgStunServerAddress"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int cfgDtmfMode {
+            get {
+                return ((int)(this["cfgDtmfMode"]));
+            }
+            set {
+                this["cfgDtmfMode"] = value;
+            }
+        }
     }
 }
