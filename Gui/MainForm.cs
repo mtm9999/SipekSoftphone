@@ -1040,7 +1040,7 @@ namespace Sipek
     {
       if (_initialized)
       {
-        UpdateAccountList();
+        //UpdateAccountList();
         UpdateBuddyList();
       }
     }

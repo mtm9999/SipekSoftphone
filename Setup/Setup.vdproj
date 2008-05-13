@@ -15,25 +15,49 @@
     {
         "Entry"
         {
+        "MsmKey" = "8:_09AD3063F3D546FCB22EAD186FC0C0A2"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_0B7566C7296F412EA9B0DAF662BDA684"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_A01A9042399D2866D34C3F3D194BF069"
+        "MsmKey" = "8:_59F421D5F480E63E03AA28CD7CDC17E7"
         "OwnerKey" = "8:_D838E0E03A3C4F059563D9D1C0A30DEB"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_A1030206502DE3C5E8F744DCA7BA8171"
+        "MsmKey" = "8:_59F421D5F480E63E03AA28CD7CDC17E7"
+        "OwnerKey" = "8:_77BAB28C6DECD0C07E7E0FEE9436D388"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_77BAB28C6DECD0C07E7E0FEE9436D388"
+        "OwnerKey" = "8:_D838E0E03A3C4F059563D9D1C0A30DEB"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_9817CC9F491471E2268977CCE799C871"
         "OwnerKey" = "8:_D838E0E03A3C4F059563D9D1C0A30DEB"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_A5F49FD9A48F483AB2B8AB342AD27EF5"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_BF5EDEC5A23A4CFD8F189282A74C394E"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -51,18 +75,18 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_D626572BAC20C9A32F9A731C2EB2E1F3"
+        "OwnerKey" = "8:_D838E0E03A3C4F059563D9D1C0A30DEB"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_D838E0E03A3C4F059563D9D1C0A30DEB"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_EC1505CF42EB40436A86A59338C51743"
-        "OwnerKey" = "8:_D838E0E03A3C4F059563D9D1C0A30DEB"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_D838E0E03A3C4F059563D9D1C0A30DEB"
         "MsmSig" = "8:_UNDEFINED"
@@ -70,19 +94,25 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_EC1505CF42EB40436A86A59338C51743"
+        "OwnerKey" = "8:_D626572BAC20C9A32F9A731C2EB2E1F3"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_A1030206502DE3C5E8F744DCA7BA8171"
+        "OwnerKey" = "8:_77BAB28C6DECD0C07E7E0FEE9436D388"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_A01A9042399D2866D34C3F3D194BF069"
+        "OwnerKey" = "8:_9817CC9F491471E2268977CCE799C871"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_59F421D5F480E63E03AA28CD7CDC17E7"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -180,6 +210,26 @@
         }
         "File"
         {
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_09AD3063F3D546FCB22EAD186FC0C0A2"
+            {
+            "SourcePath" = "8:..\\lib\\ssleay32.dll"
+            "TargetName" = "8:ssleay32.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_B82B0425AC644711B0488FF150DF422C"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_0B7566C7296F412EA9B0DAF662BDA684"
             {
             "SourcePath" = "8:..\\Gui\\bin\\Sounds\\ringback.wav"
@@ -200,20 +250,20 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_A01A9042399D2866D34C3F3D194BF069"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_59F421D5F480E63E03AA28CD7CDC17E7"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:pjsipDll, Version=0.0.0.0, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:nunit.framework, Version=2.4.6.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_A01A9042399D2866D34C3F3D194BF069"
+                    "_59F421D5F480E63E03AA28CD7CDC17E7"
                     {
-                    "Name" = "8:pjsipDll.dll"
+                    "Name" = "8:nunit.framework.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:pjsipDll.dll"
+            "SourcePath" = "8:nunit.framework.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_B82B0425AC644711B0488FF150DF422C"
@@ -231,14 +281,14 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_A1030206502DE3C5E8F744DCA7BA8171"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_77BAB28C6DECD0C07E7E0FEE9436D388"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
             "AssemblyAsmDisplayName" = "8:SipekSdk, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_A1030206502DE3C5E8F744DCA7BA8171"
+                    "_77BAB28C6DECD0C07E7E0FEE9436D388"
                     {
                     "Name" = "8:SipekSdk.dll"
                     "Attributes" = "3:512"
@@ -262,12 +312,63 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_9817CC9F491471E2268977CCE799C871"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:pjsipDll, Version=0.0.0.0, Culture=neutral, processorArchitecture=x86"
+                "ScatterAssemblies"
+                {
+                    "_9817CC9F491471E2268977CCE799C871"
+                    {
+                    "Name" = "8:pjsipDll.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:pjsipDll.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_B82B0425AC644711B0488FF150DF422C"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A5F49FD9A48F483AB2B8AB342AD27EF5"
             {
             "SourcePath" = "8:..\\Gui\\bin\\Sounds\\congestion.wav"
             "TargetName" = "8:congestion.wav"
             "Tag" = "8:"
             "Folder" = "8:_A82A129ECFCF4534BFC2E5940692B3A9"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_BF5EDEC5A23A4CFD8F189282A74C394E"
+            {
+            "SourcePath" = "8:..\\lib\\libeay32.dll"
+            "TargetName" = "8:libeay32.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_B82B0425AC644711B0488FF150DF422C"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -322,14 +423,14 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_EC1505CF42EB40436A86A59338C51743"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_D626572BAC20C9A32F9A731C2EB2E1F3"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
             "AssemblyAsmDisplayName" = "8:WaveLibMixer, Version=1.0.2927.30170, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_EC1505CF42EB40436A86A59338C51743"
+                    "_D626572BAC20C9A32F9A731C2EB2E1F3"
                     {
                     "Name" = "8:WaveLibMixer.dll"
                     "Attributes" = "3:512"

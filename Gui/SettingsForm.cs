@@ -635,5 +635,10 @@ namespace Sipek
     {
       SipekResources.Configurator.DtmfMode = (EDtmfMode)comboBoxDtmfMode.SelectedIndex;
     }
+
+    private void checkBoxDefault_CheckedChanged(object sender, EventArgs e)
+    {
+      ReregisterRequired = true;
+    }
   }
 }
