@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Sipek2")]
-[assembly: AssemblyDescription("Free SIP phone - Powered by pjsip.org SIP stack (0.8.0)")]
+[assembly: AssemblyDescription("Free SIP phone - Powered by pjsip.org SIP stack (0.8.0) and SipekSdk")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Sipek2")]

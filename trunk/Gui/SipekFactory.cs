@@ -32,6 +32,7 @@ namespace Sipek
       // initialize modules
       _callManager.StackProxy = _stackProxy;
       _callManager.Config = _config;
+      _callManager.Factory = this;
       _stackProxy.Config = _config;
       _registrar.Config = _config;
       _messenger.Config = _config;
@@ -124,14 +125,16 @@ namespace Sipek
         _form.Invoke(_elapsed, new object[] { sender, e});
     }
 
-    public void Start()
+    public bool Start()
     {
       _guiTimer.Start();
+      return true;
     }
 
-    public void Stop()
+    public bool Stop()
     {
       _guiTimer.Stop();
+      return true;
     }
 
     private int _interval;
