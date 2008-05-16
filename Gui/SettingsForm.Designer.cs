@@ -88,11 +88,11 @@ namespace Sipek
       this.listBoxDisCodecs = new System.Windows.Forms.ListBox();
       this.tabPageAdvanced = new System.Windows.Forms.TabPage();
       this.groupBoxSignaling = new System.Windows.Forms.GroupBox();
-      this.label16 = new System.Windows.Forms.Label();
-      this.comboBoxDtmfMode = new System.Windows.Forms.ComboBox();
-      this.groupBoxStun = new System.Windows.Forms.GroupBox();
       this.textBoxStunServerAddress = new System.Windows.Forms.TextBox();
       this.label15 = new System.Windows.Forms.Label();
+      this.checkBoxPresence = new System.Windows.Forms.CheckBox();
+      this.label16 = new System.Windows.Forms.Label();
+      this.comboBoxDtmfMode = new System.Windows.Forms.ComboBox();
       this.panel2 = new System.Windows.Forms.Panel();
       this.buttonApply = new System.Windows.Forms.Button();
       this.buttonCancel = new System.Windows.Forms.Button();
@@ -115,7 +115,6 @@ namespace Sipek
       this.tabCodecsPage.SuspendLayout();
       this.tabPageAdvanced.SuspendLayout();
       this.groupBoxSignaling.SuspendLayout();
-      this.groupBoxStun.SuspendLayout();
       this.panel2.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -740,7 +739,6 @@ namespace Sipek
       // tabPageAdvanced
       // 
       this.tabPageAdvanced.Controls.Add(this.groupBoxSignaling);
-      this.tabPageAdvanced.Controls.Add(this.groupBoxStun);
       this.tabPageAdvanced.Location = new System.Drawing.Point(4, 22);
       this.tabPageAdvanced.Name = "tabPageAdvanced";
       this.tabPageAdvanced.Padding = new System.Windows.Forms.Padding(3);
@@ -751,20 +749,47 @@ namespace Sipek
       // 
       // groupBoxSignaling
       // 
+      this.groupBoxSignaling.Controls.Add(this.textBoxStunServerAddress);
+      this.groupBoxSignaling.Controls.Add(this.label15);
+      this.groupBoxSignaling.Controls.Add(this.checkBoxPresence);
       this.groupBoxSignaling.Controls.Add(this.label16);
       this.groupBoxSignaling.Controls.Add(this.comboBoxDtmfMode);
-      this.groupBoxSignaling.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.groupBoxSignaling.Location = new System.Drawing.Point(3, 77);
+      this.groupBoxSignaling.Dock = System.Windows.Forms.DockStyle.Top;
+      this.groupBoxSignaling.Location = new System.Drawing.Point(3, 3);
       this.groupBoxSignaling.Name = "groupBoxSignaling";
-      this.groupBoxSignaling.Size = new System.Drawing.Size(290, 291);
+      this.groupBoxSignaling.Size = new System.Drawing.Size(290, 122);
       this.groupBoxSignaling.TabIndex = 1;
       this.groupBoxSignaling.TabStop = false;
       this.groupBoxSignaling.Text = "Signalling";
       // 
+      // textBoxStunServerAddress
+      // 
+      this.textBoxStunServerAddress.Location = new System.Drawing.Point(84, 79);
+      this.textBoxStunServerAddress.Name = "textBoxStunServerAddress";
+      this.textBoxStunServerAddress.Size = new System.Drawing.Size(174, 20);
+      this.textBoxStunServerAddress.TabIndex = 1;
+      // 
+      // label15
+      // 
+      this.label15.AutoSize = true;
+      this.label15.Location = new System.Drawing.Point(17, 82);
+      this.label15.Name = "label15";
+      this.label15.Size = new System.Drawing.Size(61, 13);
+      this.label15.TabIndex = 0;
+      this.label15.Text = "Stun server";
+      // 
+      // checkBoxPresence
+      // 
+      this.checkBoxPresence.Location = new System.Drawing.Point(20, 19);
+      this.checkBoxPresence.Name = "checkBoxPresence";
+      this.checkBoxPresence.Size = new System.Drawing.Size(174, 24);
+      this.checkBoxPresence.TabIndex = 2;
+      this.checkBoxPresence.Text = "Enable Presence";
+      // 
       // label16
       // 
       this.label16.AutoSize = true;
-      this.label16.Location = new System.Drawing.Point(7, 33);
+      this.label16.Location = new System.Drawing.Point(19, 52);
       this.label16.Name = "label16";
       this.label16.Size = new System.Drawing.Size(59, 13);
       this.label16.TabIndex = 1;
@@ -777,39 +802,11 @@ namespace Sipek
             "Out-of-band (INFO)",
             "Inband (rfc2833)",
             "Transparent"});
-      this.comboBoxDtmfMode.Location = new System.Drawing.Point(84, 30);
+      this.comboBoxDtmfMode.Location = new System.Drawing.Point(84, 49);
       this.comboBoxDtmfMode.Name = "comboBoxDtmfMode";
       this.comboBoxDtmfMode.Size = new System.Drawing.Size(174, 21);
       this.comboBoxDtmfMode.TabIndex = 0;
       this.comboBoxDtmfMode.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
-      // 
-      // groupBoxStun
-      // 
-      this.groupBoxStun.Controls.Add(this.textBoxStunServerAddress);
-      this.groupBoxStun.Controls.Add(this.label15);
-      this.groupBoxStun.Dock = System.Windows.Forms.DockStyle.Top;
-      this.groupBoxStun.Location = new System.Drawing.Point(3, 3);
-      this.groupBoxStun.Name = "groupBoxStun";
-      this.groupBoxStun.Size = new System.Drawing.Size(290, 74);
-      this.groupBoxStun.TabIndex = 0;
-      this.groupBoxStun.TabStop = false;
-      this.groupBoxStun.Text = "Stun";
-      // 
-      // textBoxStunServerAddress
-      // 
-      this.textBoxStunServerAddress.Location = new System.Drawing.Point(84, 27);
-      this.textBoxStunServerAddress.Name = "textBoxStunServerAddress";
-      this.textBoxStunServerAddress.Size = new System.Drawing.Size(174, 20);
-      this.textBoxStunServerAddress.TabIndex = 1;
-      // 
-      // label15
-      // 
-      this.label15.AutoSize = true;
-      this.label15.Location = new System.Drawing.Point(7, 30);
-      this.label15.Name = "label15";
-      this.label15.Size = new System.Drawing.Size(61, 13);
-      this.label15.TabIndex = 0;
-      this.label15.Text = "Stun server";
       // 
       // panel2
       // 
@@ -891,8 +888,6 @@ namespace Sipek
       this.tabPageAdvanced.ResumeLayout(false);
       this.groupBoxSignaling.ResumeLayout(false);
       this.groupBoxSignaling.PerformLayout();
-      this.groupBoxStun.ResumeLayout(false);
-      this.groupBoxStun.PerformLayout();
       this.panel2.ResumeLayout(false);
       this.ResumeLayout(false);
 
@@ -963,11 +958,11 @@ namespace Sipek
     private System.Windows.Forms.TrackBar trackBarRecordingBalance;
     private System.Windows.Forms.CheckBox checkBoxSecure;
     private System.Windows.Forms.TabPage tabPageAdvanced;
-    private System.Windows.Forms.GroupBox groupBoxStun;
     private System.Windows.Forms.TextBox textBoxStunServerAddress;
     private System.Windows.Forms.Label label15;
     private System.Windows.Forms.GroupBox groupBoxSignaling;
     private System.Windows.Forms.Label label16;
     private System.Windows.Forms.ComboBox comboBoxDtmfMode;
+    private System.Windows.Forms.CheckBox checkBoxPresence;
   }
 }

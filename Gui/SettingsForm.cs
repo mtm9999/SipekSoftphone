@@ -63,10 +63,6 @@ namespace Sipek
       InitializeComponent();
 
       _resources = resources;
-      // Initialization   TODO try catch
-      mMixers = new Mixers();
-      mMixers.Playback.MixerLineChanged += new WaveLib.AudioMixer.Mixer.MixerLineChangeHandler(mMixer_MixerLineChanged);
-      mMixers.Recording.MixerLineChanged += new WaveLib.AudioMixer.Mixer.MixerLineChangeHandler(mMixer_MixerLineChanged);
     }
 
     private void updateAccountList()
@@ -227,6 +223,19 @@ namespace Sipek
       textBoxStunServerAddress.Text = SipekResources.Configurator.StunServerAddress;
       comboBoxDtmfMode.SelectedIndex = (int)SipekResources.Configurator.DtmfMode;
 
+			      // init audio
+			try {
+        mMixers = new Mixers();
+			} 
+      catch (Exception ex)
+			{
+			  ///report error
+        (new ErrorDialog("Initialize Error" + ex.Message, "Audio/Sound Card problem! \r\nPlease, check PC audio configuration and start again!")).ShowDialog();
+        return;
+      }
+      mMixers.Playback.MixerLineChanged += new WaveLib.AudioMixer.Mixer.MixerLineChangeHandler(mMixer_MixerLineChanged);
+      mMixers.Recording.MixerLineChanged += new WaveLib.AudioMixer.Mixer.MixerLineChangeHandler(mMixer_MixerLineChanged);
+			
       LoadDeviceCombos(mMixers);
 
       // load codecs from system

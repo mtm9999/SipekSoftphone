@@ -33,6 +33,7 @@ namespace Sipek
       _callManager.StackProxy = _stackProxy;
       _callManager.Config = _config;
       _callManager.Factory = this;
+      _callManager.MediaProxy = _mediaProxy;
       _stackProxy.Config = _config;
       _registrar.Config = _config;
       _messenger.Config = _config;

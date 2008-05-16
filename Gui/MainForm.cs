@@ -758,7 +758,14 @@ namespace Sipek
 
     private void LoadAudioValues()
     {
+			try {
       mMixers = new Mixers();
+			} catch (Exception e)
+      {
+        ///report error
+        (new ErrorDialog("Initialize Error " + e.Message, "Audio/Sound Card problem! \r\nPlease, check PC audio configuration and start again!")).ShowDialog();
+        return;
+      }
       // set callback
       mMixers.Playback.MixerLineChanged += new WaveLib.AudioMixer.Mixer.MixerLineChangeHandler(mMixer_MixerLineChanged);
       mMixers.Recording.MixerLineChanged += new WaveLib.AudioMixer.Mixer.MixerLineChangeHandler(mMixer_MixerLineChanged);
@@ -824,7 +831,7 @@ namespace Sipek
 
       if (status != 0)
       {
-        (new ErrorDialog("Initialize Error", "Please, check configuration and start again! \r\nStatus code " + status)).ShowDialog();
+        (new ErrorDialog("Initialize Error", "Init SIP stack problem! \r\nPlease, check configuration and start again! \r\nStatus code " + status)).ShowDialog();
         return;
       }
       _initialized = true;
