@@ -223,7 +223,7 @@ namespace Sipek
       textBoxStunServerAddress.Text = SipekResources.Configurator.StunServerAddress;
       comboBoxDtmfMode.SelectedIndex = (int)SipekResources.Configurator.DtmfMode;
 
-			      // init audio
+      // init audio
 			try {
         mMixers = new Mixers();
 			} 

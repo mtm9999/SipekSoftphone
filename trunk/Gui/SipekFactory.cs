@@ -27,7 +27,9 @@ namespace Sipek
     {
       _form = mf;
 
-      SipConfigStruct.Instance.useTLS = Properties.Settings.Default.cfgSecurityFlag;
+      // initialize sip struct at startup
+      SipConfigStruct.Instance.useTLS = this.Configurator.SecurityFlag;
+      SipConfigStruct.Instance.stunServer = this.Configurator.StunServerAddress;
 
       // initialize modules
       _callManager.StackProxy = _stackProxy;

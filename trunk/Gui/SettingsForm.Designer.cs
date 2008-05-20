@@ -90,7 +90,6 @@ namespace Sipek
       this.groupBoxSignaling = new System.Windows.Forms.GroupBox();
       this.textBoxStunServerAddress = new System.Windows.Forms.TextBox();
       this.label15 = new System.Windows.Forms.Label();
-      this.checkBoxPresence = new System.Windows.Forms.CheckBox();
       this.label16 = new System.Windows.Forms.Label();
       this.comboBoxDtmfMode = new System.Windows.Forms.ComboBox();
       this.panel2 = new System.Windows.Forms.Panel();
@@ -357,7 +356,7 @@ namespace Sipek
       // checkBoxSecure
       // 
       this.checkBoxSecure.AutoSize = true;
-      this.checkBoxSecure.Location = new System.Drawing.Point(90, 45);
+      this.checkBoxSecure.Location = new System.Drawing.Point(90, 49);
       this.checkBoxSecure.Name = "checkBoxSecure";
       this.checkBoxSecure.Size = new System.Drawing.Size(89, 17);
       this.checkBoxSecure.TabIndex = 11;
@@ -368,7 +367,7 @@ namespace Sipek
       // label12
       // 
       this.label12.AutoSize = true;
-      this.label12.Location = new System.Drawing.Point(5, 26);
+      this.label12.Location = new System.Drawing.Point(9, 26);
       this.label12.Name = "label12";
       this.label12.Size = new System.Drawing.Size(70, 13);
       this.label12.TabIndex = 9;
@@ -376,7 +375,7 @@ namespace Sipek
       // 
       // textBoxListenPort
       // 
-      this.textBoxListenPort.Location = new System.Drawing.Point(90, 19);
+      this.textBoxListenPort.Location = new System.Drawing.Point(90, 23);
       this.textBoxListenPort.Name = "textBoxListenPort";
       this.textBoxListenPort.Size = new System.Drawing.Size(56, 20);
       this.textBoxListenPort.TabIndex = 10;
@@ -751,7 +750,6 @@ namespace Sipek
       // 
       this.groupBoxSignaling.Controls.Add(this.textBoxStunServerAddress);
       this.groupBoxSignaling.Controls.Add(this.label15);
-      this.groupBoxSignaling.Controls.Add(this.checkBoxPresence);
       this.groupBoxSignaling.Controls.Add(this.label16);
       this.groupBoxSignaling.Controls.Add(this.comboBoxDtmfMode);
       this.groupBoxSignaling.Dock = System.Windows.Forms.DockStyle.Top;
@@ -764,32 +762,25 @@ namespace Sipek
       // 
       // textBoxStunServerAddress
       // 
-      this.textBoxStunServerAddress.Location = new System.Drawing.Point(84, 79);
+      this.textBoxStunServerAddress.Location = new System.Drawing.Point(84, 69);
       this.textBoxStunServerAddress.Name = "textBoxStunServerAddress";
       this.textBoxStunServerAddress.Size = new System.Drawing.Size(174, 20);
       this.textBoxStunServerAddress.TabIndex = 1;
+      this.textBoxStunServerAddress.TextChanged += new System.EventHandler(this.restartRequired_TextChanged);
       // 
       // label15
       // 
       this.label15.AutoSize = true;
-      this.label15.Location = new System.Drawing.Point(17, 82);
+      this.label15.Location = new System.Drawing.Point(17, 72);
       this.label15.Name = "label15";
       this.label15.Size = new System.Drawing.Size(61, 13);
       this.label15.TabIndex = 0;
       this.label15.Text = "Stun server";
       // 
-      // checkBoxPresence
-      // 
-      this.checkBoxPresence.Location = new System.Drawing.Point(20, 19);
-      this.checkBoxPresence.Name = "checkBoxPresence";
-      this.checkBoxPresence.Size = new System.Drawing.Size(174, 24);
-      this.checkBoxPresence.TabIndex = 2;
-      this.checkBoxPresence.Text = "Enable Presence";
-      // 
       // label16
       // 
       this.label16.AutoSize = true;
-      this.label16.Location = new System.Drawing.Point(19, 52);
+      this.label16.Location = new System.Drawing.Point(19, 42);
       this.label16.Name = "label16";
       this.label16.Size = new System.Drawing.Size(59, 13);
       this.label16.TabIndex = 1;
@@ -802,7 +793,7 @@ namespace Sipek
             "Out-of-band (INFO)",
             "Inband (rfc2833)",
             "Transparent"});
-      this.comboBoxDtmfMode.Location = new System.Drawing.Point(84, 49);
+      this.comboBoxDtmfMode.Location = new System.Drawing.Point(84, 34);
       this.comboBoxDtmfMode.Name = "comboBoxDtmfMode";
       this.comboBoxDtmfMode.Size = new System.Drawing.Size(174, 21);
       this.comboBoxDtmfMode.TabIndex = 0;
@@ -963,6 +954,5 @@ namespace Sipek
     private System.Windows.Forms.GroupBox groupBoxSignaling;
     private System.Windows.Forms.Label label16;
     private System.Windows.Forms.ComboBox comboBoxDtmfMode;
-    private System.Windows.Forms.CheckBox checkBoxPresence;
   }
 }
