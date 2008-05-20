@@ -45,7 +45,12 @@ namespace Sipek
  
     Timer tmr = new Timer();  // Refresh Call List
     EUserStatus _lastUserStatus = EUserStatus.AVAILABLE;
-    bool _initialized = false;
+
+    public bool IsInitialized
+    {
+      get { return SipekResources.StackProxy.IsInitialized; }
+    }
+
 
     #region Properties
 
@@ -68,7 +73,7 @@ namespace Sipek
 
     private void RefreshForm()
     {
-      if (_initialized) 
+      if (IsInitialized) 
       {
         // Update Call Status
         UpdateCallLines(-1);
@@ -246,7 +251,7 @@ namespace Sipek
 
     private void UpdateBuddyList()
     {
-      if (!_initialized) return;
+      if (!IsInitialized) return;
 
       Dictionary<int, CBuddyRecord> results = CBuddyList.getInstance().getList();
       listViewBuddies.Items.Clear();
@@ -667,7 +672,7 @@ namespace Sipek
 
     private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
     {
-      if (_initialized)
+      if (IsInitialized)
       {
         SipekResources.CallLogger.save();
         CBuddyList.getInstance().save();
@@ -834,8 +839,6 @@ namespace Sipek
         (new ErrorDialog("Initialize Error", "Init SIP stack problem! \r\nPlease, check configuration and start again! \r\nStatus code " + status)).ShowDialog();
         return;
       }
-      _initialized = true;
-
 
       // initialize Stack
       SipekResources.Registrar.registerAccounts();
@@ -1045,7 +1048,7 @@ namespace Sipek
 
     private void MainForm_Activated(object sender, EventArgs e)
     {
-      if (_initialized)
+      if (IsInitialized)
       {
         //UpdateAccountList();
         UpdateBuddyList();
