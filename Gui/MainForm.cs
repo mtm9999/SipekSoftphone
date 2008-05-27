@@ -768,7 +768,7 @@ namespace Sipek
 			} catch (Exception e)
       {
         ///report error
-        (new ErrorDialog("Initialize Error " + e.Message, "Audio/Sound Card problem! \r\nPlease, check PC audio configuration and start again!")).ShowDialog();
+        (new ErrorDialog("Initialize Error " + e.Message, "Audio Mixer cannot initialize! \r\nCheck audio configuration and start again!")).ShowDialog();
         return;
       }
       // set callback
