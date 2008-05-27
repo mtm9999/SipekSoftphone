@@ -39,6 +39,12 @@ namespace Sipek
       _stackProxy.Config = _config;
       _registrar.Config = _config;
       _messenger.Config = _config;
+
+      // do not save account state
+      for (int i = 0; i < 5; i++)
+      {
+        Properties.Settings.Default.cfgSipAccountState[i] = "0";
+      }
     }
     #endregion Constructor
 
@@ -406,12 +412,6 @@ namespace Sipek
     public void Save()
     {
       // save properties
-      // do not save account state
-      for (int i=0; i<5; i++)
-      {
-        Properties.Settings.Default.cfgSipAccountState[i] = "0";
-      }
-
       Properties.Settings.Default.Save();
     }
 

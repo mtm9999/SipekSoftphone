@@ -310,6 +310,7 @@ namespace Sipek
       this.textBoxAccountName.Name = "textBoxAccountName";
       this.textBoxAccountName.Size = new System.Drawing.Size(155, 20);
       this.textBoxAccountName.TabIndex = 3;
+      this.textBoxAccountName.ModifiedChanged += new System.EventHandler(this.reregistrationRequired_TextChanged);
       // 
       // checkBoxDefault
       // 

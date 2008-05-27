@@ -130,7 +130,7 @@ namespace Sipek
     private void buttonApply_Click(object sender, EventArgs e)
     {
       int index = this.comboBoxAccounts.SelectedIndex;
-      if (index >= 0)
+      if (index >= 0) 
       {
         IAccount account = SipekResources.Configurator.Accounts[index];
 
@@ -142,8 +142,6 @@ namespace Sipek
         account.UserName = textBoxUsername.Text;
         account.Password = textBoxPassword.Text;
         account.DomainName = textBoxDomain.Text;
-
-        updateAccountList();
 
         if (checkBoxDefault.Checked) SipekResources.Configurator.DefaultAccountIndex = index;
       }
@@ -226,17 +224,17 @@ namespace Sipek
       // init audio
 			try {
         mMixers = new Mixers();
+
+				mMixers.Playback.MixerLineChanged += new WaveLib.AudioMixer.Mixer.MixerLineChangeHandler(mMixer_MixerLineChanged);
+        mMixers.Recording.MixerLineChanged += new WaveLib.AudioMixer.Mixer.MixerLineChangeHandler(mMixer_MixerLineChanged);
+			
+        LoadDeviceCombos(mMixers);			
 			} 
       catch (Exception ex)
 			{
 			  ///report error
-        (new ErrorDialog("Initialize Error" + ex.Message, "Audio/Sound Card problem! \r\nPlease, check PC audio configuration and start again!")).ShowDialog();
-        return;
-      }
-      mMixers.Playback.MixerLineChanged += new WaveLib.AudioMixer.Mixer.MixerLineChangeHandler(mMixer_MixerLineChanged);
-      mMixers.Recording.MixerLineChanged += new WaveLib.AudioMixer.Mixer.MixerLineChangeHandler(mMixer_MixerLineChanged);
-			
-      LoadDeviceCombos(mMixers);
+        (new ErrorDialog("Initialize Error " + ex.Message, "Audio Mixer cannot initialize! \r\nCheck audio configuration and start again!")).ShowDialog();
+      }		
 
       // load codecs from system
       int noofcodecs = SipekResources.StackProxy.getNoOfCodecs();
@@ -257,6 +255,10 @@ namespace Sipek
           listBoxEnCodecs.Items.Add(item);
         }
       }
+
+      // set stack flags
+      ReregisterRequired = false;
+      RestartRequired = false;
     }
 
 
