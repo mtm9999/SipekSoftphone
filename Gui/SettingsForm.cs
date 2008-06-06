@@ -160,20 +160,25 @@ namespace Sipek
       SipekResources.Configurator.StunServerAddress = textBoxStunServerAddress.Text;
  
       //////////////////////////////////////////////////////////////////////////
-      // check if at least 1 codec selected
-      if (listBoxEnCodecs.Items.Count == 0)
+      // skip if stack not initialized
+      if (SipekResources.StackProxy.IsInitialized)
       {
-        (new ErrorDialog("Settings Warning", "No codec selected!")).ShowDialog();
-        return;
+        // check if at least 1 codec selected
+        if (listBoxEnCodecs.Items.Count == 0)
+        {
+          (new ErrorDialog("Settings Warning", "No codec selected!")).ShowDialog();
+          return;
+        }
+
+        // save enabled codec list
+        List<string> cl = new List<string>();
+        foreach (string item in listBoxEnCodecs.Items)
+        {
+          cl.Add(item);
+        }
+        SipekResources.Configurator.CodecList = cl;
       }
 
-      // save enabled codec list
-      List<string> cl = new List<string>();
-      foreach (string item in listBoxEnCodecs.Items)
-      {
-        cl.Add(item);
-      }
-      SipekResources.Configurator.CodecList = cl;
     }
 
     private void buttonOK_Click(object sender, EventArgs e)
@@ -182,16 +187,19 @@ namespace Sipek
 
       SipekResources.Configurator.Save();
 
-      // set codecs priority...
-      foreach (string item in listBoxDisCodecs.Items)
-      {
-        SipekResources.StackProxy.setCodecPriority(item, 0);
+      if (SipekResources.StackProxy.IsInitialized)
+      { 
+        // set codecs priority...
+        foreach (string item in listBoxDisCodecs.Items)
+        {
+          SipekResources.StackProxy.setCodecPriority(item, 0);
+        }
+        foreach (string item in listBoxEnCodecs.Items)
+        {
+          SipekResources.StackProxy.setCodecPriority(item, 128);
+        }      
       }
-      foreach (string item in listBoxEnCodecs.Items)
-      {
-        SipekResources.StackProxy.setCodecPriority(item, 128);
-      }
-      
+
       // reinitialize stack
       if (RestartRequired) SipekResources.StackProxy.initialize();
         
@@ -236,26 +244,29 @@ namespace Sipek
         (new ErrorDialog("Initialize Error " + ex.Message, "Audio Mixer cannot initialize! \r\nCheck audio configuration and start again!")).ShowDialog();
       }		
 
-      // load codecs from system
-      int noofcodecs = SipekResources.StackProxy.getNoOfCodecs();
-      for (int i = 0; i < noofcodecs; i++)
+      // load codecs from system 
+      if (SipekResources.StackProxy.IsInitialized)
       {
-        string name = SipekResources.StackProxy.getCodec(i);
-        listBoxDisCodecs.Items.Add(name);
-      }
-      // load enabled codecs from settings
-      List<string> codeclist = SipekResources.Configurator.CodecList;
-      foreach (string item in codeclist)
-      {
-        // item match with disabled list (all supported codec)
-        if (listBoxDisCodecs.Items.Contains(item))
+        int noofcodecs = SipekResources.StackProxy.getNoOfCodecs();
+        for (int i = 0; i < noofcodecs; i++)
         {
-          // move item from disabled list to enabled
-          listBoxDisCodecs.Items.Remove(item);
-          listBoxEnCodecs.Items.Add(item);
+          string name = SipekResources.StackProxy.getCodec(i);
+          listBoxDisCodecs.Items.Add(name);
+        }
+        // load enabled codecs from settings
+        List<string> codeclist = SipekResources.Configurator.CodecList;
+        foreach (string item in codeclist)
+        {
+          // item match with disabled list (all supported codec)
+          if (listBoxDisCodecs.Items.Contains(item))
+          {
+            // move item from disabled list to enabled
+            listBoxDisCodecs.Items.Remove(item);
+            listBoxEnCodecs.Items.Add(item);
+          }
         }
       }
-
+      
       // set stack flags
       ReregisterRequired = false;
       RestartRequired = false;
