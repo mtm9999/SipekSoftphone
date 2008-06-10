@@ -425,7 +425,6 @@ namespace Sipek
 
     private void exitToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      SipekResources.CallManager.Shutdown();
       this.Close();
     }
 
@@ -678,6 +677,8 @@ namespace Sipek
         CBuddyList.getInstance().save();
       }
       SipekResources.Configurator.Save();
+      // shutdown stack
+      SipekResources.CallManager.Shutdown();
     }
 
     private void toolStripTextBoxTransferTo_KeyDown(object sender, KeyEventArgs e)
