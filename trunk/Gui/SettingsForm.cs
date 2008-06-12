@@ -150,9 +150,11 @@ namespace Sipek
       SipekResources.Configurator.AAFlag = checkBoxAA.Checked;
       SipekResources.Configurator.CFUFlag = checkBoxCFU.Checked;
       SipekResources.Configurator.CFNRFlag = checkBoxCFNR.Checked;
+      SipekResources.Configurator.CFBFlag = checkBoxCFB.Checked;
 
       SipekResources.Configurator.CFUNumber = textBoxCFU.Text;
       SipekResources.Configurator.CFNRNumber = textBoxCFNR.Text;
+      SipekResources.Configurator.CFBNumber = textBoxCFB.Text;
       
       // additional settings
       SipekResources.Configurator.SIPPort = Int16.Parse(textBoxListenPort.Text);
@@ -219,9 +221,11 @@ namespace Sipek
       checkBoxAA.Checked = SipekResources.Configurator.AAFlag;
       checkBoxCFU.Checked = SipekResources.Configurator.CFUFlag;
       checkBoxCFNR.Checked = SipekResources.Configurator.CFNRFlag;
+      checkBoxCFB.Checked = SipekResources.Configurator.CFBFlag;
 
       textBoxCFU.Text = SipekResources.Configurator.CFUNumber;
       textBoxCFNR.Text = SipekResources.Configurator.CFNRNumber;
+      textBoxCFB.Text = SipekResources.Configurator.CFBNumber;
 
       textBoxListenPort.Text = SipekResources.Configurator.SIPPort.ToString();
 
