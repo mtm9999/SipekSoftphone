@@ -91,6 +91,15 @@ namespace Sipek
       // Refresh toolstripbuttons
       toolStripButtonDND.Checked = SipekResources.Configurator.DNDFlag;
       toolStripButtonAA.Checked = SipekResources.Configurator.AAFlag;
+
+      unconditionalToolStripMenuItem.Checked = SipekResources.Configurator.CFUFlag;
+      toolStripTextBoxCFUNumber.Text = SipekResources.Configurator.CFUNumber;
+
+      noReplyToolStripMenuItem.Checked = SipekResources.Configurator.CFNRFlag;
+      toolStripTextBoxCFNRNumber.Text = SipekResources.Configurator.CFNRNumber;
+
+      busyToolStripMenuItem.Checked = SipekResources.Configurator.CFBFlag;
+      toolStripTextBoxCFBNumber.Text = SipekResources.Configurator.CFBNumber;
     }
 
     private void UpdateAccountList()
@@ -436,6 +445,7 @@ namespace Sipek
     private void toolStripMenuItem1_Click(object sender, EventArgs e)
     {
       (new SettingsForm(this.SipekResources)).ShowDialog();
+      RefreshForm();
     }
 
     /// <summary>
@@ -850,14 +860,6 @@ namespace Sipek
 
       //////////////////////////////////////////////////////////////////////////
       // load settings
-      unconditionalToolStripMenuItem.Checked = SipekResources.Configurator.CFUFlag;
-      toolStripTextBoxCFUNumber.Text = SipekResources.Configurator.CFUNumber;
-
-      noReplyToolStripMenuItem.Checked = SipekResources.Configurator.CFNRFlag;
-      toolStripTextBoxCFNRNumber.Text = SipekResources.Configurator.CFNRNumber;
-
-      busyToolStripMenuItem.Checked = SipekResources.Configurator.CFBFlag;
-      toolStripTextBoxCFBNumber.Text = SipekResources.Configurator.CFBNumber;
 
       this.UpdateCallRegister();
 
