@@ -28,6 +28,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Timers;
 using System.Runtime.InteropServices;
+using System.Media;
 using Sipek.Common;
 using Sipek.Common.CallControl;
 using Sipek.Sip;
@@ -469,53 +470,46 @@ namespace Sipek
   // internal class
   public class CMediaPlayerProxy : IMediaProxyInterface
   {
-    #region DLL declarations
-    [DllImport("WinMM.dll")]
-    public static extern bool PlaySound(string fname, int Mod, int flag);
-
-    // these are the SoundFlags we are using here, check mmsystem.h for more
-    public int SND_ASYNC = 0x0001; // play asynchronously
-    public int SND_FILENAME = 0x00020000; // use file name
-    public int SND_PURGE = 0x0040; // purge non-static events
-    public int SND_LOOP = 0x0008;  // loop the sound until next sndPlaySound 
-
-    #endregion
+    SoundPlayer player = new SoundPlayer();
 
     #region Methods
 
     public int playTone(ETones toneId)
     {
       string fname;
-      int SoundFlags = SND_FILENAME | SND_ASYNC | SND_LOOP;
 
       switch (toneId)
       {
         case ETones.EToneDial:
-          fname = "sounds\\dial.wav";
+          fname = "Sounds/dial.wav";
           break;
         case ETones.EToneCongestion:
-          fname = "sounds\\congestion.wav";
+          fname = "Sounds/congestion.wav";
           break;
         case ETones.EToneRingback:
-          fname = "sounds\\ringback.wav";
+          fname = "Sounds/ringback.wav";
           break;
         case ETones.EToneRing:
-          fname = "sounds\\ring.wav";
+          fname = "Sounds/ring.wav";
           break;
         default:
           fname = "";
           break;
       }
 
-      PlaySound(fname, 0, SoundFlags);
+      player.SoundLocation = fname;
+      player.Load();
+      player.PlayLooping();
+
       return 1;
     }
 
     public int stopTone()
     {
-      PlaySound(null, 0, SND_PURGE);
+      player.Stop();
       return 1;
     }
+
     #endregion
 
   }
