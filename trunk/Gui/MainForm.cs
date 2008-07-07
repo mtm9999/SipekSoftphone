@@ -32,10 +32,12 @@ using System.Text;
 using System.Windows.Forms;
 using System.Collections.ObjectModel;
 using System.Windows.Forms.Design;
-using WaveLib.AudioMixer; // see http://www.codeproject.com/KB/graphics/AudioLib.aspx
 using Sipek.Common;
 using Sipek.Common.CallControl;
-
+#if LINUX
+#else
+using WaveLib.AudioMixer; // see http://www.codeproject.com/KB/graphics/AudioLib.aspx
+#endif
 
 namespace Sipek
 {
@@ -100,6 +102,9 @@ namespace Sipek
 
       busyToolStripMenuItem.Checked = SipekResources.Configurator.CFBFlag;
       toolStripTextBoxCFBNumber.Text = SipekResources.Configurator.CFBNumber;
+
+      // check if user status available
+      toolStripComboBoxUserStatus.Enabled = SipekResources.Configurator.PublishEnabled;
     }
 
     private void UpdateAccountList()
@@ -827,6 +832,113 @@ namespace Sipek
       _lastMicVol = recline.Volume;
     }
 
+    /// <summary>
+    /// Callback from Windows Volume Control
+    /// </summary>
+    /// <param name="mixer"></param>
+    /// <param name="line"></param>
+    private void mMixer_MixerLineChanged(Mixer mixer, MixerLine line)
+    {
+      mAvoidEvents = true;
+
+      try
+      {
+        float balance = -1;
+        MixerLine frontEndLine = (MixerLine)toolStripTrackBar1.Tag;
+        if (frontEndLine == line)
+        {
+          int volume = 0;
+          if (line.Channels != 2)
+            volume = line.Volume;
+          else
+          {
+            line.Channel = Channel.Left;
+            int left = line.Volume;
+            line.Channel = Channel.Right;
+            int right = line.Volume;
+            if (left > right)
+            {
+              volume = left;
+              // TIP: Do not reset the balance if both left and right channel have 0 value
+              if (left != 0 && right != 0)
+                balance = (volume > 0) ? -(1 - (right / (float)left)) : 0;
+            }
+            else
+            {
+              volume = right;
+              // TIP: Do not reset the balance if both left and right channel have 0 value
+              if (left != 0 && right != 0)
+                balance = (volume > 0) ? 1 - (left / (float)right) : 0;
+            }
+          }
+
+          if (volume >= 0)
+            toolStripTrackBar1.Value = volume;
+
+        }
+
+        // adjust toolstrip checkboxes
+        if ((MixerLine)toolStripMicMuteButton.Tag == line)
+        {
+          toolStripMicMuteButton.Checked = line.Volume == 0 ? true : false;
+        }
+        else if ((MixerLine)toolStripMuteButton.Tag == line)
+        {
+           toolStripMuteButton.Checked = line.Mute;
+        }
+      }
+      finally
+      {
+        mAvoidEvents = false;
+      }
+    }
+
+    private void toolStripTrackBar1_ValueChanged(object sender, EventArgs e)
+    {
+      if (mAvoidEvents)
+        return;
+
+      TrackBar tBar = (TrackBar)sender;
+      MixerLine line = (MixerLine)tBar.Tag;
+      if (line.Channels != 2)
+      {
+        // One channel or more than two let set the volume uniform
+        line.Channel = Channel.Uniform;
+        line.Volume = tBar.Value;
+      }
+      else
+      {
+        //Set independent volume
+        line.Channel = Channel.Uniform;
+        line.Volume = toolStripTrackBar1.Value;
+      }
+    }
+
+    private int _lastMicVol = 0;
+
+    private void toolStripMuteButton_Click(object sender, EventArgs e)
+    {
+      ToolStripButton chkBox = (ToolStripButton)sender;
+      MixerLine line = (MixerLine)chkBox.Tag;
+      if (line.Direction == MixerType.Recording)
+      {
+        //line.Selected = chkBox.Checked;
+        if (chkBox.Checked == true)
+        {
+          _lastMicVol = line.Volume;
+          line.Volume = 0;
+        }
+        else 
+        {
+          line.Volume = _lastMicVol;
+        }
+      }
+      else
+      {
+        line.Mute = chkBox.Checked;
+      }
+    }
+
     private void MainForm_Load(object sender, EventArgs e)
     {
       LoadAudioValues();
@@ -893,113 +1005,6 @@ namespace Sipek
       // timer 
       tmr.Interval = 1000;
       tmr.Tick += new EventHandler(UpdateCallTimeout);
-    }
-
-    private void toolStripTrackBar1_ValueChanged(object sender, EventArgs e)
-    {
-      if (mAvoidEvents)
-        return;
-
-      TrackBar tBar = (TrackBar)sender;
-      MixerLine line = (MixerLine)tBar.Tag;
-      if (line.Channels != 2)
-      {
-        // One channel or more than two let set the volume uniform
-        line.Channel = Channel.Uniform;
-        line.Volume = tBar.Value;
-      }
-      else
-      {
-        //Set independent volume
-        line.Channel = Channel.Uniform;
-        line.Volume = toolStripTrackBar1.Value;
-      }
-    }
-
-    /// <summary>
-    /// Callback from Windows Volume Control
-    /// </summary>
-    /// <param name="mixer"></param>
-    /// <param name="line"></param>
-    private void mMixer_MixerLineChanged(Mixer mixer, MixerLine line)
-    {
-      mAvoidEvents = true;
-
-      try
-      {
-        float balance = -1;
-        MixerLine frontEndLine = (MixerLine)toolStripTrackBar1.Tag;
-        if (frontEndLine == line)
-        {
-          int volume = 0;
-          if (line.Channels != 2)
-            volume = line.Volume;
-          else
-          {
-            line.Channel = Channel.Left;
-            int left = line.Volume;
-            line.Channel = Channel.Right;
-            int right = line.Volume;
-            if (left > right)
-            {
-              volume = left;
-              // TIP: Do not reset the balance if both left and right channel have 0 value
-              if (left != 0 && right != 0)
-                balance = (volume > 0) ? -(1 - (right / (float)left)) : 0;
-            }
-            else
-            {
-              volume = right;
-              // TIP: Do not reset the balance if both left and right channel have 0 value
-              if (left != 0 && right != 0)
-                balance = (volume > 0) ? 1 - (left / (float)right) : 0;
-            }
-          }
-
-          if (volume >= 0)
-            toolStripTrackBar1.Value = volume;
-
-        }
-
-        // adjust toolstrip checkboxes
-        if ((MixerLine)toolStripMicMuteButton.Tag == line)
-        {
-          toolStripMicMuteButton.Checked = line.Volume == 0 ? true : false;
-        }
-        else if ((MixerLine)toolStripMuteButton.Tag == line)
-        {
-           toolStripMuteButton.Checked = line.Mute;
-        }
-      }
-      finally
-      {
-        mAvoidEvents = false;
-      }
-    }
-
-    private int _lastMicVol = 0;
-
-    private void toolStripMuteButton_Click(object sender, EventArgs e)
-    {
-      ToolStripButton chkBox = (ToolStripButton)sender;
-      MixerLine line = (MixerLine)chkBox.Tag;
-      if (line.Direction == MixerType.Recording)
-      {
-        //line.Selected = chkBox.Checked;
-        if (chkBox.Checked == true)
-        {
-          _lastMicVol = line.Volume;
-          line.Volume = 0;
-        }
-        else 
-        {
-          line.Volume = _lastMicVol;
-        }
-      }
-      else
-      {
-        line.Mute = chkBox.Checked;
-      }
     }
 
     private void listViewAccounts_DoubleClick(object sender, EventArgs e)

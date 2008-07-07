@@ -26,9 +26,12 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using WaveLib.AudioMixer; // see http://www.codeproject.com/KB/graphics/AudioLib.aspx
 using Sipek.Common.CallControl;
 using Sipek.Common; 
+#if LINUX
+#else
+using WaveLib.AudioMixer; // see http://www.codeproject.com/KB/graphics/AudioLib.aspx
+#endif
 
 namespace Sipek
 {
@@ -114,6 +117,7 @@ namespace Sipek
       textBoxRegistrarAddress.Text = acc.HostName;
       textBoxProxyAddress.Text = acc.ProxyAddress; 
       textBoxDomain.Text = acc.DomainName;
+      comboBoxSIPTransport.SelectedIndex = (int)acc.TransportMode;
     }
   
     private void clearAll()
@@ -142,6 +146,7 @@ namespace Sipek
         account.UserName = textBoxUsername.Text;
         account.Password = textBoxPassword.Text;
         account.DomainName = textBoxDomain.Text;
+        account.TransportMode = (ETransportMode)comboBoxSIPTransport.SelectedIndex;
 
         if (checkBoxDefault.Checked) SipekResources.Configurator.DefaultAccountIndex = index;
       }
@@ -158,9 +163,9 @@ namespace Sipek
       
       // additional settings
       SipekResources.Configurator.SIPPort = Int16.Parse(textBoxListenPort.Text);
-      SipekResources.Configurator.SecurityFlag = checkBoxSecure.Checked;
       SipekResources.Configurator.StunServerAddress = textBoxStunServerAddress.Text;
- 
+       SipekResources.Configurator.PublishEnabled = checkBoxPublish.Checked;
+
       //////////////////////////////////////////////////////////////////////////
       // skip if stack not initialized
       if (SipekResources.StackProxy.IsInitialized)
@@ -214,6 +219,7 @@ namespace Sipek
     {
       // Continued
       updateAccountList();
+
       comboBoxAccounts.SelectedIndex = SipekResources.Configurator.DefaultAccountIndex;
 
       /////
@@ -229,9 +235,9 @@ namespace Sipek
 
       textBoxListenPort.Text = SipekResources.Configurator.SIPPort.ToString();
 
-      checkBoxSecure.Checked = SipekResources.Configurator.SecurityFlag;
       textBoxStunServerAddress.Text = SipekResources.Configurator.StunServerAddress;
       comboBoxDtmfMode.SelectedIndex = (int)SipekResources.Configurator.DtmfMode;
+      checkBoxPublish.Checked = SipekResources.Configurator.PublishEnabled;
 
       // init audio
 			try {
@@ -666,5 +672,23 @@ namespace Sipek
     {
       ReregisterRequired = true;
     }
+
+    private void comboBoxSIPTransport_SelectedIndexChanged(object sender, EventArgs e)
+    {
+      // get current account
+      int accountId = this.comboBoxAccounts.SelectedIndex;
+      if ((accountId >= 0)&&(accountId < 5))
+      {
+        SipekResources.Configurator.Accounts[accountId].TransportMode = (ETransportMode)comboBoxSIPTransport.SelectedIndex;
+      }
+    }
+
+    private void checkBoxPublish_CheckedChanged(object sender, EventArgs e)
+    {
+      SipekResources.Configurator.PublishEnabled = checkBoxPublish.Checked;
+      RestartRequired = true;
+      ReregisterRequired = true;
+    }
+
   }
 }
