@@ -376,18 +376,6 @@ namespace Sipek.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool cfgSecurityFlag {
-            get {
-                return ((bool)(this["cfgSecurityFlag"]));
-            }
-            set {
-                this["cfgSecurityFlag"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string cfgStunServerAddress {
             get {
@@ -407,6 +395,52 @@ namespace Sipek.Properties {
             }
             set {
                 this["cfgDtmfMode"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
+<ArrayOfString xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
+  <string>0</string>
+  <string>0</string>
+  <string>0</string>
+  <string>0</string>
+  <string>0</string>
+</ArrayOfString>")]
+        public global::System.Collections.Specialized.StringCollection cfgSipAccountTransport {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["cfgSipAccountTransport"]));
+            }
+            set {
+                this["cfgSipAccountTransport"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool cfgSipPublishEnabled {
+            get {
+                return ((bool)(this["cfgSipPublishEnabled"]));
+            }
+            set {
+                this["cfgSipPublishEnabled"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsi=\"http://www.w3." +
+            "org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n  <s" +
+            "tring />\r\n  <string />\r\n  <string />\r\n  <string />\r\n  <string />\r\n</ArrayOfStrin" +
+            "g>")]
+        public global::System.Collections.Specialized.StringCollection cfgSipAccountIndex {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["cfgSipAccountIndex"]));
+            }
+            set {
+                this["cfgSipAccountIndex"] = value;
             }
         }
     }

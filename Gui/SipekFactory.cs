@@ -54,8 +54,8 @@ namespace Sipek
       _form = mf;
 
       // initialize sip struct at startup
-      SipConfigStruct.Instance.useTLS = this.Configurator.SecurityFlag;
       SipConfigStruct.Instance.stunServer = this.Configurator.StunServerAddress;
+      SipConfigStruct.Instance.publishEnabled = this.Configurator.PublishEnabled;
 
       // initialize modules
       _callManager.StackProxy = _stackProxy;
@@ -70,6 +70,7 @@ namespace Sipek
       for (int i = 0; i < 5; i++)
       {
         Properties.Settings.Default.cfgSipAccountState[i] = "0";
+        Properties.Settings.Default.cfgSipAccountIndex[i] = "0";
       }
     }
     #endregion Constructor
@@ -80,9 +81,10 @@ namespace Sipek
       return new GUITimer(_form);
     }
 
-    public IStateMachine createStateMachine(CCallManager mng)
+    public IStateMachine createStateMachine()
     {
-      return new CStateMachine(mng);
+      // TODO: check max number of calls
+      return new CStateMachine();
     }
 
     #endregion
@@ -193,7 +195,30 @@ namespace Sipek
   public class SipekAccount : IAccount
   {
     private int _index = -1;
+    private int _accountIdentification = -1;
     
+    /// <summary>
+    /// Temp storage!
+    /// The account index assigned by voip stack
+    /// </summary>
+    public int Index
+    {
+      get
+      { 
+        int value;
+        if (Int32.TryParse(Properties.Settings.Default.cfgSipAccountIndex[_index], out value))
+        {
+          return value;
+        }
+        return -1; 
+      }
+      set { Properties.Settings.Default.cfgSipAccountIndex[_index] = value.ToString(); }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="index">the account identification used by configuration (values 0..4)</param>
     public SipekAccount(int index)
     {
       _index = index;
@@ -313,6 +338,23 @@ namespace Sipek
         Properties.Settings.Default.cfgSipAccountProxyAddresses[_index] = value;
       }
     }
+
+    public ETransportMode TransportMode
+    {
+      get
+      {
+        int value;
+        if (Int32.TryParse(Properties.Settings.Default.cfgSipAccountTransport[_index], out value))
+        {
+          return (ETransportMode)value;
+        }
+        return (ETransportMode.TM_UDP); // default
+      }
+      set
+      {
+        Properties.Settings.Default.cfgSipAccountTransport[_index] = ((int)value).ToString();
+      }
+    }
     #endregion
 
   }
@@ -370,16 +412,16 @@ namespace Sipek
       set { Properties.Settings.Default.cfgSipPort = value; }
     }
 
-    public bool SecurityFlag
+    public bool PublishEnabled
     {
       get {
-        SipConfigStruct.Instance.useTLS = Properties.Settings.Default.cfgSecurityFlag;
-        return Properties.Settings.Default.cfgSecurityFlag; 
+        SipConfigStruct.Instance.publishEnabled = Properties.Settings.Default.cfgSipPublishEnabled;
+        return Properties.Settings.Default.cfgSipPublishEnabled;
       }
-      set { 
-        Properties.Settings.Default.cfgSecurityFlag = value;
-        SipConfigStruct.Instance.useTLS = value;
-      }
+      set {
+        SipConfigStruct.Instance.publishEnabled = value;
+        Properties.Settings.Default.cfgSipPublishEnabled = value;
+      }    
     }
 
     public string StunServerAddress
@@ -408,6 +450,9 @@ namespace Sipek
       }
     }
 
+    /// <summary>
+    /// The position of default account in account list. Does NOT mean same as DefaultAccountIndex
+    /// </summary>
     public int DefaultAccountIndex
     {
       get
