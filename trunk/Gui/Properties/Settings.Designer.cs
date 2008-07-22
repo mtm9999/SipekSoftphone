@@ -443,5 +443,17 @@ namespace Sipek.Properties {
                 this["cfgSipAccountIndex"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3600")]
+        public int cfgRegistrationTimeout {
+            get {
+                return ((int)(this["cfgRegistrationTimeout"]));
+            }
+            set {
+                this["cfgRegistrationTimeout"] = value;
+            }
+        }
     }
 }

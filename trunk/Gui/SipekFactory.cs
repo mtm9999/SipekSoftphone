@@ -56,6 +56,7 @@ namespace Sipek
       // initialize sip struct at startup
       SipConfigStruct.Instance.stunServer = this.Configurator.StunServerAddress;
       SipConfigStruct.Instance.publishEnabled = this.Configurator.PublishEnabled;
+      SipConfigStruct.Instance.expires = this.Configurator.Expires;
 
       // initialize modules
       _callManager.StackProxy = _stackProxy;
@@ -447,6 +448,20 @@ namespace Sipek
       set
       {
         Properties.Settings.Default.cfgDtmfMode = (int)value;
+      }
+    }
+
+    public int Expires
+    {
+      get
+      {
+        SipConfigStruct.Instance.expires = Properties.Settings.Default.cfgRegistrationTimeout;
+        return Properties.Settings.Default.cfgRegistrationTimeout;
+      }
+      set
+      {
+        Properties.Settings.Default.cfgRegistrationTimeout = value;
+        SipConfigStruct.Instance.expires = value;
       }
     }
 
