@@ -98,6 +98,8 @@ namespace Sipek
       this.buttonApply = new System.Windows.Forms.Button();
       this.buttonCancel = new System.Windows.Forms.Button();
       this.buttonOK = new System.Windows.Forms.Button();
+      this.textBoxExpires = new System.Windows.Forms.TextBox();
+      this.label18 = new System.Windows.Forms.Label();
       this.tabControlSettings.SuspendLayout();
       this.tabPageSettingsSIP.SuspendLayout();
       this.groupBox2.SuspendLayout();
@@ -202,7 +204,7 @@ namespace Sipek
       this.label2.Name = "label2";
       this.label2.Size = new System.Drawing.Size(43, 13);
       this.label2.TabIndex = 3;
-      this.label2.Text = "Domain";
+      this.label2.Text = "Realm";
       // 
       // label1
       // 
@@ -405,7 +407,7 @@ namespace Sipek
       this.tabPageSettingsServices.Location = new System.Drawing.Point(4, 22);
       this.tabPageSettingsServices.Name = "tabPageSettingsServices";
       this.tabPageSettingsServices.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPageSettingsServices.Size = new System.Drawing.Size(355, 371);
+      this.tabPageSettingsServices.Size = new System.Drawing.Size(296, 371);
       this.tabPageSettingsServices.TabIndex = 2;
       this.tabPageSettingsServices.Text = "Services";
       this.tabPageSettingsServices.UseVisualStyleBackColor = true;
@@ -418,7 +420,7 @@ namespace Sipek
       this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.groupBox1.Location = new System.Drawing.Point(3, 3);
       this.groupBox1.Name = "groupBox1";
-      this.groupBox1.Size = new System.Drawing.Size(349, 128);
+      this.groupBox1.Size = new System.Drawing.Size(290, 128);
       this.groupBox1.TabIndex = 1;
       this.groupBox1.TabStop = false;
       // 
@@ -468,7 +470,7 @@ namespace Sipek
       this.groupBoxServices.Dock = System.Windows.Forms.DockStyle.Bottom;
       this.groupBoxServices.Location = new System.Drawing.Point(3, 131);
       this.groupBoxServices.Name = "groupBoxServices";
-      this.groupBoxServices.Size = new System.Drawing.Size(349, 237);
+      this.groupBoxServices.Size = new System.Drawing.Size(290, 237);
       this.groupBoxServices.TabIndex = 0;
       this.groupBoxServices.TabStop = false;
       this.groupBoxServices.Text = "Forwardings....";
@@ -531,7 +533,7 @@ namespace Sipek
       this.tabPageSettingsAudio.Location = new System.Drawing.Point(4, 22);
       this.tabPageSettingsAudio.Name = "tabPageSettingsAudio";
       this.tabPageSettingsAudio.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPageSettingsAudio.Size = new System.Drawing.Size(355, 371);
+      this.tabPageSettingsAudio.Size = new System.Drawing.Size(296, 371);
       this.tabPageSettingsAudio.TabIndex = 0;
       this.tabPageSettingsAudio.Text = "Audio";
       this.tabPageSettingsAudio.UseVisualStyleBackColor = true;
@@ -546,7 +548,7 @@ namespace Sipek
       this.groupBox5.Dock = System.Windows.Forms.DockStyle.Fill;
       this.groupBox5.Location = new System.Drawing.Point(3, 180);
       this.groupBox5.Name = "groupBox5";
-      this.groupBox5.Size = new System.Drawing.Size(349, 188);
+      this.groupBox5.Size = new System.Drawing.Size(290, 188);
       this.groupBox5.TabIndex = 1;
       this.groupBox5.TabStop = false;
       this.groupBox5.Text = "Recording";
@@ -618,7 +620,7 @@ namespace Sipek
       this.groupBox4.Dock = System.Windows.Forms.DockStyle.Top;
       this.groupBox4.Location = new System.Drawing.Point(3, 3);
       this.groupBox4.Name = "groupBox4";
-      this.groupBox4.Size = new System.Drawing.Size(349, 177);
+      this.groupBox4.Size = new System.Drawing.Size(290, 177);
       this.groupBox4.TabIndex = 0;
       this.groupBox4.TabStop = false;
       this.groupBox4.Text = "Playback";
@@ -692,7 +694,7 @@ namespace Sipek
       this.tabCodecsPage.Location = new System.Drawing.Point(4, 22);
       this.tabCodecsPage.Name = "tabCodecsPage";
       this.tabCodecsPage.Padding = new System.Windows.Forms.Padding(3);
-      this.tabCodecsPage.Size = new System.Drawing.Size(355, 371);
+      this.tabCodecsPage.Size = new System.Drawing.Size(296, 371);
       this.tabCodecsPage.TabIndex = 3;
       this.tabCodecsPage.Text = "Codecs";
       this.tabCodecsPage.UseVisualStyleBackColor = true;
@@ -764,6 +766,8 @@ namespace Sipek
       // 
       // groupBoxSignaling
       // 
+      this.groupBoxSignaling.Controls.Add(this.label18);
+      this.groupBoxSignaling.Controls.Add(this.textBoxExpires);
       this.groupBoxSignaling.Controls.Add(this.textBoxStunServerAddress);
       this.groupBoxSignaling.Controls.Add(this.label15);
       this.groupBoxSignaling.Controls.Add(this.checkBoxPublish);
@@ -772,14 +776,14 @@ namespace Sipek
       this.groupBoxSignaling.Dock = System.Windows.Forms.DockStyle.Top;
       this.groupBoxSignaling.Location = new System.Drawing.Point(3, 3);
       this.groupBoxSignaling.Name = "groupBoxSignaling";
-      this.groupBoxSignaling.Size = new System.Drawing.Size(290, 141);
+      this.groupBoxSignaling.Size = new System.Drawing.Size(290, 185);
       this.groupBoxSignaling.TabIndex = 1;
       this.groupBoxSignaling.TabStop = false;
       this.groupBoxSignaling.Text = "Signalling";
       // 
       // textBoxStunServerAddress
       // 
-      this.textBoxStunServerAddress.Location = new System.Drawing.Point(84, 69);
+      this.textBoxStunServerAddress.Location = new System.Drawing.Point(95, 69);
       this.textBoxStunServerAddress.Name = "textBoxStunServerAddress";
       this.textBoxStunServerAddress.Size = new System.Drawing.Size(174, 20);
       this.textBoxStunServerAddress.TabIndex = 1;
@@ -788,7 +792,7 @@ namespace Sipek
       // label15
       // 
       this.label15.AutoSize = true;
-      this.label15.Location = new System.Drawing.Point(17, 72);
+      this.label15.Location = new System.Drawing.Point(7, 72);
       this.label15.Name = "label15";
       this.label15.Size = new System.Drawing.Size(61, 13);
       this.label15.TabIndex = 0;
@@ -796,17 +800,18 @@ namespace Sipek
       // 
       // checkBoxPublish
       // 
-      this.checkBoxPublish.Location = new System.Drawing.Point(82, 99);
+      this.checkBoxPublish.Location = new System.Drawing.Point(84, 106);
       this.checkBoxPublish.Name = "checkBoxPublish";
       this.checkBoxPublish.Size = new System.Drawing.Size(174, 24);
       this.checkBoxPublish.TabIndex = 2;
       this.checkBoxPublish.Text = "Publish User Status";
+      this.checkBoxPublish.Click += new System.EventHandler(this.reregistrationRequired_TextChanged);
       this.checkBoxPublish.CheckedChanged += new System.EventHandler(this.checkBoxPublish_CheckedChanged);
       // 
       // label16
       // 
       this.label16.AutoSize = true;
-      this.label16.Location = new System.Drawing.Point(19, 42);
+      this.label16.Location = new System.Drawing.Point(7, 37);
       this.label16.Name = "label16";
       this.label16.Size = new System.Drawing.Size(59, 13);
       this.label16.TabIndex = 1;
@@ -819,7 +824,7 @@ namespace Sipek
             "Out-of-band (INFO)",
             "Inband (rfc2833)",
             "Transparent"});
-      this.comboBoxDtmfMode.Location = new System.Drawing.Point(84, 34);
+      this.comboBoxDtmfMode.Location = new System.Drawing.Point(95, 34);
       this.comboBoxDtmfMode.Name = "comboBoxDtmfMode";
       this.comboBoxDtmfMode.Size = new System.Drawing.Size(174, 21);
       this.comboBoxDtmfMode.TabIndex = 0;
@@ -866,6 +871,24 @@ namespace Sipek
       this.buttonOK.Text = "OK";
       this.buttonOK.UseVisualStyleBackColor = true;
       this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
+      // 
+      // textBoxExpires
+      // 
+      this.textBoxExpires.Location = new System.Drawing.Point(127, 147);
+      this.textBoxExpires.Name = "textBoxExpires";
+      this.textBoxExpires.Size = new System.Drawing.Size(58, 20);
+      this.textBoxExpires.TabIndex = 3;
+      this.textBoxExpires.Text = "3600";
+      this.textBoxExpires.TextChanged += new System.EventHandler(this.reregistrationRequired_TextChanged);
+      // 
+      // label18
+      // 
+      this.label18.AutoSize = true;
+      this.label18.Location = new System.Drawing.Point(7, 150);
+      this.label18.Name = "label18";
+      this.label18.Size = new System.Drawing.Size(114, 13);
+      this.label18.TabIndex = 4;
+      this.label18.Text = "Registration timeout [s]";
       // 
       // SettingsForm
       // 
@@ -982,5 +1005,7 @@ namespace Sipek
     private System.Windows.Forms.ComboBox comboBoxSIPTransport;
     private System.Windows.Forms.Label label17;
     private System.Windows.Forms.CheckBox checkBoxPublish;
+    private System.Windows.Forms.Label label18;
+    private System.Windows.Forms.TextBox textBoxExpires;
   }
 }

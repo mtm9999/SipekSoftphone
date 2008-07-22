@@ -164,7 +164,8 @@ namespace Sipek
       // additional settings
       SipekResources.Configurator.SIPPort = Int16.Parse(textBoxListenPort.Text);
       SipekResources.Configurator.StunServerAddress = textBoxStunServerAddress.Text;
-       SipekResources.Configurator.PublishEnabled = checkBoxPublish.Checked;
+      SipekResources.Configurator.PublishEnabled = checkBoxPublish.Checked;
+      SipekResources.Configurator.Expires = Int32.Parse(textBoxExpires.Text);
 
       //////////////////////////////////////////////////////////////////////////
       // skip if stack not initialized
@@ -238,6 +239,7 @@ namespace Sipek
       textBoxStunServerAddress.Text = SipekResources.Configurator.StunServerAddress;
       comboBoxDtmfMode.SelectedIndex = (int)SipekResources.Configurator.DtmfMode;
       checkBoxPublish.Checked = SipekResources.Configurator.PublishEnabled;
+      textBoxExpires.Text = SipekResources.Configurator.Expires.ToString(); 
 
       // init audio
 			try {
