@@ -20,9 +20,9 @@ namespace Sipek
       this.Text = String.Format("About {0}", AssemblyTitle);
       this.labelProductName.Text = AssemblyProduct;
       //this.labelVersion.Text = String.Format("Version {0}", AssemblyVersion);
-      this.labelVersion.Text = "Version 0.2.096.047";
+      this.labelVersion.Text = "Version 0.2.103.058";
       this.labelCopyright.Text = AssemblyCopyright;
-      this.labelCompanyName.Text = AssemblyCompany;
+      this.linkLabelCompany.Text = AssemblyCompany;
       this.textBoxDescription.Text = AssemblyDescription;
     }
 
@@ -118,19 +118,11 @@ namespace Sipek
       Close();
     }
 
-    private void okButton_Click_1(object sender, EventArgs e)
+    private void linkLabelCompany_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
     {
-       
+      System.Diagnostics.Process.Start(this.linkLabelCompany.Text); 
     }
 
-    private void labelProductName_Click(object sender, EventArgs e)
-    {
-
-    }
-
-    private void labelVersion_Click(object sender, EventArgs e)
-    {
-
-    }
+   
   }
 }
