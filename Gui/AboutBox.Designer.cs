@@ -33,9 +33,9 @@ namespace Sipek
       this.labelProductName = new System.Windows.Forms.Label();
       this.labelVersion = new System.Windows.Forms.Label();
       this.labelCopyright = new System.Windows.Forms.Label();
-      this.labelCompanyName = new System.Windows.Forms.Label();
       this.textBoxDescription = new System.Windows.Forms.TextBox();
       this.okButton = new System.Windows.Forms.Button();
+      this.linkLabelCompany = new System.Windows.Forms.LinkLabel();
       this.tableLayoutPanel.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).BeginInit();
       this.SuspendLayout();
@@ -49,9 +49,9 @@ namespace Sipek
       this.tableLayoutPanel.Controls.Add(this.labelProductName, 1, 0);
       this.tableLayoutPanel.Controls.Add(this.labelVersion, 1, 1);
       this.tableLayoutPanel.Controls.Add(this.labelCopyright, 1, 2);
-      this.tableLayoutPanel.Controls.Add(this.labelCompanyName, 1, 3);
       this.tableLayoutPanel.Controls.Add(this.textBoxDescription, 1, 4);
       this.tableLayoutPanel.Controls.Add(this.okButton, 1, 5);
+      this.tableLayoutPanel.Controls.Add(this.linkLabelCompany, 1, 3);
       this.tableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
       this.tableLayoutPanel.Location = new System.Drawing.Point(9, 9);
       this.tableLayoutPanel.Name = "tableLayoutPanel";
@@ -62,7 +62,7 @@ namespace Sipek
       this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
       this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 28.57143F));
       this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-      this.tableLayoutPanel.Size = new System.Drawing.Size(321, 185);
+      this.tableLayoutPanel.Size = new System.Drawing.Size(345, 220);
       this.tableLayoutPanel.TabIndex = 0;
       // 
       // logoPictureBox
@@ -72,7 +72,7 @@ namespace Sipek
       this.logoPictureBox.Location = new System.Drawing.Point(3, 3);
       this.logoPictureBox.Name = "logoPictureBox";
       this.tableLayoutPanel.SetRowSpan(this.logoPictureBox, 6);
-      this.logoPictureBox.Size = new System.Drawing.Size(99, 179);
+      this.logoPictureBox.Size = new System.Drawing.Size(107, 214);
       this.logoPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
       this.logoPictureBox.TabIndex = 12;
       this.logoPictureBox.TabStop = false;
@@ -80,63 +80,49 @@ namespace Sipek
       // labelProductName
       // 
       this.labelProductName.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.labelProductName.Location = new System.Drawing.Point(111, 0);
+      this.labelProductName.Location = new System.Drawing.Point(119, 0);
       this.labelProductName.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
       this.labelProductName.MaximumSize = new System.Drawing.Size(0, 17);
       this.labelProductName.Name = "labelProductName";
-      this.labelProductName.Size = new System.Drawing.Size(207, 17);
+      this.labelProductName.Size = new System.Drawing.Size(223, 17);
       this.labelProductName.TabIndex = 19;
       this.labelProductName.Text = "Sipek 2  -  Version 0.100";
       this.labelProductName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-      this.labelProductName.Click += new System.EventHandler(this.labelProductName_Click);
       // 
       // labelVersion
       // 
       this.labelVersion.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.labelVersion.Location = new System.Drawing.Point(111, 26);
+      this.labelVersion.Location = new System.Drawing.Point(119, 31);
       this.labelVersion.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
       this.labelVersion.MaximumSize = new System.Drawing.Size(0, 17);
       this.labelVersion.Name = "labelVersion";
-      this.labelVersion.Size = new System.Drawing.Size(207, 17);
+      this.labelVersion.Size = new System.Drawing.Size(223, 17);
       this.labelVersion.TabIndex = 0;
-      this.labelVersion.Text = "Powered by pjsip.org (0.8.0) ";
+      this.labelVersion.Text = "Powered by pjsip.org (0.9.0) ";
       this.labelVersion.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-      this.labelVersion.Click += new System.EventHandler(this.labelVersion_Click);
       // 
       // labelCopyright
       // 
       this.labelCopyright.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.labelCopyright.Location = new System.Drawing.Point(111, 52);
+      this.labelCopyright.Location = new System.Drawing.Point(119, 62);
       this.labelCopyright.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
       this.labelCopyright.MaximumSize = new System.Drawing.Size(0, 17);
       this.labelCopyright.Name = "labelCopyright";
-      this.labelCopyright.Size = new System.Drawing.Size(207, 17);
+      this.labelCopyright.Size = new System.Drawing.Size(223, 17);
       this.labelCopyright.TabIndex = 21;
       this.labelCopyright.Text = "Copyright (c) 2007 All rigths reserved";
       this.labelCopyright.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
       // 
-      // labelCompanyName
-      // 
-      this.labelCompanyName.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.labelCompanyName.Location = new System.Drawing.Point(111, 78);
-      this.labelCompanyName.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
-      this.labelCompanyName.MaximumSize = new System.Drawing.Size(0, 17);
-      this.labelCompanyName.Name = "labelCompanyName";
-      this.labelCompanyName.Size = new System.Drawing.Size(207, 17);
-      this.labelCompanyName.TabIndex = 22;
-      this.labelCompanyName.Text = "sasacoh@gmail.com";
-      this.labelCompanyName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-      // 
       // textBoxDescription
       // 
       this.textBoxDescription.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.textBoxDescription.Location = new System.Drawing.Point(111, 107);
+      this.textBoxDescription.Location = new System.Drawing.Point(119, 127);
       this.textBoxDescription.Margin = new System.Windows.Forms.Padding(6, 3, 3, 3);
       this.textBoxDescription.Multiline = true;
       this.textBoxDescription.Name = "textBoxDescription";
       this.textBoxDescription.ReadOnly = true;
       this.textBoxDescription.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-      this.textBoxDescription.Size = new System.Drawing.Size(207, 46);
+      this.textBoxDescription.Size = new System.Drawing.Size(223, 56);
       this.textBoxDescription.TabIndex = 23;
       this.textBoxDescription.TabStop = false;
       this.textBoxDescription.Text = "Sipek2 is a simple SIP client.";
@@ -145,18 +131,31 @@ namespace Sipek
       // 
       this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.okButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-      this.okButton.Location = new System.Drawing.Point(243, 159);
+      this.okButton.Location = new System.Drawing.Point(267, 194);
       this.okButton.Name = "okButton";
       this.okButton.Size = new System.Drawing.Size(75, 23);
       this.okButton.TabIndex = 24;
       this.okButton.Text = "&OK";
-      this.okButton.Click += new System.EventHandler(this.okButton_Click_1);
+      // 
+      // linkLabelCompany
+      // 
+      this.linkLabelCompany.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.linkLabelCompany.Location = new System.Drawing.Point(119, 93);
+      this.linkLabelCompany.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
+      this.linkLabelCompany.MaximumSize = new System.Drawing.Size(0, 17);
+      this.linkLabelCompany.Name = "linkLabelCompany";
+      this.linkLabelCompany.Size = new System.Drawing.Size(223, 17);
+      this.linkLabelCompany.TabIndex = 25;
+      this.linkLabelCompany.TabStop = true;
+      this.linkLabelCompany.Text = "linkLabelCompany";
+      this.linkLabelCompany.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+      this.linkLabelCompany.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelCompany_LinkClicked);
       // 
       // AboutBox
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(339, 203);
+      this.ClientSize = new System.Drawing.Size(363, 238);
       this.Controls.Add(this.tableLayoutPanel);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
       this.MaximizeBox = false;
@@ -181,8 +180,8 @@ namespace Sipek
     private System.Windows.Forms.Label labelProductName;
     private System.Windows.Forms.Label labelVersion;
     private System.Windows.Forms.Label labelCopyright;
-    private System.Windows.Forms.Label labelCompanyName;
     private System.Windows.Forms.TextBox textBoxDescription;
     private System.Windows.Forms.Button okButton;
+    private System.Windows.Forms.LinkLabel linkLabelCompany;
   }
 }
