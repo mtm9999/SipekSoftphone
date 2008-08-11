@@ -202,9 +202,11 @@ namespace Sipek
         {
           SipekResources.StackProxy.setCodecPriority(item, 0);
         }
+        int i = 0;
         foreach (string item in listBoxEnCodecs.Items)
         {
-          SipekResources.StackProxy.setCodecPriority(item, 128);
+          SipekResources.StackProxy.setCodecPriority(item, 128 - i);
+          i++;
         }      
       }
 
