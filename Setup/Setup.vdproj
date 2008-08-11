@@ -39,8 +39,8 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_574115B9A635475CA645CF2AF8E7D17A"
-        "OwnerKey" = "8:_3DA4101F16EA4F3BB586A404319F2B8C"
+        "MsmKey" = "8:_485611EF1E4D4B2D8B0F55C54C596E26"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -77,6 +77,12 @@
         {
         "MsmKey" = "8:_C24D4A294FAB494A82CCFDF1FC6DE1B9"
         "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_D1B3508A7DB0411483E058E3A1F892B6"
+        "OwnerKey" = "8:_3DA4101F16EA4F3BB586A404319F2B8C"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -254,6 +260,26 @@
             {
             "SourcePath" = "8:..\\lib\\msvcr71.dll"
             "TargetName" = "8:msvcr71.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_B82B0425AC644711B0488FF150DF422C"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_485611EF1E4D4B2D8B0F55C54C596E26"
+            {
+            "SourcePath" = "8:..\\README.txt"
+            "TargetName" = "8:README.txt"
             "Tag" = "8:"
             "Folder" = "8:_B82B0425AC644711B0488FF150DF422C"
             "Condition" = "8:"
@@ -1064,7 +1090,7 @@
             "Feature" = "8:"
             "IsolateTo" = "8:"
             }
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_574115B9A635475CA645CF2AF8E7D17A"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_D1B3508A7DB0411483E058E3A1F892B6"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
