@@ -1,4 +1,4 @@
-SIPek project!
+Sipek project!
 
 See http://sipekphone.googlepages.com/!
 
