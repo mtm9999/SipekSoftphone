@@ -166,6 +166,9 @@ namespace Sipek
       SipekResources.Configurator.StunServerAddress = textBoxStunServerAddress.Text;
       SipekResources.Configurator.PublishEnabled = checkBoxPublish.Checked;
       SipekResources.Configurator.Expires = Int32.Parse(textBoxExpires.Text);
+      SipekResources.Configurator.VADEnabled = checkBoxVAD.Checked;
+      SipekResources.Configurator.ECTail = Int32.Parse(textBoxECTail.Text);
+      SipekResources.Configurator.NameServer = textBoxNameServer.Text;
 
       //////////////////////////////////////////////////////////////////////////
       // skip if stack not initialized
@@ -215,6 +218,9 @@ namespace Sipek
         
       if (ReregisterRequired) SipekResources.Registrar.registerAccounts();
 
+      // set device Id
+      SipekResources.StackProxy.setSoundDevice(mMixers.Playback.DeviceDetail.MixerName, mMixers.Recording.DeviceDetail.MixerName);
+
       Close();
     }
 
@@ -241,7 +247,10 @@ namespace Sipek
       textBoxStunServerAddress.Text = SipekResources.Configurator.StunServerAddress;
       comboBoxDtmfMode.SelectedIndex = (int)SipekResources.Configurator.DtmfMode;
       checkBoxPublish.Checked = SipekResources.Configurator.PublishEnabled;
-      textBoxExpires.Text = SipekResources.Configurator.Expires.ToString(); 
+      textBoxExpires.Text = SipekResources.Configurator.Expires.ToString();
+      checkBoxVAD.Checked = SipekResources.Configurator.VADEnabled;
+      textBoxECTail.Text = SipekResources.Configurator.ECTail.ToString();
+      textBoxNameServer.Text = SipekResources.Configurator.NameServer;
 
       // init audio
 			try {
@@ -327,7 +336,7 @@ namespace Sipek
         trackBarPlaybackBalance.Tag = line;
         checkBoxPlaybackMute.Tag = line;
       }
-
+      
       //If it is 2 channels then ask both and set the volume to the bigger but keep relation between them (Balance)
       int volume = 0;
       float balance = 0;
@@ -692,6 +701,15 @@ namespace Sipek
       SipekResources.Configurator.PublishEnabled = checkBoxPublish.Checked;
       RestartRequired = true;
       ReregisterRequired = true;
+    }
+
+
+    private void numEvaluate_KeyPress(object sender, System.Windows.Forms.KeyPressEventArgs e)
+    {
+      if (((e.KeyChar < '0') || (e.KeyChar > '9')) && (e.KeyChar != '\b'))
+      {
+        e.Handled = true;
+      }
     }
 
   }

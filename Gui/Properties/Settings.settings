@@ -191,5 +191,17 @@
     <Setting Name="cfgRegistrationTimeout" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">3600</Value>
     </Setting>
+    <Setting Name="cfgVAD" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="cfgECTail" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">200</Value>
+    </Setting>
+    <Setting Name="cfgNameServer" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="cfgUpdgradeSettings" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

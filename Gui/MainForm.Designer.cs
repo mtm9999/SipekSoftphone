@@ -29,6 +29,7 @@ namespace Sipek
     private void InitializeComponent()
     {
       this.components = new System.ComponentModel.Container();
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
       this.BottomToolStripPanel = new System.Windows.Forms.ToolStripPanel();
       this.TopToolStripPanel = new System.Windows.Forms.ToolStripPanel();
       this.RightToolStripPanel = new System.Windows.Forms.ToolStripPanel();
@@ -109,10 +110,16 @@ namespace Sipek
       this.toolStrip1 = new System.Windows.Forms.ToolStrip();
       this.toolStripMuteButton = new System.Windows.Forms.ToolStripButton();
       this.toolStripMicMuteButton = new System.Windows.Forms.ToolStripButton();
-      this.toolStripTrackBar1 = new Sipek.ToolStripTrackBar();
       this.toolStripUserStatus = new System.Windows.Forms.ToolStrip();
       this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
       this.toolStripComboBoxUserStatus = new System.Windows.Forms.ToolStripComboBox();
+      this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+      this.contextMenuSystemTray = new System.Windows.Forms.ContextMenuStrip(this.components);
+      this.restoreToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
+      this.exitToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+      this.aboutSipekToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.toolStripTrackBar1 = new Sipek.ToolStripTrackBar();
       this.statusStrip.SuspendLayout();
       this.menuStrip.SuspendLayout();
       this.toolStripCall.SuspendLayout();
@@ -138,6 +145,7 @@ namespace Sipek
       this.toolStripServices.SuspendLayout();
       this.toolStrip1.SuspendLayout();
       this.toolStripUserStatus.SuspendLayout();
+      this.contextMenuSystemTray.SuspendLayout();
       this.SuspendLayout();
       // 
       // BottomToolStripPanel
@@ -380,7 +388,7 @@ namespace Sipek
       // 
       this.splitContainerENS.Panel2.Controls.Add(this.tabControl);
       this.splitContainerENS.Size = new System.Drawing.Size(478, 222);
-      this.splitContainerENS.SplitterDistance = 89;
+      this.splitContainerENS.SplitterDistance = 87;
       this.splitContainerENS.TabIndex = 1;
       // 
       // listViewCallLines
@@ -395,7 +403,7 @@ namespace Sipek
       this.listViewCallLines.Location = new System.Drawing.Point(0, 0);
       this.listViewCallLines.MultiSelect = false;
       this.listViewCallLines.Name = "listViewCallLines";
-      this.listViewCallLines.Size = new System.Drawing.Size(474, 85);
+      this.listViewCallLines.Size = new System.Drawing.Size(474, 83);
       this.listViewCallLines.TabIndex = 6;
       this.listViewCallLines.UseCompatibleStateImageBehavior = false;
       this.listViewCallLines.View = System.Windows.Forms.View.Details;
@@ -475,7 +483,7 @@ namespace Sipek
       this.tabControl.Location = new System.Drawing.Point(0, 0);
       this.tabControl.Name = "tabControl";
       this.tabControl.SelectedIndex = 0;
-      this.tabControl.Size = new System.Drawing.Size(474, 125);
+      this.tabControl.Size = new System.Drawing.Size(474, 127);
       this.tabControl.TabIndex = 0;
       // 
       // tabPageCalls
@@ -484,7 +492,7 @@ namespace Sipek
       this.tabPageCalls.Location = new System.Drawing.Point(4, 22);
       this.tabPageCalls.Name = "tabPageCalls";
       this.tabPageCalls.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPageCalls.Size = new System.Drawing.Size(466, 99);
+      this.tabPageCalls.Size = new System.Drawing.Size(466, 101);
       this.tabPageCalls.TabIndex = 0;
       this.tabPageCalls.Text = "Call Register";
       this.tabPageCalls.UseVisualStyleBackColor = true;
@@ -502,7 +510,7 @@ namespace Sipek
       this.listViewCallRegister.Location = new System.Drawing.Point(3, 3);
       this.listViewCallRegister.MultiSelect = false;
       this.listViewCallRegister.Name = "listViewCallRegister";
-      this.listViewCallRegister.Size = new System.Drawing.Size(460, 93);
+      this.listViewCallRegister.Size = new System.Drawing.Size(460, 95);
       this.listViewCallRegister.TabIndex = 0;
       this.listViewCallRegister.UseCompatibleStateImageBehavior = false;
       this.listViewCallRegister.View = System.Windows.Forms.View.Details;
@@ -682,7 +690,7 @@ namespace Sipek
       this.tabPageAccounts.Location = new System.Drawing.Point(4, 22);
       this.tabPageAccounts.Name = "tabPageAccounts";
       this.tabPageAccounts.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPageAccounts.Size = new System.Drawing.Size(175, 117);
+      this.tabPageAccounts.Size = new System.Drawing.Size(175, 192);
       this.tabPageAccounts.TabIndex = 2;
       this.tabPageAccounts.Text = "Accounts";
       this.tabPageAccounts.UseVisualStyleBackColor = true;
@@ -698,7 +706,7 @@ namespace Sipek
       this.listViewAccounts.Location = new System.Drawing.Point(3, 3);
       this.listViewAccounts.MultiSelect = false;
       this.listViewAccounts.Name = "listViewAccounts";
-      this.listViewAccounts.Size = new System.Drawing.Size(169, 111);
+      this.listViewAccounts.Size = new System.Drawing.Size(169, 186);
       this.listViewAccounts.TabIndex = 0;
       this.listViewAccounts.UseCompatibleStateImageBehavior = false;
       this.listViewAccounts.View = System.Windows.Forms.View.Details;
@@ -872,16 +880,6 @@ namespace Sipek
       this.toolStripMicMuteButton.ToolTipText = "Microphone Mute";
       this.toolStripMicMuteButton.Click += new System.EventHandler(this.toolStripMuteButton_Click);
       // 
-      // toolStripTrackBar1
-      // 
-      this.toolStripTrackBar1.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
-      this.toolStripTrackBar1.Name = "toolStripTrackBar1";
-      this.toolStripTrackBar1.Size = new System.Drawing.Size(104, 22);
-      this.toolStripTrackBar1.Tag = null;
-      this.toolStripTrackBar1.Text = "toolStripTrackBar1";
-      this.toolStripTrackBar1.ToolTipText = "Volume Control";
-      this.toolStripTrackBar1.ValueChanged += new System.EventHandler(this.toolStripTrackBar1_ValueChanged);
-      // 
       // toolStripUserStatus
       // 
       this.toolStripUserStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -891,7 +889,7 @@ namespace Sipek
             this.toolStripComboBoxUserStatus});
       this.toolStripUserStatus.Location = new System.Drawing.Point(499, 24);
       this.toolStripUserStatus.Name = "toolStripUserStatus";
-      this.toolStripUserStatus.Size = new System.Drawing.Size(160, 25);
+      this.toolStripUserStatus.Size = new System.Drawing.Size(162, 25);
       this.toolStripUserStatus.TabIndex = 9;
       // 
       // toolStripLabel1
@@ -916,6 +914,62 @@ namespace Sipek
       this.toolStripComboBoxUserStatus.ToolTipText = "Select User Status";
       this.toolStripComboBoxUserStatus.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBoxUserStatus_SelectedIndexChanged);
       // 
+      // notifyIcon
+      // 
+      this.notifyIcon.BalloonTipTitle = "Sipek Softphone";
+      this.notifyIcon.ContextMenuStrip = this.contextMenuSystemTray;
+      this.notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon.Icon")));
+      this.notifyIcon.Text = "Sipek Softphone";
+      this.notifyIcon.Visible = true;
+      this.notifyIcon.BalloonTipClicked += new System.EventHandler(this.notifyIcon_DoubleClick);
+      this.notifyIcon.DoubleClick += new System.EventHandler(this.notifyIcon_DoubleClick);
+      // 
+      // contextMenuSystemTray
+      // 
+      this.contextMenuSystemTray.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aboutSipekToolStripMenuItem,
+            this.restoreToolStripMenuItem,
+            this.toolStripMenuItem3,
+            this.exitToolStripMenuItem1});
+      this.contextMenuSystemTray.Name = "contextMenuSystemTray";
+      this.contextMenuSystemTray.Size = new System.Drawing.Size(143, 76);
+      // 
+      // restoreToolStripMenuItem
+      // 
+      this.restoreToolStripMenuItem.Name = "restoreToolStripMenuItem";
+      this.restoreToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+      this.restoreToolStripMenuItem.Text = "Restore";
+      this.restoreToolStripMenuItem.Click += new System.EventHandler(this.notifyIcon_DoubleClick);
+      // 
+      // toolStripMenuItem3
+      // 
+      this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+      this.toolStripMenuItem3.Size = new System.Drawing.Size(139, 6);
+      // 
+      // exitToolStripMenuItem1
+      // 
+      this.exitToolStripMenuItem1.Name = "exitToolStripMenuItem1";
+      this.exitToolStripMenuItem1.Size = new System.Drawing.Size(142, 22);
+      this.exitToolStripMenuItem1.Text = "Exit";
+      this.exitToolStripMenuItem1.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+      // 
+      // aboutSipekToolStripMenuItem
+      // 
+      this.aboutSipekToolStripMenuItem.Name = "aboutSipekToolStripMenuItem";
+      this.aboutSipekToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+      this.aboutSipekToolStripMenuItem.Text = "About Sipek";
+      this.aboutSipekToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+      // 
+      // toolStripTrackBar1
+      // 
+      this.toolStripTrackBar1.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+      this.toolStripTrackBar1.Name = "toolStripTrackBar1";
+      this.toolStripTrackBar1.Size = new System.Drawing.Size(104, 22);
+      this.toolStripTrackBar1.Tag = null;
+      this.toolStripTrackBar1.Text = "toolStripTrackBar1";
+      this.toolStripTrackBar1.ToolTipText = "Volume Control";
+      this.toolStripTrackBar1.ValueChanged += new System.EventHandler(this.toolStripTrackBar1_ValueChanged);
+      // 
       // MainForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -924,10 +978,11 @@ namespace Sipek
       this.Controls.Add(this.toolStripContainer2);
       this.MainMenuStrip = this.menuStrip;
       this.Name = "MainForm";
-      this.Text = "Sipek2";
+      this.Text = "Sipek Softphone";
       this.Load += new System.EventHandler(this.MainForm_Load);
       this.Activated += new System.EventHandler(this.MainForm_Activated);
       this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
+      this.Resize += new System.EventHandler(this.MainForm_Resize);
       this.statusStrip.ResumeLayout(false);
       this.statusStrip.PerformLayout();
       this.menuStrip.ResumeLayout(false);
@@ -962,6 +1017,7 @@ namespace Sipek
       this.toolStrip1.PerformLayout();
       this.toolStripUserStatus.ResumeLayout(false);
       this.toolStripUserStatus.PerformLayout();
+      this.contextMenuSystemTray.ResumeLayout(false);
       this.ResumeLayout(false);
 
     }
@@ -1052,6 +1108,12 @@ namespace Sipek
     private System.Windows.Forms.ToolStripButton toolStrip3PtyButton;
     private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelMessages;
     private System.Windows.Forms.ColumnHeader columnHeaderBuddyText;
+    private System.Windows.Forms.NotifyIcon notifyIcon;
+    private System.Windows.Forms.ContextMenuStrip contextMenuSystemTray;
+    private System.Windows.Forms.ToolStripMenuItem restoreToolStripMenuItem;
+    private System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
+    private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem1;
+    private System.Windows.Forms.ToolStripMenuItem aboutSipekToolStripMenuItem;
 
   }
 }

@@ -455,5 +455,53 @@ namespace Sipek.Properties {
                 this["cfgRegistrationTimeout"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool cfgVAD {
+            get {
+                return ((bool)(this["cfgVAD"]));
+            }
+            set {
+                this["cfgVAD"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("200")]
+        public int cfgECTail {
+            get {
+                return ((int)(this["cfgECTail"]));
+            }
+            set {
+                this["cfgECTail"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string cfgNameServer {
+            get {
+                return ((string)(this["cfgNameServer"]));
+            }
+            set {
+                this["cfgNameServer"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool cfgUpdgradeSettings {
+            get {
+                return ((bool)(this["cfgUpdgradeSettings"]));
+            }
+            set {
+                this["cfgUpdgradeSettings"] = value;
+            }
+        }
     }
 }

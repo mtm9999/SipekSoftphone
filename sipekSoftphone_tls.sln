@@ -1,0 +1,24 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup_TLS", "Setup_SSL\Setup_SSL.vdproj", "{E3B563DC-38CF-4505-99E0-10FA128C543A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gui_tls", "Gui\Gui_tls.csproj", "{482A26E8-EFD9-4FA4-9731-417843DA4BDC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E3B563DC-38CF-4505-99E0-10FA128C543A}.Debug|Any CPU.ActiveCfg = Release
+		{E3B563DC-38CF-4505-99E0-10FA128C543A}.Release|Any CPU.ActiveCfg = Release
+		{482A26E8-EFD9-4FA4-9731-417843DA4BDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{482A26E8-EFD9-4FA4-9731-417843DA4BDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{482A26E8-EFD9-4FA4-9731-417843DA4BDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{482A26E8-EFD9-4FA4-9731-417843DA4BDC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
