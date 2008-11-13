@@ -57,6 +57,9 @@ namespace Sipek
       SipConfigStruct.Instance.stunServer = this.Configurator.StunServerAddress;
       SipConfigStruct.Instance.publishEnabled = this.Configurator.PublishEnabled;
       SipConfigStruct.Instance.expires = this.Configurator.Expires;
+      SipConfigStruct.Instance.VADEnabled = this.Configurator.VADEnabled;
+      SipConfigStruct.Instance.ECTail = this.Configurator.ECTail;
+      SipConfigStruct.Instance.nameServer = this.Configurator.NameServer;
 
       // initialize modules
       _callManager.StackProxy = _stackProxy;
@@ -159,8 +162,11 @@ namespace Sipek
       _guiTimer.Stop();
       //_elapsed(sender, e);
       // Synchronize thread with GUI because SIP stack works with GUI thread only
-      if (!_form.Disposing)
-        _form.Invoke(_elapsed, new object[] { sender, e});
+      if ((_form.IsDisposed) || (_form.Disposing) || (!_form.IsInitialized))
+      {
+        return;
+      }
+      _form.Invoke(_elapsed, new object[] { sender, e });
     }
 
     public bool Start()
@@ -462,6 +468,49 @@ namespace Sipek
       {
         Properties.Settings.Default.cfgRegistrationTimeout = value;
         SipConfigStruct.Instance.expires = value;
+      }
+    }
+
+    public int ECTail
+    {
+      get
+      {
+        SipConfigStruct.Instance.ECTail = Properties.Settings.Default.cfgECTail;
+        return Properties.Settings.Default.cfgECTail;
+      }
+      set
+      {
+        Properties.Settings.Default.cfgECTail = value;
+        SipConfigStruct.Instance.ECTail = value;
+      }
+    }
+
+    public bool VADEnabled
+    {
+      get
+      {
+        SipConfigStruct.Instance.VADEnabled = Properties.Settings.Default.cfgVAD;
+        return Properties.Settings.Default.cfgVAD;
+      }
+      set
+      {
+        Properties.Settings.Default.cfgVAD = value;
+        SipConfigStruct.Instance.VADEnabled = value;
+      }
+    }
+
+
+    public string NameServer
+    {
+      get
+      {
+        SipConfigStruct.Instance.nameServer = Properties.Settings.Default.cfgNameServer;
+        return Properties.Settings.Default.cfgNameServer;
+      }
+      set
+      {
+        Properties.Settings.Default.cfgNameServer = value;
+        SipConfigStruct.Instance.nameServer = value;
       }
     }
 

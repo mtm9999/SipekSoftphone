@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Sipek</RootNamespace>
-    <AssemblyName>sipek2</AssemblyName>
+    <AssemblyName>Sipek</AssemblyName>
     <ManifestCertificateThumbprint>DA6B9EF4563F33236E3D1708CCDCCBD9C9226C4E</ManifestCertificateThumbprint>
     <ManifestKeyFile>Gui_TemporaryKey.pfx</ManifestKeyFile>
     <GenerateManifests>false</GenerateManifests>

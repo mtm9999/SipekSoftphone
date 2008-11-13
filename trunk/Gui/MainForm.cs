@@ -34,32 +34,32 @@ using System.Collections.ObjectModel;
 using System.Windows.Forms.Design;
 using Sipek.Common;
 using Sipek.Common.CallControl;
+
 #if LINUX
 #else
-using WaveLib.AudioMixer; // see http://www.codeproject.com/KB/graphics/AudioLib.aspx
+  using WaveLib.AudioMixer; // see http://www.codeproject.com/KB/graphics/AudioLib.aspx
 #endif
 
 namespace Sipek
 {
   public partial class MainForm : Form
   {
-    const string HEADER_TEXT = "Sipek2";
- 
-    Timer tmr = new Timer();  // Refresh Call List
-    EUserStatus _lastUserStatus = EUserStatus.AVAILABLE;
-
-    public bool IsInitialized
-    {
-      get { return SipekResources.StackProxy.IsInitialized; }
-    }
-
 
     #region Properties
+
+    private Timer tmr = new Timer();  // Refresh Call List
+    private EUserStatus _lastUserStatus = EUserStatus.AVAILABLE;
+    private string HEADER_TEXT;
 
     private SipekResources _resources = null;
     private SipekResources SipekResources
     {
       get { return _resources; }
+    }
+
+    public bool IsInitialized
+    {
+      get { return SipekResources.StackProxy.IsInitialized; }
     }
     
     #endregion
@@ -68,6 +68,20 @@ namespace Sipek
     {
       InitializeComponent();
 
+#if TLS
+      this.Text += " TLS";
+      HEADER_TEXT = this.Text;
+#else
+      HEADER_TEXT = this.Text;
+#endif
+
+      // Check if settings upgrade needed?
+      if (Properties.Settings.Default.cfgUpdgradeSettings == true)
+      {
+        Properties.Settings.Default.Upgrade();
+        Properties.Settings.Default.cfgUpdgradeSettings = false;
+      }
+      // Create resource object containing SipekSdk and other Sipek related data
       _resources = new SipekResources(this);
     }
 
@@ -218,6 +232,15 @@ namespace Sipek
     delegate void MessageReceivedDelegate(string from, string message);
     delegate void BuddyStateChangedDelegate(int buddyId, int status, string text);
     delegate void DMessageWaiting(int mwi, string text);
+    delegate void DIncomingCall(int sessionId, string number, string info);
+
+    void CallManager_IncomingCallNotification(int sessionId, string number, string info)
+    {
+      if (InvokeRequired)
+        this.BeginInvoke(new DIncomingCall(this.OnIncomingCall), new object[] { sessionId, number, info});
+      else
+        OnIncomingCall(sessionId, number, info);
+    }
 
     public void onCallStateChanged(int sessionId)
     {
@@ -259,6 +282,10 @@ namespace Sipek
         MessageWaiting(mwi, text);
     }
 
+    private void OnIncomingCall(int sessionId, string number, string info)
+    {
+      notifyIcon.ShowBalloonTip(30, "Sipek Softphone", "Incoming call from " + number + "!", ToolTipIcon.Info);
+    }
     /////////////////////////////////////////////////////////////////////////////////////
     /// Buddy List Methods
     #region Buddy List Methods
@@ -439,7 +466,22 @@ namespace Sipek
 
     private void exitToolStripMenuItem_Click(object sender, EventArgs e)
     {
+      ShutdownVoIP();
+
       this.Close();
+    }
+
+    private void ShutdownVoIP()
+    {
+      if (IsInitialized)
+      {
+        SipekResources.CallLogger.save();
+        CBuddyList.getInstance().save();
+      }
+      SipekResources.Configurator.Save();
+
+      // shutdown stack
+      SipekResources.CallManager.Shutdown();
     }
 
     private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -538,7 +580,6 @@ namespace Sipek
           // display info
           //toolStripStatusLabel1.Text = item.Value.lastInfoMessage;
         }
-
 
         if (callList.Count > 0)
         {
@@ -686,14 +727,7 @@ namespace Sipek
 
     private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
     {
-      if (IsInitialized)
-      {
-        SipekResources.CallLogger.save();
-        CBuddyList.getInstance().save();
-      }
-      SipekResources.Configurator.Save();
-      // shutdown stack
-      SipekResources.CallManager.Shutdown();
+      ShutdownVoIP();
     }
 
     private void toolStripTextBoxTransferTo_KeyDown(object sender, KeyEventArgs e)
@@ -945,6 +979,7 @@ namespace Sipek
       
       // Register callbacks from callcontrol
       SipekResources.CallManager.CallStateRefresh += onCallStateChanged;
+      SipekResources.CallManager.IncomingCallNotification += new DIncomingCallNotification(CallManager_IncomingCallNotification);
       // Register callbacks from pjsipWrapper
       //SipekFactory.getCommonProxy().CallStateChanged += onTelephonyRefresh;
       SipekResources.Messenger.MessageReceived += onMessageReceived;
@@ -1072,6 +1107,19 @@ namespace Sipek
         CBuddyList.getInstance().deleteRecord(item.Id);
         UpdateBuddyList();
       }
+    }
+
+    private void MainForm_Resize(object sender, EventArgs e)
+    {
+      if (FormWindowState.Minimized == WindowState)
+        Hide();
+    }
+
+    private void notifyIcon_DoubleClick(object sender, EventArgs e)
+    {
+      Show();
+      WindowState = FormWindowState.Normal;
+      Activate();
     }
 
   }
