@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Sipek Softphone")]
 [assembly: AssemblyDescription("A free SIP softphone - powered by pjsip.org and SipekSdk. The source code is released under GPL2.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("http://sipekphone.googlepages.com")]
+[assembly: AssemblyCompany("http://sites.google.com/site/sipekvoip/")]
 [assembly: AssemblyProduct("Softphone")]
 [assembly: AssemblyCopyright("Copyright © Sasa Coh 2008")]
 [assembly: AssemblyTrademark("")]

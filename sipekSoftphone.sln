@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{DC632D21-59DF-4195-9333-7445C85325F4}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gui", "Gui\Gui.csproj", "{D3EE2A06-D617-45F8-879E-8D0931BC8982}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{3375C286-298E-491B-96B1-CD6F445C5A6B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,12 +11,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{DC632D21-59DF-4195-9333-7445C85325F4}.Debug|Any CPU.ActiveCfg = Debug
-		{DC632D21-59DF-4195-9333-7445C85325F4}.Release|Any CPU.ActiveCfg = Release
 		{D3EE2A06-D617-45F8-879E-8D0931BC8982}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D3EE2A06-D617-45F8-879E-8D0931BC8982}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D3EE2A06-D617-45F8-879E-8D0931BC8982}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D3EE2A06-D617-45F8-879E-8D0931BC8982}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3375C286-298E-491B-96B1-CD6F445C5A6B}.Debug|Any CPU.ActiveCfg = Debug
+		{3375C286-298E-491B-96B1-CD6F445C5A6B}.Debug|Any CPU.Build.0 = Debug
+		{3375C286-298E-491B-96B1-CD6F445C5A6B}.Release|Any CPU.ActiveCfg = Release
+		{3375C286-298E-491B-96B1-CD6F445C5A6B}.Release|Any CPU.Build.0 = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -604,6 +604,10 @@ namespace Sipek
         // TODO!!!!!!!!!!! Sychronize SHARED RESOURCES!!!!
       }
       //listViewCallLines.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+
+      // close balloon tip
+      notifyIcon.Visible = false;
+      notifyIcon.Visible = true;
     }
 
     public void UpdateCallTimeout(object sender, EventArgs e)
