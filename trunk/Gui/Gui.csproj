@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Sipek</RootNamespace>
-    <AssemblyName>Sipek</AssemblyName>
+    <AssemblyName>SipekSoftphone</AssemblyName>
     <ManifestCertificateThumbprint>DA6B9EF4563F33236E3D1708CCDCCBD9C9226C4E</ManifestCertificateThumbprint>
     <ManifestKeyFile>Gui_TemporaryKey.pfx</ManifestKeyFile>
     <GenerateManifests>false</GenerateManifests>
@@ -28,6 +28,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <StartupObject>Sipek.Program</StartupObject>
+    <ApplicationIcon>Sipek.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -225,6 +226,7 @@
     <Content Include="Resources\phone_redirect.png" />
     <Content Include="Resources\phone_reject.png" />
     <Content Include="Resources\phone_speaker.png" />
+    <Content Include="Sipek.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

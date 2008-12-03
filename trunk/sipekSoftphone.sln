@@ -18,7 +18,6 @@ Global
 		{3375C286-298E-491B-96B1-CD6F445C5A6B}.Debug|Any CPU.ActiveCfg = Debug
 		{3375C286-298E-491B-96B1-CD6F445C5A6B}.Debug|Any CPU.Build.0 = Debug
 		{3375C286-298E-491B-96B1-CD6F445C5A6B}.Release|Any CPU.ActiveCfg = Release
-		{3375C286-298E-491B-96B1-CD6F445C5A6B}.Release|Any CPU.Build.0 = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

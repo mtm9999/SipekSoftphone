@@ -6,10 +6,10 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Sipek Softphone")]
-[assembly: AssemblyDescription("A free SIP softphone - powered by pjsip.org and SipekSdk. The source code is released under GPL2.")]
+[assembly: AssemblyDescription("Sipek Softphone is a free SIP softphone - powered by pjsip.org and SipekSdk libraries. The source code is released under GPL2.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("http://sites.google.com/site/sipekvoip/")]
-[assembly: AssemblyProduct("Softphone")]
+[assembly: AssemblyProduct("Sipek Softphone")]
 [assembly: AssemblyCopyright("Copyright © Sasa Coh 2008")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -29,5 +29,5 @@ using System.Runtime.InteropServices;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("0.3.108.80")]
+[assembly: AssemblyVersion("0.3.136.108")]
 [assembly: AssemblyFileVersion("0.1.0.0")]
