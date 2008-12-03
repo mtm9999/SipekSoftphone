@@ -15,12 +15,6 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_0961E21E121B48E8A9716DD54036F8C3"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_0B7566C7296F412EA9B0DAF662BDA684"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -34,25 +28,19 @@
         "Entry"
         {
         "MsmKey" = "8:_77BAB28C6DECD0C07E7E0FEE9436D388"
-        "OwnerKey" = "8:_0961E21E121B48E8A9716DD54036F8C3"
+        "OwnerKey" = "8:_C2ABA1A3BDD04B80A20DA25F71C83311"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_9817CC9F491471E2268977CCE799C871"
-        "OwnerKey" = "8:_0961E21E121B48E8A9716DD54036F8C3"
+        "OwnerKey" = "8:_C2ABA1A3BDD04B80A20DA25F71C83311"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_A5F49FD9A48F483AB2B8AB342AD27EF5"
         "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_BE03F79C625F4702A1B3E9C36C865E2D"
-        "OwnerKey" = "8:_3DA4101F16EA4F3BB586A404319F2B8C"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -69,20 +57,26 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_C2ABA1A3BDD04B80A20DA25F71C83311"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_D626572BAC20C9A32F9A731C2EB2E1F3"
-        "OwnerKey" = "8:_0961E21E121B48E8A9716DD54036F8C3"
+        "OwnerKey" = "8:_C2ABA1A3BDD04B80A20DA25F71C83311"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E9868FDD4E8B4B008589858DD3F916C0"
+        "OwnerKey" = "8:_3DA4101F16EA4F3BB586A404319F2B8C"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_9817CC9F491471E2268977CCE799C871"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_0961E21E121B48E8A9716DD54036F8C3"
+        "OwnerKey" = "8:_C2ABA1A3BDD04B80A20DA25F71C83311"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -95,6 +89,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_77BAB28C6DECD0C07E7E0FEE9436D388"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_9817CC9F491471E2268977CCE799C871"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -441,9 +441,9 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:SipekSoftphone"
+        "ProductName" = "8:Sipek Softphone"
         "ProductCode" = "8:{8B36C269-76E9-493E-B1DB-0C0D8DFBD36F}"
-        "PackageCode" = "8:{6E5834BB-B2E0-450A-B516-95D437211AFE}"
+        "PackageCode" = "8:{AB773CF2-806F-46DC-9399-1AF3D920566A}"
         "UpgradeCode" = "8:{06F8AC95-6BCA-407E-A06E-6A26BE8A4014}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
@@ -452,12 +452,12 @@
         "ProductVersion" = "8:0.3"
         "Manufacturer" = "8:SasaCoh"
         "ARPHELPTELEPHONE" = "8:"
-        "ARPHELPLINK" = "8:http://sipekphone.googlepages.com/"
+        "ARPHELPLINK" = "8:http://sites.google.com/site/sipekvoip"
         "Title" = "8:Sipek Softphone Setup"
         "Subject" = "8:"
         "ARPCONTACT" = "8:SasaCoh"
         "Keywords" = "8:"
-        "ARPCOMMENTS" = "8:Sipek Softphone Project"
+        "ARPCOMMENTS" = "8:Sipek Softphone"
         "ARPURLINFOABOUT" = "8:"
         "ARPPRODUCTICON" = "8:"
         "ARPIconIndex" = "3:0"
@@ -562,18 +562,18 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_EE8EEFF30EAF4C9481A500B29E5A9C11"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_9D23AD69A85741FB88E22A41D4771808"
             {
-            "Name" = "8:Softphone"
+            "Name" = "8:Sipek Softphone"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
-            "IconIndex" = "3:0"
+            "IconIndex" = "3:32512"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_0961E21E121B48E8A9716DD54036F8C3"
+            "Target" = "8:_C2ABA1A3BDD04B80A20DA25F71C83311"
             "Folder" = "8:_981EBDCC2E8D4BA79F99EB200FF12F03"
             "WorkingFolder" = "8:_B82B0425AC644711B0488FF150DF422C"
-            "Icon" = "8:"
+            "Icon" = "8:_C2ABA1A3BDD04B80A20DA25F71C83311"
             "Feature" = "8:"
             }
         }
@@ -986,7 +986,7 @@
             "Feature" = "8:"
             "IsolateTo" = "8:"
             }
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_BE03F79C625F4702A1B3E9C36C865E2D"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_E9868FDD4E8B4B008589858DD3F916C0"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
@@ -1003,9 +1003,9 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_0961E21E121B48E8A9716DD54036F8C3"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_C2ABA1A3BDD04B80A20DA25F71C83311"
             {
-            "SourcePath" = "8:..\\Gui\\obj\\Release\\Sipek.exe"
+            "SourcePath" = "8:..\\Gui\\obj\\Release\\SipekSoftphone.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_B82B0425AC644711B0488FF150DF422C"

@@ -402,5 +402,19 @@ namespace Sipek.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        internal static System.Drawing.Icon Sipek {
+            get {
+                object obj = ResourceManager.GetObject("Sipek", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap SipekImage {
+            get {
+                object obj = ResourceManager.GetObject("SipekImage", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

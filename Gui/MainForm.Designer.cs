@@ -351,7 +351,7 @@ namespace Sipek
       this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.panel1.Location = new System.Drawing.Point(0, 0);
       this.panel1.Name = "panel1";
-      this.panel1.Size = new System.Drawing.Size(669, 147);
+      this.panel1.Size = new System.Drawing.Size(669, 222);
       this.panel1.TabIndex = 3;
       // 
       // splitContainerEW
@@ -368,7 +368,7 @@ namespace Sipek
       // splitContainerEW.Panel2
       // 
       this.splitContainerEW.Panel2.Controls.Add(this.tabControl2);
-      this.splitContainerEW.Size = new System.Drawing.Size(669, 147);
+      this.splitContainerEW.Size = new System.Drawing.Size(669, 222);
       this.splitContainerEW.SplitterDistance = 478;
       this.splitContainerEW.TabIndex = 5;
       // 
@@ -387,8 +387,8 @@ namespace Sipek
       // splitContainerENS.Panel2
       // 
       this.splitContainerENS.Panel2.Controls.Add(this.tabControl);
-      this.splitContainerENS.Size = new System.Drawing.Size(478, 147);
-      this.splitContainerENS.SplitterDistance = 57;
+      this.splitContainerENS.Size = new System.Drawing.Size(478, 222);
+      this.splitContainerENS.SplitterDistance = 86;
       this.splitContainerENS.TabIndex = 1;
       // 
       // listViewCallLines
@@ -403,7 +403,7 @@ namespace Sipek
       this.listViewCallLines.Location = new System.Drawing.Point(0, 0);
       this.listViewCallLines.MultiSelect = false;
       this.listViewCallLines.Name = "listViewCallLines";
-      this.listViewCallLines.Size = new System.Drawing.Size(474, 53);
+      this.listViewCallLines.Size = new System.Drawing.Size(474, 82);
       this.listViewCallLines.TabIndex = 6;
       this.listViewCallLines.UseCompatibleStateImageBehavior = false;
       this.listViewCallLines.View = System.Windows.Forms.View.Details;
@@ -483,7 +483,7 @@ namespace Sipek
       this.tabControl.Location = new System.Drawing.Point(0, 0);
       this.tabControl.Name = "tabControl";
       this.tabControl.SelectedIndex = 0;
-      this.tabControl.Size = new System.Drawing.Size(474, 82);
+      this.tabControl.Size = new System.Drawing.Size(474, 128);
       this.tabControl.TabIndex = 0;
       // 
       // tabPageCalls
@@ -492,7 +492,7 @@ namespace Sipek
       this.tabPageCalls.Location = new System.Drawing.Point(4, 22);
       this.tabPageCalls.Name = "tabPageCalls";
       this.tabPageCalls.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPageCalls.Size = new System.Drawing.Size(466, 56);
+      this.tabPageCalls.Size = new System.Drawing.Size(466, 102);
       this.tabPageCalls.TabIndex = 0;
       this.tabPageCalls.Text = "Call Register";
       this.tabPageCalls.UseVisualStyleBackColor = true;
@@ -510,7 +510,7 @@ namespace Sipek
       this.listViewCallRegister.Location = new System.Drawing.Point(3, 3);
       this.listViewCallRegister.MultiSelect = false;
       this.listViewCallRegister.Name = "listViewCallRegister";
-      this.listViewCallRegister.Size = new System.Drawing.Size(460, 50);
+      this.listViewCallRegister.Size = new System.Drawing.Size(460, 96);
       this.listViewCallRegister.TabIndex = 0;
       this.listViewCallRegister.UseCompatibleStateImageBehavior = false;
       this.listViewCallRegister.View = System.Windows.Forms.View.Details;
@@ -587,7 +587,7 @@ namespace Sipek
       this.tabControl2.Location = new System.Drawing.Point(0, 0);
       this.tabControl2.Name = "tabControl2";
       this.tabControl2.SelectedIndex = 0;
-      this.tabControl2.Size = new System.Drawing.Size(183, 143);
+      this.tabControl2.Size = new System.Drawing.Size(183, 218);
       this.tabControl2.TabIndex = 0;
       // 
       // tabPageBuddies
@@ -596,7 +596,7 @@ namespace Sipek
       this.tabPageBuddies.Location = new System.Drawing.Point(4, 22);
       this.tabPageBuddies.Name = "tabPageBuddies";
       this.tabPageBuddies.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPageBuddies.Size = new System.Drawing.Size(175, 117);
+      this.tabPageBuddies.Size = new System.Drawing.Size(175, 192);
       this.tabPageBuddies.TabIndex = 0;
       this.tabPageBuddies.Text = "Buddies";
       this.tabPageBuddies.UseVisualStyleBackColor = true;
@@ -614,7 +614,7 @@ namespace Sipek
       this.listViewBuddies.Location = new System.Drawing.Point(3, 3);
       this.listViewBuddies.MultiSelect = false;
       this.listViewBuddies.Name = "listViewBuddies";
-      this.listViewBuddies.Size = new System.Drawing.Size(169, 111);
+      this.listViewBuddies.Size = new System.Drawing.Size(169, 186);
       this.listViewBuddies.TabIndex = 0;
       this.listViewBuddies.UseCompatibleStateImageBehavior = false;
       this.listViewBuddies.View = System.Windows.Forms.View.Details;
@@ -690,7 +690,7 @@ namespace Sipek
       this.tabPageAccounts.Location = new System.Drawing.Point(4, 22);
       this.tabPageAccounts.Name = "tabPageAccounts";
       this.tabPageAccounts.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPageAccounts.Size = new System.Drawing.Size(175, 117);
+      this.tabPageAccounts.Size = new System.Drawing.Size(175, 192);
       this.tabPageAccounts.TabIndex = 2;
       this.tabPageAccounts.Text = "Accounts";
       this.tabPageAccounts.UseVisualStyleBackColor = true;
@@ -706,7 +706,7 @@ namespace Sipek
       this.listViewAccounts.Location = new System.Drawing.Point(3, 3);
       this.listViewAccounts.MultiSelect = false;
       this.listViewAccounts.Name = "listViewAccounts";
-      this.listViewAccounts.Size = new System.Drawing.Size(169, 111);
+      this.listViewAccounts.Size = new System.Drawing.Size(169, 186);
       this.listViewAccounts.TabIndex = 0;
       this.listViewAccounts.UseCompatibleStateImageBehavior = false;
       this.listViewAccounts.View = System.Windows.Forms.View.Details;
@@ -731,7 +731,7 @@ namespace Sipek
       // 
       this.toolStripContainer2.ContentPanel.AutoScroll = true;
       this.toolStripContainer2.ContentPanel.Controls.Add(this.panel1);
-      this.toolStripContainer2.ContentPanel.Size = new System.Drawing.Size(669, 147);
+      this.toolStripContainer2.ContentPanel.Size = new System.Drawing.Size(669, 222);
       this.toolStripContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
       this.toolStripContainer2.Location = new System.Drawing.Point(0, 0);
       this.toolStripContainer2.Name = "toolStripContainer2";
@@ -755,7 +755,7 @@ namespace Sipek
             this.toolStripButtonDND,
             this.toolStripButtonAA,
             this.toolStripSplitButtonCF});
-      this.toolStripServices.Location = new System.Drawing.Point(62, 49);
+      this.toolStripServices.Location = new System.Drawing.Point(251, 24);
       this.toolStripServices.Name = "toolStripServices";
       this.toolStripServices.Size = new System.Drawing.Size(88, 25);
       this.toolStripServices.TabIndex = 8;
@@ -852,7 +852,7 @@ namespace Sipek
             this.toolStripMuteButton,
             this.toolStripMicMuteButton,
             this.toolStripTrackBar1});
-      this.toolStrip1.Location = new System.Drawing.Point(3, 74);
+      this.toolStrip1.Location = new System.Drawing.Point(339, 24);
       this.toolStrip1.Name = "toolStrip1";
       this.toolStrip1.Size = new System.Drawing.Size(160, 25);
       this.toolStrip1.TabIndex = 10;
@@ -897,7 +897,7 @@ namespace Sipek
       this.toolStripUserStatus.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabel1,
             this.toolStripComboBoxUserStatus});
-      this.toolStripUserStatus.Location = new System.Drawing.Point(3, 99);
+      this.toolStripUserStatus.Location = new System.Drawing.Point(499, 24);
       this.toolStripUserStatus.Name = "toolStripUserStatus";
       this.toolStripUserStatus.Size = new System.Drawing.Size(160, 25);
       this.toolStripUserStatus.TabIndex = 9;
@@ -976,6 +976,7 @@ namespace Sipek
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(669, 293);
       this.Controls.Add(this.toolStripContainer2);
+      this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.MainMenuStrip = this.menuStrip;
       this.Name = "MainForm";
       this.Text = "Sipek Softphone";

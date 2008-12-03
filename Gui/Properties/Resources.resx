@@ -265,4 +265,10 @@
   <data name="phone_speaker" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>../Resources/phone_speaker.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Sipek" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Sipek.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SipekImage" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Sipek.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>
