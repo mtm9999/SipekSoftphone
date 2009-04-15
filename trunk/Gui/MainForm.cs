@@ -530,6 +530,7 @@ namespace Sipek
               holdRetrieveToolStripMenuItem.Visible = true;
               transferToolStripMenuItem.Visible = true;
               //sendMessageToolStripMenuItem.Visible = true;
+              attendedTransferToolStripMenuItem.Visible = true;
               break;
             case EStateId.HOLDING:
               holdRetrieveToolStripMenuItem.Text = "Retrieve";
@@ -682,6 +683,29 @@ namespace Sipek
       {
         ListViewItem lvi = listViewCallLines.SelectedItems[0];
         SipekResources.CallManager.onUserRelease(((CStateMachine)lvi.Tag).Session);
+      }
+    }
+
+    private void attendedTransferToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      if (listViewCallLines.SelectedItems.Count > 0)
+      {
+        ListViewItem lvi = listViewCallLines.SelectedItems[0];
+        CStateMachine call = (CStateMachine)lvi.Tag;
+        // check call states
+        if (SipekResources.CallManager.Count >= 2)
+        {
+          // get ACTIVE call
+          List<IStateMachine> activeCalls = SipekResources.CallManager[EStateId.ACTIVE];
+          if (activeCalls.Count == 0) return;
+
+          // get HOLDING call
+          List<IStateMachine> holdingCalls = SipekResources.CallManager[EStateId.HOLDING];
+          if (holdingCalls.Count == 0) return;
+
+          // transfer ACTIVE to HOLDING
+          SipekResources.CallManager.OnUserTransferAttendant(activeCalls[0].Session, holdingCalls[0].Session);
+        }
       }
     }
 
