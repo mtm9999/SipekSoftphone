@@ -138,8 +138,36 @@ namespace Sipek
         {
           name = acc.AccountName;
         }
-        // create listviewitem
-        ListViewItem item = new ListViewItem(new string[] { name, acc.RegState.ToString() });
+        String regstate;
+        switch (acc.RegState)
+        {
+          case -1:
+            if (!acc.Enabled)
+            {
+              regstate = "Disabled";
+            }
+            else if (acc.HostName.Length == 0)
+            {
+              regstate = "Empty";
+            }
+            else
+            {
+              regstate = "Error";
+            }
+
+            break;
+          case 0:
+            regstate = "Trying";
+        	break;
+          case 200:
+            regstate = "Registered";
+            break;
+          default:
+            regstate = "Registration Error (" + acc.RegState.ToString() + ")";
+            break;
+        }
+
+        ListViewItem item = new ListViewItem(new string[] { name, regstate });
         // mark default account
         if (i == SipekResources.Configurator.DefaultAccountIndex)
         {
