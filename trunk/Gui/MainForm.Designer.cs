@@ -65,6 +65,7 @@ namespace Sipek
       this.holdRetrieveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.transferToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripTextBoxTransferTo = new System.Windows.Forms.ToolStripTextBox();
+      this.attendedTransferToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.partyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.tabControl = new System.Windows.Forms.TabControl();
       this.tabPageCalls = new System.Windows.Forms.TabPage();
@@ -120,7 +121,6 @@ namespace Sipek
       this.restoreToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
       this.exitToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-      this.attendedTransferToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.statusStrip.SuspendLayout();
       this.menuStrip.SuspendLayout();
       this.toolStripCall.SuspendLayout();
@@ -234,19 +234,19 @@ namespace Sipek
       // toolStripMenuItem1
       // 
       this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-      this.toolStripMenuItem1.Size = new System.Drawing.Size(124, 22);
+      this.toolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
       this.toolStripMenuItem1.Text = "Settings";
       this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
       // 
       // toolStripSeparator1
       // 
       this.toolStripSeparator1.Name = "toolStripSeparator1";
-      this.toolStripSeparator1.Size = new System.Drawing.Size(121, 6);
+      this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
       // 
       // exitToolStripMenuItem
       // 
       this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-      this.exitToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+      this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
       this.exitToolStripMenuItem.Text = "Exit";
       this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
       // 
@@ -434,7 +434,7 @@ namespace Sipek
             this.attendedTransferToolStripMenuItem,
             this.partyToolStripMenuItem});
       this.contextMenuStripCalls.Name = "contextMenuStripCalls";
-      this.contextMenuStripCalls.Size = new System.Drawing.Size(175, 158);
+      this.contextMenuStripCalls.Size = new System.Drawing.Size(175, 136);
       this.contextMenuStripCalls.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStripCalls_Opening);
       // 
       // acceptToolStripMenuItem
@@ -471,6 +471,13 @@ namespace Sipek
       this.toolStripTextBoxTransferTo.Name = "toolStripTextBoxTransferTo";
       this.toolStripTextBoxTransferTo.Size = new System.Drawing.Size(100, 21);
       this.toolStripTextBoxTransferTo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.toolStripTextBoxTransferTo_KeyDown);
+      // 
+      // attendedTransferToolStripMenuItem
+      // 
+      this.attendedTransferToolStripMenuItem.Name = "attendedTransferToolStripMenuItem";
+      this.attendedTransferToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+      this.attendedTransferToolStripMenuItem.Text = "Transfer Attended";
+      this.attendedTransferToolStripMenuItem.Click += new System.EventHandler(this.attendedTransferToolStripMenuItem_Click);
       // 
       // partyToolStripMenuItem
       // 
@@ -717,10 +724,12 @@ namespace Sipek
       // columnHeaderAccountName
       // 
       this.columnHeaderAccountName.Text = "Name";
+      this.columnHeaderAccountName.Width = 61;
       // 
       // columnHeaderStatus
       // 
       this.columnHeaderStatus.Text = "Status";
+      this.columnHeaderStatus.Width = 104;
       // 
       // toolStripContainer2
       // 
@@ -971,13 +980,6 @@ namespace Sipek
       this.exitToolStripMenuItem1.Size = new System.Drawing.Size(142, 22);
       this.exitToolStripMenuItem1.Text = "Exit";
       this.exitToolStripMenuItem1.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
-      // 
-      // attendedTransferToolStripMenuItem
-      // 
-      this.attendedTransferToolStripMenuItem.Name = "attendedTransferToolStripMenuItem";
-      this.attendedTransferToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
-      this.attendedTransferToolStripMenuItem.Text = "Transfer Attended";
-      this.attendedTransferToolStripMenuItem.Click += new System.EventHandler(this.attendedTransferToolStripMenuItem_Click);
       // 
       // MainForm
       // 

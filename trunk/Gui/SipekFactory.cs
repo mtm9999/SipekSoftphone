@@ -204,6 +204,21 @@ namespace Sipek
     private int _index = -1;
     private int _accountIdentification = -1;
     
+    public bool Enabled
+    {
+      get
+      {
+        bool value;
+        if (Boolean.TryParse(Properties.Settings.Default.cfgSipAccountEnabled[_index], out value))
+        {
+          return value;
+        }
+        return false;
+      }
+
+      set { Properties.Settings.Default.cfgSipAccountEnabled[_index] = value.ToString(); }
+    }
+
     /// <summary>
     /// Temp storage!
     /// The account index assigned by voip stack

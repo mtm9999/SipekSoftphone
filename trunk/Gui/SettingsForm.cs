@@ -109,6 +109,8 @@ namespace Sipek
         // error!!!
         return;
       }
+      checkBoxAccountEnabled.Checked = acc.Enabled;
+
       textBoxAccountName.Text = acc.AccountName;
      
       textBoxDisplayName.Text = acc.DisplayName;
@@ -138,6 +140,7 @@ namespace Sipek
       {
         IAccount account = SipekResources.Configurator.Accounts[index];
 
+        account.Enabled = checkBoxAccountEnabled.Checked;
         account.HostName = textBoxRegistrarAddress.Text;
         account.ProxyAddress = textBoxProxyAddress.Text; 
         account.AccountName = textBoxAccountName.Text;

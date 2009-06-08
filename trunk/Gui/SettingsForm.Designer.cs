@@ -46,6 +46,7 @@ namespace Sipek
       this.label3 = new System.Windows.Forms.Label();
       this.textBoxDisplayName = new System.Windows.Forms.TextBox();
       this.groupBox3 = new System.Windows.Forms.GroupBox();
+      this.checkBoxAccountEnabled = new System.Windows.Forms.CheckBox();
       this.label7 = new System.Windows.Forms.Label();
       this.textBoxAccountName = new System.Windows.Forms.TextBox();
       this.checkBoxDefault = new System.Windows.Forms.CheckBox();
@@ -172,12 +173,12 @@ namespace Sipek
       this.groupBox2.Controls.Add(this.label3);
       this.groupBox2.Controls.Add(this.textBoxDisplayName);
       this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.groupBox2.Location = new System.Drawing.Point(3, 104);
+      this.groupBox2.Location = new System.Drawing.Point(3, 98);
       this.groupBox2.Name = "groupBox2";
-      this.groupBox2.Size = new System.Drawing.Size(290, 178);
+      this.groupBox2.Size = new System.Drawing.Size(290, 184);
       this.groupBox2.TabIndex = 10;
       this.groupBox2.TabStop = false;
-      this.groupBox2.Text = "User";
+      this.groupBox2.Text = "User Config";
       // 
       // label14
       // 
@@ -294,6 +295,7 @@ namespace Sipek
       // 
       // groupBox3
       // 
+      this.groupBox3.Controls.Add(this.checkBoxAccountEnabled);
       this.groupBox3.Controls.Add(this.label7);
       this.groupBox3.Controls.Add(this.textBoxAccountName);
       this.groupBox3.Controls.Add(this.checkBoxDefault);
@@ -302,15 +304,26 @@ namespace Sipek
       this.groupBox3.Dock = System.Windows.Forms.DockStyle.Top;
       this.groupBox3.Location = new System.Drawing.Point(3, 3);
       this.groupBox3.Name = "groupBox3";
-      this.groupBox3.Size = new System.Drawing.Size(290, 101);
+      this.groupBox3.Size = new System.Drawing.Size(290, 95);
       this.groupBox3.TabIndex = 3;
       this.groupBox3.TabStop = false;
       this.groupBox3.Text = "Accounts";
       // 
+      // checkBoxAccountEnabled
+      // 
+      this.checkBoxAccountEnabled.AutoSize = true;
+      this.checkBoxAccountEnabled.Location = new System.Drawing.Point(90, 72);
+      this.checkBoxAccountEnabled.Name = "checkBoxAccountEnabled";
+      this.checkBoxAccountEnabled.Size = new System.Drawing.Size(65, 17);
+      this.checkBoxAccountEnabled.TabIndex = 8;
+      this.checkBoxAccountEnabled.Text = "Enabled";
+      this.checkBoxAccountEnabled.UseVisualStyleBackColor = true;
+      this.checkBoxAccountEnabled.CheckedChanged += new System.EventHandler(this.reregistrationRequired_TextChanged);
+      // 
       // label7
       // 
       this.label7.AutoSize = true;
-      this.label7.Location = new System.Drawing.Point(6, 73);
+      this.label7.Location = new System.Drawing.Point(6, 49);
       this.label7.Name = "label7";
       this.label7.Size = new System.Drawing.Size(35, 13);
       this.label7.TabIndex = 7;
@@ -318,16 +331,16 @@ namespace Sipek
       // 
       // textBoxAccountName
       // 
-      this.textBoxAccountName.Location = new System.Drawing.Point(90, 70);
+      this.textBoxAccountName.Location = new System.Drawing.Point(90, 46);
       this.textBoxAccountName.Name = "textBoxAccountName";
-      this.textBoxAccountName.Size = new System.Drawing.Size(155, 20);
+      this.textBoxAccountName.Size = new System.Drawing.Size(168, 20);
       this.textBoxAccountName.TabIndex = 3;
       this.textBoxAccountName.ModifiedChanged += new System.EventHandler(this.reregistrationRequired_TextChanged);
       // 
       // checkBoxDefault
       // 
       this.checkBoxDefault.AutoSize = true;
-      this.checkBoxDefault.Location = new System.Drawing.Point(90, 47);
+      this.checkBoxDefault.Location = new System.Drawing.Point(182, 72);
       this.checkBoxDefault.Name = "checkBoxDefault";
       this.checkBoxDefault.Size = new System.Drawing.Size(91, 17);
       this.checkBoxDefault.TabIndex = 2;
@@ -349,7 +362,7 @@ namespace Sipek
       this.comboBoxAccounts.FormattingEnabled = true;
       this.comboBoxAccounts.Location = new System.Drawing.Point(90, 19);
       this.comboBoxAccounts.Name = "comboBoxAccounts";
-      this.comboBoxAccounts.Size = new System.Drawing.Size(155, 21);
+      this.comboBoxAccounts.Size = new System.Drawing.Size(183, 21);
       this.comboBoxAccounts.TabIndex = 0;
       this.comboBoxAccounts.SelectedIndexChanged += new System.EventHandler(this.comboBoxAccounts_SelectedIndexChanged);
       // 
@@ -365,7 +378,6 @@ namespace Sipek
       this.groupBox6.Size = new System.Drawing.Size(290, 86);
       this.groupBox6.TabIndex = 12;
       this.groupBox6.TabStop = false;
-      this.groupBox6.Text = "Phone";
       // 
       // comboBoxSIPTransport
       // 
@@ -1088,5 +1100,6 @@ namespace Sipek
     private System.Windows.Forms.Label label19;
     private System.Windows.Forms.TextBox textBoxNameServer;
     private System.Windows.Forms.Label label20;
+    private System.Windows.Forms.CheckBox checkBoxAccountEnabled;
   }
 }
